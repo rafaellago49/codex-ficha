@@ -1,0 +1,171 @@
+[
+  {
+    "id": "human",
+    "name": "Humano",
+    "description": "Versáteis e adaptáveis, os humanos são a raça mais comum. Ganham +1 em todos os atributos.",
+    "size": "Médio",
+    "speed": 9,
+    "abilityBonuses": {
+      "str": 1, "dex": 1, "con": 1, "int": 1, "wis": 1, "cha": 1
+    },
+    "choosableBonus": null,
+    "traits": [
+      { "name": "Idioma Extra", "description": "Você pode falar, ler e escrever um idioma extra à sua escolha." },
+      { "name": "Versatilidade", "description": "+1 em todos os atributos reflete a natureza adaptável dos humanos." }
+    ],
+    "languages": ["Comum", "Um idioma à escolha"],
+    "darkvision": false,
+    "proficiencies": []
+  },
+  {
+    "id": "half-elf",
+    "name": "Meio-Elfo",
+    "description": "Nascidos entre dois mundos, os meio-elfos combinam a sociabilidade humana com a graça élfica.",
+    "size": "Médio",
+    "speed": 9,
+    "abilityBonuses": {
+      "cha": 2
+    },
+    "choosableBonus": {
+      "count": 2,
+      "amount": 1,
+      "exclude": ["cha"],
+      "description": "Escolha 2 atributos diferentes (exceto Carisma) para receber +1 cada."
+    },
+    "traits": [
+      { "name": "Visão no Escuro", "description": "Graças ao seu sangue élfico, você tem visão superior no escuro até 18 metros." },
+      { "name": "Ancestralidade Feérica", "description": "Você tem vantagem em salvaguardas contra ser enfeitiçado e a magia não pode fazê-lo dormir." },
+      { "name": "Versatilidade em Perícias", "description": "Você ganha proficiência em duas perícias à sua escolha." }
+    ],
+    "languages": ["Comum", "Élfico", "Um idioma à escolha"],
+    "darkvision": true,
+    "darkvisionRange": 18,
+    "proficiencies": []
+  },
+  {
+    "id": "elf-high",
+    "name": "Elfo (Alto Elfo)",
+    "description": "Graciosos e imortais, os altos elfos são magicamente dotados e de longa vida.",
+    "size": "Médio",
+    "speed": 9,
+    "abilityBonuses": {
+      "dex": 2, "int": 1
+    },
+    "choosableBonus": null,
+    "traits": [
+      { "name": "Visão no Escuro", "description": "Você tem visão superior no escuro até 18 metros." },
+      { "name": "Sentidos Aguçados", "description": "Você tem proficiência na perícia Percepção." },
+      { "name": "Ancestralidade Feérica", "description": "Vantagem em salvaguardas contra enfeitiçamento. Imunidade ao sono mágico." },
+      { "name": "Transe", "description": "Elfos não precisam dormir. Em vez disso, meditam por 4 horas." },
+      { "name": "Treinamento Élfico com Armas", "description": "Proficiência com espada longa, espada curta, arco longo e arco curto." },
+      { "name": "Truque", "description": "Você conhece um truque à sua escolha da lista de magias do Mago." }
+    ],
+    "languages": ["Comum", "Élfico"],
+    "darkvision": true,
+    "darkvisionRange": 18,
+    "proficiencies": ["Percepção", "Espada Longa", "Espada Curta", "Arco Longo", "Arco Curto"]
+  },
+  {
+    "id": "dwarf-hill",
+    "name": "Anão (Anão das Colinas)",
+    "description": "Robustos e resilientes, os anões das colinas são conhecidos por sua resistência e determinação.",
+    "size": "Médio",
+    "speed": 7.5,
+    "abilityBonuses": {
+      "con": 2, "wis": 1
+    },
+    "choosableBonus": null,
+    "traits": [
+      { "name": "Visão no Escuro", "description": "Acostumado à vida subterrânea, você tem visão no escuro até 18 metros." },
+      { "name": "Resiliência Anã", "description": "Você tem vantagem em salvaguardas contra veneno e resistência a dano de veneno." },
+      { "name": "Treinamento Anão com Armas", "description": "Proficiência com machadinha, machado de batalha, martelo leve e martelo de guerra." },
+      { "name": "Proficiência com Ferramentas", "description": "Proficiência com ferramentas de ferreiro, cervejeiro ou pedreiro (à sua escolha)." },
+      { "name": "Percepção de Pedra", "description": "Vantagem em verificações de Percepção (Int) relacionadas à origem de trabalho em pedra." },
+      { "name": "Tenacidade Anã", "description": "Seu máximo de pontos de vida aumenta em 1 e aumenta mais 1 sempre que você sobe um nível." }
+    ],
+    "languages": ["Comum", "Anão"],
+    "darkvision": true,
+    "darkvisionRange": 18,
+    "proficiencies": ["Machadinha", "Machado de Batalha", "Martelo Leve", "Martelo de Guerra"]
+  },
+  {
+    "id": "halfling-lightfoot",
+    "name": "Halfling (Pés-Leves)",
+    "description": "Pequenos e ágeis, os halflings pés-leves são naturalmente sortudos e difíceis de localizar.",
+    "size": "Pequeno",
+    "speed": 7.5,
+    "abilityBonuses": {
+      "dex": 2, "cha": 1
+    },
+    "choosableBonus": null,
+    "traits": [
+      { "name": "Sorte", "description": "Quando você rolar 1 em uma jogada de ataque, teste de habilidade ou salvaguarda, você pode rolar novamente e deve usar o novo resultado." },
+      { "name": "Valente", "description": "Você tem vantagem em salvaguardas contra ser amedrontado." },
+      { "name": "Agilidade Halfling", "description": "Você pode mover-se pelo espaço de qualquer criatura de tamanho Médio ou maior." },
+      { "name": "Naturalmente Furtivo", "description": "Você pode tentar se esconder mesmo quando estiver obscurecido apenas por uma criatura de tamanho Médio ou maior." }
+    ],
+    "languages": ["Comum", "Halfling"],
+    "darkvision": false,
+    "proficiencies": []
+  },
+  {
+    "id": "tiefling",
+    "name": "Tiefling",
+    "description": "Marcados por um pacto infernal ancestral, os tieflings carregam a herança do Inferno em sua aparência.",
+    "size": "Médio",
+    "speed": 9,
+    "abilityBonuses": {
+      "int": 1, "cha": 2
+    },
+    "choosableBonus": null,
+    "traits": [
+      { "name": "Visão no Escuro", "description": "Graças ao seu legado infernal, você tem visão superior no escuro até 18 metros." },
+      { "name": "Resistência Infernal", "description": "Você tem resistência a dano de fogo." },
+      { "name": "Herança Infernal", "description": "Você conhece o truque Taumaturgia. Ao atingir o nível 3, você pode lançar Rajada Infernal uma vez por dia. Ao atingir o nível 5, você pode lançar Escuridão uma vez por dia." }
+    ],
+    "languages": ["Comum", "Infernal"],
+    "darkvision": true,
+    "darkvisionRange": 18,
+    "proficiencies": []
+  },
+  {
+    "id": "dragonborn",
+    "name": "Draconato",
+    "description": "Orgulhosos e honrados, os draconatos carregam a herança dos dragões e o poder de seu sopro.",
+    "size": "Médio",
+    "speed": 9,
+    "abilityBonuses": {
+      "str": 2, "cha": 1
+    },
+    "choosableBonus": null,
+    "traits": [
+      { "name": "Ancestralidade Dracônica", "description": "Escolha um tipo de dragão — isso determina o tipo de dano do seu sopro e sua resistência." },
+      { "name": "Arma de Sopro", "description": "Você pode usar sua ação para exalar energia destrutiva. CD = 8 + mod. Con + bônus de proficiência." },
+      { "name": "Resistência Dracônica", "description": "Você tem resistência ao tipo de dano associado à sua ancestralidade dracônica." }
+    ],
+    "languages": ["Comum", "Dracônico"],
+    "darkvision": false,
+    "proficiencies": []
+  },
+  {
+    "id": "gnome-rock",
+    "name": "Gnomo (Gnomo da Rocha)",
+    "description": "Inventivos e curiosos, os gnomos da rocha têm uma afinidade natural com a engenharia e a ilusão.",
+    "size": "Pequeno",
+    "speed": 7.5,
+    "abilityBonuses": {
+      "int": 2, "con": 1
+    },
+    "choosableBonus": null,
+    "traits": [
+      { "name": "Visão no Escuro", "description": "Acostumado à vida subterrânea, você tem visão no escuro até 18 metros." },
+      { "name": "Astúcia Gnômica", "description": "Você tem vantagem em salvaguardas de Inteligência, Sabedoria e Carisma contra magia." },
+      { "name": "Conhecimento Artificial", "description": "Você tem proficiência com ferramentas de artesão (ferramentas de ourives ou ferramentas de ferreiro) e com Arcana." },
+      { "name": "Engenheiro Competente", "description": "Com 10 dias e 100 PO em materiais, você pode construir um pequeno autômato inofensivo." }
+    ],
+    "languages": ["Comum", "Gnômico"],
+    "darkvision": true,
+    "darkvisionRange": 18,
+    "proficiencies": ["Arcanismo"]
+  }
+]
