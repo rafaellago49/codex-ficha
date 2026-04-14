@@ -47,12 +47,14 @@ export const Sheet = (() => {
   let _viewEl     = null;
   let _activeTab  = 'registro';
   let _spells     = [];
+  let _classFeatures = null;
   let _spellFilter = 'all';
 
   // ── Public init ──────────────────────────────────────────────────────────
   const init = async (viewEl) => {
     _viewEl = viewEl;
     _spells = await DataLoader.load('./data/spells.json') || [];
+    _classFeatures = await DataLoader.load('./data/class-features.json') || {};
     _render();
   };
 
@@ -78,6 +80,8 @@ export const Sheet = (() => {
           </div>
         </div>
         <div class="topbar-right">
+          <button class="btn btn-secondary btn-sm" id="btn-level-up">⬆ Subir de Nível</button>
+          <button class="btn btn-secondary btn-sm" id="btn-short-rest">☕ Descanso Curto</button>
           <button class="btn btn-secondary btn-sm" id="btn-long-rest">☾ Descanso Longo</button>
           <button class="btn btn-secondary btn-sm" id="btn-export">💾 Exportar</button>
           <button class="btn btn-ghost btn-sm" id="btn-home-back" title="Página inicial">⌂</button>
@@ -131,14 +135,11 @@ export const Sheet = (() => {
       Toast.show('✦ Ficha exportada com sucesso.');
     });
 
+    document.getElementById('btn-level-up')?.addEventListener('click', () => _handleLevelUp());
+    document.getElementById('btn-short-rest')?.addEventListener('click', () => _handleShortRest());
     document.getElementById('btn-long-rest')?.addEventListener('click', () => {
       if (!confirm('Realizar Descanso Longo? HP e recursos serão restaurados.')) return;
-      const state = CharacterState.get();
-      CharacterState.patch({
-        combat: { ...state.combat, hp: { ...state.combat.hp, current: state.combat.hp.max, temp: 0 },
-          deathSaves: { successes: [false,false,false], failures: [false,false,false] }
-        }
-      });
+      CharacterState.resetLongRest();
       Toast.show('☾ Descanso Longo realizado. Revigorado e renovado.');
       _renderActivePanel();
     });
@@ -289,6 +290,7 @@ export const Sheet = (() => {
 
   const _renderCombatBlock = () => {
     const c = CharacterState.get().combat || {};
+    const passive = c.passivePerception || (10 + CharacterState.getSkillMod('perception'));
     return `
       <div class="card mb-2">
         <div class="card-title">Combate</div>
@@ -298,12 +300,16 @@ export const Sheet = (() => {
             <div class="lbl-sm">C.A.</div>
           </div>
           <div class="combat-stat-box">
-            <input type="number" class="val" id="sheet-init" value="${c.initiative||0}">
+            <input type="number" class="val" id="sheet-init" value="${CharacterState.getModifier('dex')}" readonly>
             <div class="lbl-sm">Iniciativa</div>
           </div>
           <div class="combat-stat-box">
             <input type="text" class="val" id="sheet-speed" value="${c.speed||9}m" style="width:100%">
             <div class="lbl-sm">Deslocamento</div>
+          </div>
+          <div class="combat-stat-box">
+            <input type="number" class="val" value="${passive}" readonly>
+            <div class="lbl-sm">Percepção Passiva</div>
           </div>
         </div>
         <div class="form-row mt-1" style="gap:0.5rem">
@@ -323,6 +329,7 @@ export const Sheet = (() => {
     const hp = CharacterState.get().combat?.hp || { current: 10, max: 10, temp: 0 };
     const pct = Math.max(0, Math.min(100, (hp.current / (hp.max || 1)) * 100));
     const barColor = pct > 50 ? 'var(--crimson-bright)' : pct > 25 ? '#e09320' : '#e03e3e';
+    const hdPool = CharacterState.get().combat?.hitDicePool || { total: 1, spent: 0, die: 8 };
     return `
       <div class="card mb-2">
         <div class="card-title">Pontos de Vida</div>
@@ -337,6 +344,9 @@ export const Sheet = (() => {
           <span style="margin-left:0.75rem;color:var(--text-muted)">Temp:</span>
           <input type="number" class="hp-input" id="hp-temp" value="${hp.temp||0}">
         </div>
+        <div class="mt-1 text-muted" style="font-size:0.82rem">
+          Dados de vida: ${Math.max(0, hdPool.total - hdPool.spent)}/${hdPool.total} (d${hdPool.die})
+        </div>
       </div>`;
   };
 
@@ -347,6 +357,7 @@ export const Sheet = (() => {
       `<input type="checkbox" data-ds="success-${i}" ${v?'checked':''}>`).join(' ');
     const failBoxes = ds.failures.map((v,i) =>
       `<input type="checkbox" data-ds="failure-${i}" ${v?'checked':''}>`).join(' ');
+    if ((CharacterState.get().combat?.hp?.current || 0) > 0) return '';
     return `
       <div class="card mb-2">
         <div class="card-title">Testes Contra a Morte</div>
@@ -383,10 +394,14 @@ export const Sheet = (() => {
 
   const _renderFeaturesBlock = () => {
     const state = CharacterState.get();
+    const classId = state.progression?.classId || _resolveClassId(state.identity?.class);
+    const features = _collectFeatures(classId, state.identity?.level || 1);
     return `
       <div class="card mb-2">
         <div class="card-title">Características & Talentos</div>
-        <textarea class="diary-textarea" data-field="features" style="min-height:120px">${state.features||''}</textarea>
+        <div class="skill-list">
+          ${(features.length ? features : ['Nenhuma feature registrada']).map(f => `<div class="skill-row-item"><span>${f}</span></div>`).join('')}
+        </div>
       </div>`;
   };
 
@@ -477,9 +492,6 @@ export const Sheet = (() => {
     document.getElementById('sheet-ac')?.addEventListener('change', e => {
       CharacterState.set('combat.ac', parseInt(e.target.value) || 10);
     });
-    document.getElementById('sheet-init')?.addEventListener('change', e => {
-      CharacterState.set('combat.initiative', parseInt(e.target.value) || 0);
-    });
     document.getElementById('sheet-speed')?.addEventListener('change', e => {
       CharacterState.set('combat.speed', e.target.value);
     });
@@ -510,7 +522,7 @@ export const Sheet = (() => {
           return `
             <div class="skill-row-item">
               <label class="skill-check">
-                <input type="checkbox" data-skill="${s.id}" ${p ? 'checked' : ''}>
+            <input type="checkbox" data-skill="${s.id}" ${p ? 'checked' : ''} disabled>
                 <span>${s.label}</span>
                 <span style="font-size:0.75rem;color:var(--text-dim);margin-left:0.3rem">(${ATTR_LABELS[s.attr].abbr})</span>
               </label>
@@ -591,16 +603,32 @@ export const Sheet = (() => {
     const el = document.getElementById('panel-grimorio');
     if (!el) return;
 
-    const prepared  = CharacterState.get().spells?.prepared || [];
+    const state = CharacterState.get();
+    const classId = state.progression?.classId || _resolveClassId(state.identity?.class);
+    const classMeta = _classFeatures?.[classId];
+    const spellMeta = classMeta?.spellcasting || { progression: 'none', ability: null, slotsByLevel: {} };
+    const classLevel = state.identity?.level || 1;
+    const slotTotals = spellMeta.slotsByLevel?.[classLevel] || [];
+    const maxSpellLevel = slotTotals.length;
+    const prepared  = state.spells?.prepared || [];
+    const castingAbility = spellMeta.ability;
+    const prepLimit = castingAbility ? Math.max(1, classLevel + CharacterState.getModifier(castingAbility)) : 0;
+    if (spellMeta.progression !== 'none' && (!state.spells?.slots || Object.keys(state.spells.slots).length === 0)) {
+      const initSlots = {};
+      slotTotals.forEach((total, idx) => { initSlots[idx + 1] = { total, used: 0 }; });
+      CharacterState.setSpellSlots(initSlots);
+    }
     const levels    = [...new Set(_spells.map(s => s.level))].sort((a,b) => a - b);
     const filterOpts = [
       `<option value="all" ${_spellFilter==='all'?'selected':''}>Todos os Níveis</option>`,
       ...levels.map(l => `<option value="${l}" ${_spellFilter==l?'selected':''}>${SPELL_LEVEL_LABELS[l]||'Nível '+l}</option>`)
     ].join('');
 
+    const classSpells = _spells.filter(s => !s.classes || s.classes.includes(classId) || s.classes.includes(state.identity?.class));
+    const legalByLevel = classSpells.filter(s => s.level === 0 || s.level <= maxSpellLevel);
     const filteredSpells = _spellFilter === 'all'
-      ? _spells
-      : _spells.filter(s => s.level === parseInt(_spellFilter));
+      ? legalByLevel
+      : legalByLevel.filter(s => s.level === parseInt(_spellFilter));
 
     // Group by level
     const grouped = {};
@@ -649,17 +677,28 @@ export const Sheet = (() => {
         }).join('')
       : `<div class="spells-empty">Nenhuma magia preparada.<br>Marque as caixas ao lado.</div>`;
 
+    const slotCards = slotTotals.map((total, idx) => {
+      const level = idx + 1;
+      const used = state.spells?.slots?.[level]?.used || 0;
+      const checks = Array.from({ length: total }).map((_, i) =>
+        `<label><input type="checkbox" data-slot-level="${level}" data-slot-idx="${i}" ${i < used ? 'checked' : ''}></label>`).join('');
+      const pactLabel = spellMeta.progression === 'pact' ? ` (Nível ${spellMeta.pactSlotLevelByClassLevel?.[classLevel] || level})` : '';
+      return `<div class="card mb-1"><div class="card-title">${SPELL_LEVEL_LABELS[level] || `${level}º`}${pactLabel}</div><div class="death-saves">${checks}</div></div>`;
+    }).join('');
+
     el.innerHTML = `
       <div class="grimoire-layout">
         <div>
+          ${spellMeta.progression !== 'none' ? `<div class="mb-1 text-muted">Magias preparadas: ${prepared.length}/${prepLimit}</div>` : '<div class="mb-1 text-muted">Classe sem conjuração.</div>'}
           <div class="spell-filters">
             <span class="filter-label">Filtrar:</span>
             <select class="filter-select" id="spell-level-filter">${filterOpts}</select>
-            <span style="font-size:0.82rem;color:var(--text-muted)">${_spells.length} magias disponíveis</span>
+            <span style="font-size:0.82rem;color:var(--text-muted)">${legalByLevel.length} magias disponíveis</span>
           </div>
           <div id="spell-list-container">${spellListHtml}</div>
         </div>
         <div class="active-spells-panel">
+          ${slotCards}
           <div class="card" style="position:sticky;top:1rem">
             <div class="card-title">✦ Magias Ativas (${prepared.length})</div>
             <div id="active-spells-list">${activeSpellItems}</div>
@@ -676,7 +715,14 @@ export const Sheet = (() => {
     el.querySelectorAll('.spell-checkbox').forEach(chk => {
       chk.addEventListener('change', () => {
         const id = chk.dataset.spellId;
-        if (chk.checked) CharacterState.prepareSpell(id);
+        if (chk.checked) {
+          const ok = CharacterState.prepareSpell(id, prepLimit);
+          if (!ok) {
+            chk.checked = false;
+            Toast.show(`Limite de preparo atingido (${prepLimit}).`);
+            return;
+          }
+        }
         else CharacterState.unprepareSpell(id);
 
         const entry = document.getElementById(`spell-${id}`);
@@ -704,6 +750,14 @@ export const Sheet = (() => {
       });
     });
 
+    el.querySelectorAll('[data-slot-level]').forEach(chk => {
+      chk.addEventListener('change', () => {
+        const level = parseInt(chk.dataset.slotLevel, 10);
+        if (chk.checked) CharacterState.useSpellSlot(level);
+        else CharacterState.restoreSpellSlot(level);
+      });
+    });
+
     el.querySelectorAll('[data-spell-toggle]').forEach(btn => {
       btn.addEventListener('click', () => {
         const entry = document.getElementById(`spell-${btn.dataset.spellToggle}`);
@@ -713,6 +767,86 @@ export const Sheet = (() => {
         }
       });
     });
+  };
+
+  const _resolveClassId = (className = '') => {
+    const map = {
+      'Bárbaro': 'barbarian', 'Bardo': 'bard', 'Clérigo': 'cleric', 'Druida': 'druid',
+      'Guerreiro': 'fighter', 'Monge': 'monk', 'Paladino': 'paladin', 'Patrulheiro': 'ranger',
+      'Ladino': 'rogue', 'Feiticeiro': 'sorcerer', 'Bruxo': 'warlock', 'Mago': 'wizard'
+    };
+    return map[className] || '';
+  };
+
+  const _collectFeatures = (classId, level) => {
+    const byLevel = _classFeatures?.[classId]?.featuresByLevel || {};
+    const out = [];
+    Object.keys(byLevel).map(n => parseInt(n, 10)).sort((a, b) => a - b).forEach(lv => {
+      if (lv <= level) out.push(...byLevel[String(lv)]);
+    });
+    return out;
+  };
+
+  const _handleLevelUp = () => {
+    const state = CharacterState.get();
+    const next = Math.min(20, (state.identity?.level || 1) + 1);
+    if (next === state.identity.level) return Toast.show('Nível máximo atingido.');
+    const useAvg = confirm('Usar média oficial no ganho de HP?\nOK = média oficial, Cancelar = rolar dado');
+    const hitDie = state.progression?.hitDie || 8;
+    const conMod = CharacterState.getModifier('con');
+    const gain = useAvg ? (Math.floor(hitDie / 2) + 1 + conMod) : ((Math.floor(Math.random() * hitDie) + 1) + conMod);
+    const hpGain = Math.max(1, gain);
+    const max = (state.combat?.hp?.max || 1) + hpGain;
+    const cur = (state.combat?.hp?.current || 1) + hpGain;
+    const hdPool = state.combat?.hitDicePool || { total: 1, spent: 0, die: hitDie };
+    const classId = state.progression?.classId || _resolveClassId(state.identity?.class);
+    const spellMeta = _classFeatures?.[classId]?.spellcasting || { slotsByLevel: {} };
+    const newSlots = spellMeta.slotsByLevel?.[next] || [];
+    const mergedSlots = {};
+    newSlots.forEach((total, idx) => {
+      const lv = idx + 1;
+      const prevUsed = state.spells?.slots?.[lv]?.used || 0;
+      mergedSlots[lv] = { total, used: Math.min(prevUsed, total) };
+    });
+    CharacterState.patch({
+      identity: { ...state.identity, level: next },
+      combat: {
+        ...state.combat,
+        hp: { ...state.combat.hp, max, current: cur },
+        hitDice: `${next}d${hitDie}`,
+        hitDicePool: { ...hdPool, total: next }
+      },
+      spells: {
+        ...state.spells,
+        slots: mergedSlots
+      },
+      features: _collectFeatures(classId, next)
+    });
+    CharacterState.recalcAc();
+    CharacterState.recalcAttacks();
+    Toast.show(`Nível ${next} alcançado. HP +${hpGain}.`);
+    _render();
+  };
+
+  const _handleShortRest = () => {
+    const state = CharacterState.get();
+    const pool = state.combat?.hitDicePool || { total: 1, spent: 0, die: 8 };
+    const available = Math.max(0, pool.total - pool.spent);
+    if (available <= 0) return Toast.show('Sem dados de vida disponíveis.');
+    const spend = Math.min(available, Math.max(1, parseInt(prompt(`Quantos dados de vida gastar? (1-${available})`) || '1', 10)));
+    const conMod = CharacterState.getModifier('con');
+    let heal = 0;
+    for (let i = 0; i < spend; i++) heal += Math.max(1, (Math.floor(Math.random() * pool.die) + 1) + conMod);
+    const hp = state.combat.hp;
+    CharacterState.patch({
+      combat: {
+        ...state.combat,
+        hp: { ...hp, current: Math.min(hp.max, hp.current + heal) },
+        hitDicePool: { ...pool, spent: pool.spent + spend }
+      }
+    });
+    Toast.show(`Descanso curto: +${heal} HP (dados gastos: ${spend}).`);
+    _renderActivePanel();
   };
 
   return { init };

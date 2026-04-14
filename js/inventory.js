@@ -70,6 +70,9 @@ export const InventoryModule = (() => {
   };
 
   const _htmlCatTabs = () => {
+    const weight = CharacterState.getTotalWeight();
+    const capacity = CharacterState.getCarryCapacity();
+    const overloaded = weight > capacity;
     const btns = CATS.map(c =>
       `<button class="cat-btn ${c===_activeCat?'active':''}" data-cat="${c}">${CAT_ICONS[c]} ${c}</button>`
     ).join('');
@@ -78,6 +81,10 @@ export const InventoryModule = (() => {
       <div class="slots-bar">
         <span class="cat-label" id="cat-label-txt">${CAT_ICONS[_activeCat]} ${_activeCat.toUpperCase()}</span>
         <span class="slots-count"><b id="used-slots">${CharacterState.getItemsByCategory(_activeCat).length}</b> / ${CharacterState.SLOTS_MAX} slots</span>
+      </div>
+      <div class="slots-bar">
+        <span class="cat-label">Carga</span>
+        <span class="slots-count" id="weight-status">${weight.toFixed(1)} / ${capacity.toFixed(1)} kg ${overloaded ? '• Sobrecarga' : ''}</span>
       </div>
       <div style="display:flex;justify-content:flex-end;margin-bottom:.5rem">
         <button class="btn btn-primary btn-sm" id="btn-open-add">+ Adicionar Item</button>
@@ -125,6 +132,9 @@ export const InventoryModule = (() => {
           </div>
           <hr class="modal-sep" id="vm-sep" style="display:none">
           <p class="modal-desc" id="vm-desc"></p>
+          <div class="form-group mt-1 mb-0">
+            <label><input type="checkbox" id="vm-equipped"> Equipado</label>
+          </div>
           <div class="inv-modal-actions">
             <button class="btn-inv btn-inv-edit"   id="vm-btn-edit">✏ Editar</button>
             <button class="btn-inv btn-inv-close"  id="vm-btn-close">Fechar</button>
@@ -156,6 +166,7 @@ export const InventoryModule = (() => {
               <div class="form-group" style="margin-bottom:0"><label>Quantidade</label><input type="number" class="form-control" id="add-qty" value="1" min="1"></div>
               <div class="form-group" style="margin-bottom:0"><label>Status</label><select class="form-control" id="add-status">${statusOpts}</select></div>
             </div>
+            <div class="form-group mt-1"><label>Peso (kg)</label><input type="number" class="form-control" id="add-weight" value="0" min="0" step="0.1"></div>
             <div class="weapon-extra mt-1" id="add-weapon-extra">
               <div class="weapon-block">
                 <p class="weapon-block-title">⚔ Atributos da Arma</p>
@@ -203,6 +214,7 @@ export const InventoryModule = (() => {
               <div class="form-group" style="margin-bottom:0"><label>Quantidade</label><input type="number" class="form-control" id="edit-qty" value="1" min="1"></div>
               <div class="form-group" style="margin-bottom:0"><label>Status</label><select class="form-control" id="edit-status">${statusOpts}</select></div>
             </div>
+            <div class="form-group mt-1"><label>Peso (kg)</label><input type="number" class="form-control" id="edit-weight" value="0" min="0" step="0.1"></div>
             <div class="weapon-extra mt-1" id="edit-weapon-extra">
               <div class="weapon-block">
                 <p class="weapon-block-title">⚔ Atributos da Arma</p>
@@ -305,6 +317,8 @@ export const InventoryModule = (() => {
     _panelEl.querySelector('#vm-cat').textContent  = _activeCat;
     _panelEl.querySelector('#vm-qty').textContent  = item.qty > 1 ? `Quantidade: ${item.qty}` : '';
     _panelEl.querySelector('#vm-desc').textContent = item.desc  || '';
+    const equippedEl = _panelEl.querySelector('#vm-equipped');
+    if (equippedEl) equippedEl.checked = !!item.equipped;
     const imgEl = _panelEl.querySelector('#vm-img');
     imgEl.innerHTML = item.img ? `<img src="${item.img}" alt="${_esc(item.name)}">` : CAT_ICONS[_activeCat];
     const wBlock = _panelEl.querySelector('#vm-weapon');
@@ -343,6 +357,15 @@ export const InventoryModule = (() => {
       if (!item) return;
       close(); _openEditModal(item);
     });
+    _panelEl.querySelector('#vm-equipped')?.addEventListener('change', (e) => {
+      if (_activeSlot === null) return;
+      const item = CharacterState.getItemsByCategory(_activeCat)[_activeSlot];
+      if (!item) return;
+      if (!!item.equipped !== !!e.target.checked) {
+        CharacterState.toggleEquipItem(_activeCat, item.id);
+        _refreshGrid();
+      }
+    });
   };
 
   const _onAddCatChange = () => {
@@ -377,7 +400,9 @@ export const InventoryModule = (() => {
       qty:    parseInt(_panelEl.querySelector('#add-qty')?.value) || 1,
       status: _panelEl.querySelector('#add-status')?.value    || 'Normal',
       desc:   _panelEl.querySelector('#add-desc')?.value.trim()    || '',
-      img:    _pendingImgAdd || null
+      img:    _pendingImgAdd || null,
+      weight: parseFloat(_panelEl.querySelector('#add-weight')?.value) || 0,
+      equipped: (_panelEl.querySelector('#add-status')?.value || '') === 'Equipado'
     };
     if (cat === 'Armas') {
       item.wDmgType = _panelEl.querySelector('#add-wdmg')?.value         || '';
@@ -413,6 +438,7 @@ export const InventoryModule = (() => {
     typeEl.innerHTML = (TYPES[_activeCat]||['Outros']).map(t=>`<option>${t}</option>`).join('');
     typeEl.value = item.type || 'Outros';
     _panelEl.querySelector('#edit-status').value = item.status || 'Normal';
+    _panelEl.querySelector('#edit-weight').value = item.weight || 0;
     const prevEl = _panelEl.querySelector('#edit-img-prev');
     prevEl.innerHTML = item.img ? `<img src="${item.img}">` : CAT_ICONS[_activeCat];
     _panelEl.querySelector('#edit-img-fname').textContent = item.img ? 'Imagem atual' : 'Sem imagem';
@@ -459,7 +485,9 @@ export const InventoryModule = (() => {
       qty:    parseInt(_panelEl.querySelector('#edit-qty')?.value) || 1,
       status: _panelEl.querySelector('#edit-status')?.value    || item.status,
       desc:   _panelEl.querySelector('#edit-desc')?.value.trim()    || '',
-      img:    _pendingImgEdit !== null ? _pendingImgEdit : item.img
+      img:    _pendingImgEdit !== null ? _pendingImgEdit : item.img,
+      weight: parseFloat(_panelEl.querySelector('#edit-weight')?.value) || 0,
+      equipped: (_panelEl.querySelector('#edit-status')?.value || item.status) === 'Equipado'
     };
     if (newCat === 'Armas') {
       updated.wDmgType = _panelEl.querySelector('#edit-wdmg')?.value         || '';
@@ -510,6 +538,12 @@ export const InventoryModule = (() => {
     }
     const cnt = _panelEl.querySelector('#used-slots');
     if (cnt) cnt.textContent = CharacterState.getItemsByCategory(_activeCat).length;
+    const weight = _panelEl.querySelector('#weight-status');
+    if (weight) {
+      const total = CharacterState.getTotalWeight();
+      const cap = CharacterState.getCarryCapacity();
+      weight.textContent = `${total.toFixed(1)} / ${cap.toFixed(1)} kg ${total > cap ? '• Sobrecarga' : ''}`;
+    }
   };
 
   const _esc = (s) => String(s)

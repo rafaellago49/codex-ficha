@@ -21,6 +21,8 @@ export const CharacterState = (() => {
     combat: {
       hp: { current: 10, max: 10, temp: 0 }, ac: 10, initiative: 0,
       speed: 9, hitDice: '1d8',
+      hitDicePool: { total: 1, spent: 0, die: 8 },
+      passivePerception: 10,
       deathSaves: { successes: [false,false,false], failures: [false,false,false] }
     },
     skills:        { proficient: [], expertise: [] },
@@ -34,11 +36,16 @@ export const CharacterState = (() => {
       'Acessórios':   [],
       'Utilizáveis':  []
     },
-    spells:  { prepared: [], slots: {} },
+    spells:  { prepared: [], slots: {}, casting: { ability: null, progression: 'none', pactLevel: 0 } },
     traits:  { personality: '', ideals: '', bonds: '', flaws: '', backstory: '' },
     diary:   { notes: '', campaign: '', allies: '' },
     proficiencies: { armor: '', weapons: '', tools: '', languages: '' },
-    features: ''
+    features: [],
+    progression: {
+      classId: '',
+      hitDie: 8,
+      attacks: []
+    }
   });
 
   let _state = _defaults();
@@ -79,6 +86,94 @@ export const CharacterState = (() => {
     let mod = getModifier(attr);
     if (_state.savingThrows.proficient.includes(attr)) mod += getProficiencyBonus();
     return mod;
+  };
+
+  const getCarryCapacity = () => {
+    const str = getTotalAttr('str');
+    return Math.round(str * 7.5 * 10) / 10;
+  };
+
+  const getEquippedItems = () => {
+    _ensureCategories();
+    return CATEGORIES.flatMap(cat => _state.inventory[cat]).filter(i => i?.equipped);
+  };
+
+  const getEquippedWeapons = () => getItemsByCategory('Armas').filter(i => i.equipped);
+
+  const _parseArmorInfo = (item = {}) => {
+    const text = `${item.desc || ''} ${item.name || ''}`.toLowerCase();
+    const acMatch = text.match(/ca\s*(\d+)/i);
+    const baseAc = acMatch ? parseInt(acMatch[1], 10) : null;
+    const isHeavy = text.includes('cota de malha') || text.includes('placas');
+    const isMedium = text.includes('escama') || text.includes('gibão');
+    return { baseAc, isHeavy, isMedium };
+  };
+
+  const recalcAc = () => {
+    const dexMod = getModifier('dex');
+    const equipped = getEquippedItems();
+    const armor = equipped.find(i => i.type === 'Armadura');
+    const shieldCount = equipped.filter(i => i.type === 'Escudo').length;
+    let ac = 10 + dexMod;
+    if (armor) {
+      const info = _parseArmorInfo(armor);
+      if (info.baseAc) {
+        if (info.isHeavy) ac = info.baseAc;
+        else if (info.isMedium) ac = info.baseAc + Math.min(dexMod, 2);
+        else ac = info.baseAc + dexMod;
+      }
+    }
+    if (shieldCount > 0) ac += 2;
+    _state.combat.ac = ac;
+    _state.combat.initiative = dexMod;
+    _state.combat.passivePerception = 10 + getSkillMod('perception');
+    save();
+    return ac;
+  };
+
+  const recalcAttacks = () => {
+    const prof = getProficiencyBonus();
+    const strMod = getModifier('str');
+    const dexMod = getModifier('dex');
+    const weapons = getEquippedWeapons().slice(0, 3);
+    const attacks = weapons.map(w => {
+      const props = (w.wProps || '').toLowerCase();
+      const finesse = props.includes('finesse') || props.includes('acuidade');
+      const ranged = (w.wRange || '').toLowerCase().includes('longa');
+      const atkMod = ranged ? dexMod : (finesse ? Math.max(strMod, dexMod) : strMod);
+      const bonus = prof + atkMod;
+      return {
+        id: w.id,
+        name: w.name,
+        attackBonus: bonus,
+        damage: `${w.wDice || '1d4'} ${w.wDmgType || ''}`.trim(),
+        abilityMod: atkMod
+      };
+    });
+    _state.progression.attacks = attacks;
+    save();
+    return attacks;
+  };
+
+  const resetShortRest = () => {
+    const pool = _state.combat.hitDicePool || { total: 1, spent: 0, die: 8 };
+    pool.spent = Math.max(0, pool.spent);
+    _state.combat.hitDicePool = pool;
+    save();
+  };
+
+  const resetLongRest = () => {
+    _state.combat.hp.current = _state.combat.hp.max;
+    _state.combat.hp.temp = 0;
+    _state.combat.deathSaves = { successes: [false, false, false], failures: [false, false, false] };
+    const pool = _state.combat.hitDicePool || { total: 1, spent: 0, die: 8 };
+    pool.spent = Math.max(0, pool.spent - Math.floor(pool.spent / 2));
+    _state.combat.hitDicePool = pool;
+    Object.keys(_state.spells.slots || {}).forEach(level => {
+      const slot = _state.spells.slots[level];
+      _state.spells.slots[level] = { ...slot, used: 0 };
+    });
+    save();
   };
 
   // ── Persistence ──
@@ -178,9 +273,14 @@ export const CharacterState = (() => {
       wDice:    item.wDice    || '',
       wRange:   item.wRange   || '',
       wAtk:     item.wAtk     || '',
-      wProps:   item.wProps   || ''
+      wProps:   item.wProps   || '',
+      weight:   parseFloat(item.weight) || 0,
+      equipped: !!item.equipped
     };
     list.push(newItem);
+    _enforceEquipmentRules(newItem.id);
+    recalcAc();
+    recalcAttacks();
     save();
     return newItem;
   };
@@ -193,6 +293,8 @@ export const CharacterState = (() => {
 
     const merged = { ...list[idx], ...updates };
     merged.qty = parseInt(merged.qty) || 1;
+    merged.weight = parseFloat(merged.weight) || 0;
+    merged.equipped = !!merged.equipped;
 
     if (newCat && newCat !== cat && CATEGORIES.includes(newCat)) {
       if (_state.inventory[newCat].length >= SLOTS_MAX) return false;
@@ -201,6 +303,9 @@ export const CharacterState = (() => {
     } else {
       list[idx] = merged;
     }
+    _enforceEquipmentRules(merged.id);
+    recalcAc();
+    recalcAttacks();
     save();
     return true;
   };
@@ -211,8 +316,46 @@ export const CharacterState = (() => {
     const idx  = list.findIndex(i => i.id === id);
     if (idx === -1) return false;
     list.splice(idx, 1);
+    recalcAc();
+    recalcAttacks();
     save();
     return true;
+  };
+
+  const _enforceEquipmentRules = (changedItemId = null) => {
+    _ensureCategories();
+    const equips = _state.inventory['Equipamentos'] || [];
+    const weapons = _state.inventory['Armas'] || [];
+    const armors = equips.filter(i => i.equipped && i.type === 'Armadura');
+    const shields = equips.filter(i => i.equipped && i.type === 'Escudo');
+    const eqWeapons = weapons.filter(i => i.equipped);
+    if (armors.length > 1) {
+      armors.slice(1).forEach(i => { i.equipped = false; });
+    }
+    if (shields.length > 1) {
+      shields.slice(1).forEach(i => { i.equipped = false; });
+    }
+    if (eqWeapons.length > 3) {
+      eqWeapons.slice(3).forEach(i => { i.equipped = false; });
+    }
+    if (changedItemId) {
+      const item = [...equips, ...weapons].find(i => i.id === changedItemId);
+      if (item && item.equipped && item.status !== 'Equipado') item.status = 'Equipado';
+      if (item && !item.equipped && item.status === 'Equipado') item.status = 'Normal';
+    }
+  };
+
+  const toggleEquipItem = (cat, id) => {
+    _ensureCategories();
+    const list = _state.inventory[cat] || [];
+    const item = list.find(i => i.id === id);
+    if (!item) return { ok: false, reason: 'Item não encontrado.' };
+    item.equipped = !item.equipped;
+    _enforceEquipmentRules(id);
+    recalcAc();
+    recalcAttacks();
+    save();
+    return { ok: true, equipped: item.equipped };
   };
 
   const getTotalWeight = () => {
@@ -244,11 +387,14 @@ export const CharacterState = (() => {
   };
 
   // ── Spells ──
-  const prepareSpell = (spellId) => {
+  const prepareSpell = (spellId, maxPrepared = Infinity) => {
+    if (_state.spells.prepared.length >= maxPrepared) return false;
     if (!_state.spells.prepared.includes(spellId)) {
       _state.spells.prepared.push(spellId);
       save();
+      return true;
     }
+    return false;
   };
 
   const unprepareSpell = (spellId) => {
@@ -258,13 +404,36 @@ export const CharacterState = (() => {
 
   const isSpellPrepared = (spellId) => _state.spells.prepared.includes(spellId);
 
+  const setSpellSlots = (slotsByLevel = {}) => {
+    _state.spells.slots = slotsByLevel;
+    save();
+  };
+
+  const useSpellSlot = (level) => {
+    const slot = _state.spells.slots?.[level];
+    if (!slot) return false;
+    if (slot.used >= slot.total) return false;
+    slot.used += 1;
+    save();
+    return true;
+  };
+
+  const restoreSpellSlot = (level) => {
+    const slot = _state.spells.slots?.[level];
+    if (!slot) return false;
+    slot.used = Math.max(0, slot.used - 1);
+    save();
+    return true;
+  };
+
   return {
     get, set, patch, save, load, reset, exportJSON, importJSON,
     getTotalAttr, getModifier, getProficiencyBonus, getSkillMod, getSaveMod,
     addItem, updateItem, deleteItem, getTotalWeight,
     getItemsByCategory, CATEGORIES, SLOTS_MAX,
     updateCoins, setCoins, getTotalPO,
-    prepareSpell, unprepareSpell, isSpellPrepared
+    prepareSpell, unprepareSpell, isSpellPrepared, setSpellSlots, useSpellSlot, restoreSpellSlot,
+    getCarryCapacity, recalcAc, recalcAttacks, resetShortRest, resetLongRest, toggleEquipItem, getEquippedItems
   };
 })();
 

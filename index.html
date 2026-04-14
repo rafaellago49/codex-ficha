@@ -69,6 +69,8 @@
 
 </div><!-- #app -->
 
+<button id="dice-fab" class="dice-fab" title="Rolar dado">🎲</button>
+
 <!-- Toast container injected dynamically by app.js -->
 
 <script type="module">
@@ -168,11 +170,30 @@
     });
   };
 
+  const _initDiceFab = () => {
+    const fab = document.getElementById('dice-fab');
+    if (!fab) return;
+    fab.addEventListener('click', () => {
+      const expr = prompt('Rolagem (ex: d20, 2d6+3):', 'd20');
+      if (!expr) return;
+      const clean = expr.toLowerCase().replace(/\s+/g, '');
+      const match = clean.match(/^(\d*)d(\d+)([+-]\d+)?$/);
+      if (!match) return Toast.show('Formato inválido. Use XdY+Z.');
+      const qty = Math.max(1, parseInt(match[1] || '1', 10));
+      const sides = Math.max(2, parseInt(match[2], 10));
+      const mod = parseInt(match[3] || '0', 10);
+      const rolls = Array.from({ length: qty }).map(() => Math.floor(Math.random() * sides) + 1);
+      const total = rolls.reduce((a, b) => a + b, 0) + mod;
+      Toast.show(`🎲 ${expr} = [${rolls.join(', ')}] ${mod ? (mod > 0 ? '+' : '') + mod : ''} => ${total}`);
+    });
+  };
+
   // ── Boot ────────────────────────────────────────────────────────────────
   ThemeManager.init();
   Router.navigate('home');
   initHome();
   _initThemePanel();
+  _initDiceFab();
 </script>
 
 </body>

@@ -1060,7 +1060,10 @@ export const Wizard = (() => {
     const conTotal = attrs.con.base + attrs.con.racialBonus;
     const conMod   = Math.floor((conTotal - 10) / 2);
     const hitDieMax = parseInt((cls?.hitDie||'d8').replace('d','')) || 8;
-    const maxHP = hitDieMax + conMod + ((lvl-1) * (Math.floor(hitDieMax/2)+1+conMod));
+    const levelOneHP = Math.max(1, hitDieMax + conMod);
+    const maxHP = lvl <= 1
+      ? levelOneHP
+      : levelOneHP + ((lvl - 1) * (Math.floor(hitDieMax / 2) + 1 + conMod));
 
     // ── Initiative ──
     const dexTotal = attrs.dex.base + attrs.dex.racialBonus;
@@ -1111,6 +1114,8 @@ export const Wizard = (() => {
             desc:     i.desc||'', img: null,
             wDmgType: i.wDmgType||'', wDice: i.wDice||'',
             wRange:   i.wRange||'', wAtk: i.wAtk||'', wProps: i.wProps||''
+            ,weight: 0,
+            equipped: (i.status || '').toLowerCase() === 'equipado'
           });
         }
       });
@@ -1124,6 +1129,10 @@ export const Wizard = (() => {
       languages: [...(race?.languages||['Comum']),
                   ...(_draft.subrace ? [] : [])].join(', ')
     };
+
+    const wisMod = Math.floor(((attrs.wis.base + attrs.wis.racialBonus) - 10) / 2);
+    const profBonus = Math.ceil(lvl / 4) + 1;
+    const passivePerception = 10 + wisMod + (allSkills.includes('perception') ? profBonus : 0);
 
     CharacterState.patch({
       identity: {
@@ -1144,13 +1153,20 @@ export const Wizard = (() => {
         initiative:  dexMod,
         speed:       _draft.subrace?.speed || race?.speed || 9,
         hitDice:     `${lvl}${cls?.hitDie||'d8'}`,
+        hitDicePool: { total: lvl, spent: 0, die: hitDieMax },
+        passivePerception,
         deathSaves:  { successes:[false,false,false], failures:[false,false,false] }
       },
       savingThrows:  { proficient: cls?.saves || [] },
       skills:        { proficient: allSkills, expertise: [] },
       proficiencies: profText,
       inventory:     inv,
-      coins
+      coins,
+      progression: {
+        classId: cls?.id || '',
+        hitDie: hitDieMax,
+        attacks: []
+      }
     });
 
     Toast.show(`✦ ${_draft.details.name} criado com sucesso!`);

@@ -1,0 +1,68 @@
+{
+  "barbarian": {
+    "name": "Bárbaro",
+    "spellcasting": { "ability": null, "progression": "none", "slotsByLevel": {} },
+    "featuresByLevel": {
+      "1": ["Fúria", "Defesa sem Armadura"],
+      "2": ["Ataque Descuidado", "Sentido de Perigo"],
+      "3": ["Caminho Primitivo"],
+      "5": ["Ataque Extra", "Movimento Rápido"],
+      "20": ["Campeão Primitivo"]
+    }
+  },
+  "bard": {
+    "name": "Bardo",
+    "spellcasting": { "ability": "cha", "progression": "full", "slotsByLevel": { "1": [2], "2": [3], "3": [4,2], "4": [4,3], "5": [4,3,2], "6": [4,3,3], "7": [4,3,3,1], "8": [4,3,3,2], "9": [4,3,3,3,1], "10": [4,3,3,3,2], "11": [4,3,3,3,2,1], "12": [4,3,3,3,2,1], "13": [4,3,3,3,2,1,1], "14": [4,3,3,3,2,1,1], "15": [4,3,3,3,2,1,1,1], "16": [4,3,3,3,2,1,1,1], "17": [4,3,3,3,2,1,1,1,1], "18": [4,3,3,3,3,1,1,1,1], "19": [4,3,3,3,3,2,1,1,1], "20": [4,3,3,3,3,2,2,1,1] } },
+    "featuresByLevel": { "1": ["Inspiração Bárdica", "Conjuração"], "2": ["Canção de Descanso"], "3": ["Especialização"], "5": ["Fonte de Inspiração"], "20": ["Inspiração Superior"] }
+  },
+  "cleric": {
+    "name": "Clérigo",
+    "spellcasting": { "ability": "wis", "progression": "full", "slotsByLevel": { "1": [2], "2": [3], "3": [4,2], "4": [4,3], "5": [4,3,2], "6": [4,3,3], "7": [4,3,3,1], "8": [4,3,3,2], "9": [4,3,3,3,1], "10": [4,3,3,3,2], "11": [4,3,3,3,2,1], "12": [4,3,3,3,2,1], "13": [4,3,3,3,2,1,1], "14": [4,3,3,3,2,1,1], "15": [4,3,3,3,2,1,1,1], "16": [4,3,3,3,2,1,1,1], "17": [4,3,3,3,2,1,1,1,1], "18": [4,3,3,3,3,1,1,1,1], "19": [4,3,3,3,3,2,1,1,1], "20": [4,3,3,3,3,2,2,1,1] } },
+    "featuresByLevel": { "1": ["Conjuração", "Domínio Divino"], "2": ["Canalizar Divindade"], "5": ["Destruir Mortos-vivos"], "10": ["Intervenção Divina"], "20": ["Conjuração Melhorada"] }
+  },
+  "druid": {
+    "name": "Druida",
+    "spellcasting": { "ability": "wis", "progression": "full", "slotsByLevel": { "1": [2], "2": [3], "3": [4,2], "4": [4,3], "5": [4,3,2], "6": [4,3,3], "7": [4,3,3,1], "8": [4,3,3,2], "9": [4,3,3,3,1], "10": [4,3,3,3,2], "11": [4,3,3,3,2,1], "12": [4,3,3,3,2,1], "13": [4,3,3,3,2,1,1], "14": [4,3,3,3,2,1,1], "15": [4,3,3,3,2,1,1,1], "16": [4,3,3,3,2,1,1,1], "17": [4,3,3,3,2,1,1,1,1], "18": [4,3,3,3,3,1,1,1,1], "19": [4,3,3,3,3,2,1,1,1], "20": [4,3,3,3,3,2,2,1,1] } },
+    "featuresByLevel": { "1": ["Conjuração", "Linguagem Druídica"], "2": ["Forma Selvagem"], "18": ["Conjuração Bestial"], "20": ["Arquidruida"] }
+  },
+  "fighter": {
+    "name": "Guerreiro",
+    "spellcasting": { "ability": null, "progression": "none", "slotsByLevel": {} },
+    "featuresByLevel": { "1": ["Estilo de Luta", "Retomar o Fôlego"], "2": ["Surto de Ação"], "5": ["Ataque Extra"], "9": ["Indomável"], "20": ["Ataque Extra (3)"] }
+  },
+  "monk": {
+    "name": "Monge",
+    "spellcasting": { "ability": null, "progression": "none", "slotsByLevel": {} },
+    "featuresByLevel": { "1": ["Defesa sem Armadura", "Artes Marciais"], "2": ["Ki", "Movimento sem Armadura"], "5": ["Ataque Extra", "Golpe Atordoante"], "20": ["Perfeição do Eu"] }
+  },
+  "paladin": {
+    "name": "Paladino",
+    "spellcasting": { "ability": "cha", "progression": "half", "slotsByLevel": { "1": [], "2": [2], "3": [3], "4": [3], "5": [4,2], "6": [4,2], "7": [4,3], "8": [4,3], "9": [4,3,2], "10": [4,3,2], "11": [4,3,3], "12": [4,3,3], "13": [4,3,3,1], "14": [4,3,3,1], "15": [4,3,3,2], "16": [4,3,3,2], "17": [4,3,3,3,1], "18": [4,3,3,3,1], "19": [4,3,3,3,2], "20": [4,3,3,3,2] } },
+    "featuresByLevel": { "1": ["Sentido Divino", "Imposição das Mãos"], "2": ["Conjuração", "Golpe Divino"], "5": ["Ataque Extra"], "6": ["Aura de Proteção"], "20": ["Campeão Ancestral"] }
+  },
+  "ranger": {
+    "name": "Patrulheiro",
+    "spellcasting": { "ability": "wis", "progression": "half", "slotsByLevel": { "1": [], "2": [2], "3": [3], "4": [3], "5": [4,2], "6": [4,2], "7": [4,3], "8": [4,3], "9": [4,3,2], "10": [4,3,2], "11": [4,3,3], "12": [4,3,3], "13": [4,3,3,1], "14": [4,3,3,1], "15": [4,3,3,2], "16": [4,3,3,2], "17": [4,3,3,3,1], "18": [4,3,3,3,1], "19": [4,3,3,3,2], "20": [4,3,3,3,2] } },
+    "featuresByLevel": { "1": ["Inimigo Favorito", "Explorador Nato"], "2": ["Estilo de Luta", "Conjuração"], "5": ["Ataque Extra"], "20": ["Assassino de Inimigos"] }
+  },
+  "rogue": {
+    "name": "Ladino",
+    "spellcasting": { "ability": null, "progression": "none", "slotsByLevel": {} },
+    "featuresByLevel": { "1": ["Especialização", "Ataque Furtivo"], "2": ["Ação Ardilosa"], "5": ["Esquiva Sobrenatural"], "20": ["Golpe de Sorte"] }
+  },
+  "sorcerer": {
+    "name": "Feiticeiro",
+    "spellcasting": { "ability": "cha", "progression": "full", "slotsByLevel": { "1": [2], "2": [3], "3": [4,2], "4": [4,3], "5": [4,3,2], "6": [4,3,3], "7": [4,3,3,1], "8": [4,3,3,2], "9": [4,3,3,3,1], "10": [4,3,3,3,2], "11": [4,3,3,3,2,1], "12": [4,3,3,3,2,1], "13": [4,3,3,3,2,1,1], "14": [4,3,3,3,2,1,1], "15": [4,3,3,3,2,1,1,1], "16": [4,3,3,3,2,1,1,1], "17": [4,3,3,3,2,1,1,1,1], "18": [4,3,3,3,3,1,1,1,1], "19": [4,3,3,3,3,2,1,1,1], "20": [4,3,3,3,3,2,2,1,1] } },
+    "featuresByLevel": { "1": ["Conjuração", "Origem Feiticeira"], "2": ["Fonte de Magia"], "3": ["Metamagia"], "20": ["Restauração Feiticeira"] }
+  },
+  "warlock": {
+    "name": "Bruxo",
+    "spellcasting": { "ability": "cha", "progression": "pact", "slotsByLevel": { "1": [1], "2": [2], "3": [2], "4": [2], "5": [2], "6": [2], "7": [2], "8": [2], "9": [2], "10": [2], "11": [3], "12": [3], "13": [3], "14": [3], "15": [3], "16": [3], "17": [4], "18": [4], "19": [4], "20": [4] }, "pactSlotLevelByClassLevel": { "1": 1, "2": 1, "3": 2, "4": 2, "5": 3, "6": 3, "7": 4, "8": 4, "9": 5, "10": 5, "11": 5, "12": 5, "13": 5, "14": 5, "15": 5, "16": 5, "17": 5, "18": 5, "19": 5, "20": 5 } },
+    "featuresByLevel": { "1": ["Magia de Pacto", "Patrono Sobrenatural"], "2": ["Invocações Místicas"], "3": ["Dádiva do Pacto"], "20": ["Mestre Arcano"] }
+  },
+  "wizard": {
+    "name": "Mago",
+    "spellcasting": { "ability": "int", "progression": "full", "slotsByLevel": { "1": [2], "2": [3], "3": [4,2], "4": [4,3], "5": [4,3,2], "6": [4,3,3], "7": [4,3,3,1], "8": [4,3,3,2], "9": [4,3,3,3,1], "10": [4,3,3,3,2], "11": [4,3,3,3,2,1], "12": [4,3,3,3,2,1], "13": [4,3,3,3,2,1,1], "14": [4,3,3,3,2,1,1], "15": [4,3,3,3,2,1,1,1], "16": [4,3,3,3,2,1,1,1], "17": [4,3,3,3,2,1,1,1,1], "18": [4,3,3,3,3,1,1,1,1], "19": [4,3,3,3,3,2,1,1,1], "20": [4,3,3,3,3,2,2,1,1] } },
+    "featuresByLevel": { "1": ["Conjuração", "Recuperação Arcana"], "2": ["Tradição Arcana"], "18": ["Mestria em Magia"], "20": ["Magias Assinatura"] }
+  }
+}

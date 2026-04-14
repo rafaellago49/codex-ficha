@@ -1310,6 +1310,29 @@ input[type="number"].form-control::-webkit-outer-spin-button { opacity: 0.5; }
   border: 1px solid rgba(255,255,255,0.15);
 }
 
+/* Floating dice roller */
+.dice-fab {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 220;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--border-gold);
+  background: linear-gradient(135deg, var(--arcane), var(--gold-dim));
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+}
+.dice-fab:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--gold);
+}
+
 /* ===================================================================
    INVENTORY — Mordessa Grid System
    =================================================================== */
