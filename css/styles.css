@@ -1532,6 +1532,24 @@ input[type="number"].form-control::-webkit-outer-spin-button { opacity: 0.5; }
 .mqty  { font-size:0.8rem; color:var(--c-pocao); margin-top:0.2rem; font-weight:600; }
 
 /* ===================================================================
+   WIZARD — Step 5 & Equipment Step additions
+   =================================================================== */
+/* Step bar with 5 dots fits within existing .wizard-step-bar flex */
+.step-dot { min-width: 30px; }
+.step-line { min-width: 10px; }
+
+/* Equipment option cards */
+.equip-option { user-select: none; }
+.equip-option:hover { border-color: var(--border-bright) !important; }
+.equip-selected { box-shadow: var(--shadow-gold); }
+
+/* Point buy +/- buttons reuse .cbtn */
+.pb-up:disabled, .pb-down:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* Standard array select focus */
+.sa-select:focus { border-color: var(--gold); outline: none; }
+
+/* ===================================================================
    RESPONSIVE
    =================================================================== */
 @media (max-width: 600px) {
