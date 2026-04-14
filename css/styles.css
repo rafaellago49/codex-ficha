@@ -851,6 +851,28 @@ input[type="number"].form-control::-webkit-outer-spin-button { opacity: 0.5; }
   color: var(--gold-dim);
   margin-top: 0.15rem;
 }
+.attr-display-box .attr-score-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  line-height: 1;
+  text-align: center;
+  -moz-appearance: textfield; /* Para o Firefox */
+  appearance: textfield;      /* Padrão para navegadores modernos */
+}
+.attr-display-box .attr-score-input::-webkit-inner-spin-button,
+.attr-display-box .attr-score-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.attr-display-box .attr-score-input:focus {
+  color: var(--gold);
+  border-bottom: 1px solid var(--border-gold);
+}
 
 /* Combat row */
 .combat-row {
@@ -932,7 +954,7 @@ input[type="number"].form-control::-webkit-outer-spin-button { opacity: 0.5; }
   border-bottom: 1px solid rgba(255,255,255,0.03);
 }
 .skill-row-item:last-child { border-bottom: none; }
-.skill-check { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+.skill-check { display: flex; align-items: center; gap: 0.5rem; }
 .skill-check input[type="checkbox"] { accent-color: var(--gold); }
 .skill-mod { font-family: var(--font-heading); font-size: 0.82rem; color: var(--gold-dim); min-width: 30px; text-align: right; }
 

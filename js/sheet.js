@@ -194,7 +194,7 @@ export const Sheet = (() => {
       return `
         <div class="attr-display-box" data-attr="${key}">
           <div class="attr-abbr">${lbl.abbr}</div>
-          <div class="attr-score" id="attr-score-${key}">${total}</div>
+          <input type="number" class="attr-score-input" data-attr-key="${key}" value="${total}" min="1" max="30">
           <div class="attr-modifier">${fmt.modifier(mod)}</div>
         </div>`;
     }).join('');
@@ -224,7 +224,7 @@ export const Sheet = (() => {
       const chk = proficient.includes(k);
       return `
         <div class="save-item">
-          <input type="checkbox" data-save="${k}" ${chk ? 'checked' : ''}>
+          <input type="checkbox" data-save="${k}" ${chk ? 'checked' : ''} disabled>
           <span>${ATTR_LABELS[k].abbr}</span>
           <span style="color:var(--gold-dim);font-family:var(--font-heading);font-size:0.8rem">${fmt.modifier(mod)}</span>
         </div>`;
@@ -247,7 +247,7 @@ export const Sheet = (() => {
       return `
         <div class="skill-row-item">
           <label class="skill-check">
-            <input type="checkbox" data-skill="${s.id}" ${prof ? 'checked' : ''}>
+            <input type="checkbox" data-skill="${s.id}" ${prof ? 'checked' : ''} disabled>
             <span>${s.label}</span>
             <span style="font-size:0.75rem;color:var(--text-dim);margin-left:0.3rem">(${ATTR_LABELS[s.attr].abbr})</span>
           </label>
@@ -439,6 +439,21 @@ export const Sheet = (() => {
     el.querySelectorAll('[data-field]').forEach(inp => {
       inp.addEventListener('change', () => {
         CharacterState.set(inp.dataset.field, inp.value);
+      });
+    });
+    // Attribute direct editing
+    el.querySelectorAll('.attr-score-input').forEach(inp => {
+      inp.addEventListener('change', (e) => {
+        const key = e.target.dataset.attrKey;
+        const newTotal = parseInt(e.target.value) || 10;
+        const state = CharacterState.get();
+        const racialBonus = state.attributes[key].racialBonus || 0;
+        
+        // Atualiza a base deduzindo o bônus racial estático
+        CharacterState.set(`attributes.${key}.base`, newTotal - racialBonus);
+        
+        // Re-renderiza o painel para atualizar modificadores, perícias e salvaguardas
+        _renderRegistro();
       });
     });
 
