@@ -1,7 +1,45 @@
 /**
  * app.js — Core: State Management, Routing, Persistence
- * Versão 4 — Async LevelUp, Hybrid Dice Roller, JSON-driven class features
+ * Versão 5 — Sistema de magias refatorado: known/prepared split,
+ * getMaxPrepared com tabelas PHB precisas, grimório do Mago em duas etapas.
  */
+
+const ImageStorage = {
+    init() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open('DND_Vault', 1);
+            request.onupgradeneeded = (event) => {
+                event.target.result.createObjectStore('item_images');
+            };
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = (event) => reject(event.target.error);
+        });
+    },
+    
+    async save(id, base64String) {
+        const db = await this.init();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction('item_images', 'readwrite');
+            const store = transaction.objectStore('item_images');
+            const request = store.put(base64String, id);
+            request.onsuccess = () => resolve(true);
+            request.onerror = () => reject(false);
+        });
+    },
+    
+    async get(id) {
+        const db = await this.init();
+        return new Promise((resolve) => {
+            const transaction = db.transaction('item_images', 'readonly');
+            const store = transaction.objectStore('item_images');
+            const request = store.get(id);
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => resolve(null);
+        });
+    }
+};
+
+window.ImageStorage = ImageStorage;
 
 // ══════════════════════════════════════════════════════════════════════════════
 // TABELAS D&D 5e (PHB)
@@ -14,48 +52,49 @@ export const PROF_BY_LEVEL = [0,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6];
 const SPELL_SLOTS_FULL = [
 // nv  1  2  3  4  5  6  7  8  9
   [], // 0
-  [4,0,0,0,0,0,0,0,0],  // 1
-  [3,2,0,0,0,0,0,0,0],  // 2
-  [4,2,2,0,0,0,0,0,0],  // 3
-  [4,3,2,0,0,0,0,0,0],  // 4
-  [4,3,2,2,0,0,0,0,0],  // 5
-  [4,3,3,2,0,0,0,0,0],  // 6
-  [4,3,3,2,1,0,0,0,0],  // 7
-  [4,3,3,3,1,0,0,0,0],  // 8
-  [4,3,3,3,2,0,0,0,0],  // 9
-  [4,3,3,3,2,1,0,0,0],  // 10
+  [2,0,0,0,0,0,0,0,0],  // 1
+  [3,0,0,0,0,0,0,0,0],  // 2 — corrigido PHB: 3 slots 1º
+  [4,2,0,0,0,0,0,0,0],  // 3
+  [4,3,0,0,0,0,0,0,0],  // 4
+  [4,3,2,0,0,0,0,0,0],  // 5
+  [4,3,3,0,0,0,0,0,0],  // 6
+  [4,3,3,1,0,0,0,0,0],  // 7
+  [4,3,3,2,0,0,0,0,0],  // 8
+  [4,3,3,3,1,0,0,0,0],  // 9
+  [4,3,3,3,2,0,0,0,0],  // 10
   [4,3,3,3,2,1,0,0,0],  // 11
-  [4,3,3,3,2,1,1,0,0],  // 12
+  [4,3,3,3,2,1,0,0,0],  // 12
   [4,3,3,3,2,1,1,0,0],  // 13
-  [4,3,3,3,2,1,1,1,0],  // 14
+  [4,3,3,3,2,1,1,0,0],  // 14
   [4,3,3,3,2,1,1,1,0],  // 15
-  [4,3,3,3,2,1,1,1,1],  // 16
+  [4,3,3,3,2,1,1,1,0],  // 16
   [4,3,3,3,2,1,1,1,1],  // 17
   [4,3,3,3,3,1,1,1,1],  // 18
   [4,3,3,3,3,2,1,1,1],  // 19
   [4,3,3,3,3,2,2,1,1],  // 20
 ];
+
 const SPELL_SLOTS_HALF = [
   [], [],
   [2,0,0,0,0,0,0,0,0],  // 2
   [3,0,0,0,0,0,0,0,0],  // 3
-  [3,2,0,0,0,0,0,0,0],  // 4
+  [3,0,0,0,0,0,0,0,0],  // 4  — corrigido PHB Paladino/Patrulheiro
   [4,2,0,0,0,0,0,0,0],  // 5
-  [4,2,2,0,0,0,0,0,0],  // 6
-  [4,3,2,0,0,0,0,0,0],  // 7
-  [4,3,2,0,0,0,0,0,0],  // 8
-  [4,3,2,2,0,0,0,0,0],  // 9
-  [4,3,2,2,0,0,0,0,0],  // 10
-  [4,3,3,2,0,0,0,0,0],  // 11
-  [4,3,3,2,0,0,0,0,0],  // 12
-  [4,3,3,2,2,0,0,0,0],  // 13
-  [4,3,3,2,2,0,0,0,0],  // 14
-  [4,3,3,2,2,2,0,0,0],  // 15
-  [4,3,3,2,2,2,0,0,0],  // 16
-  [4,3,3,3,2,2,0,0,0],  // 17
-  [4,3,3,3,2,2,0,0,0],  // 18
-  [4,3,3,3,2,2,2,0,0],  // 19
-  [4,3,3,3,3,2,2,0,0],  // 20
+  [4,2,0,0,0,0,0,0,0],  // 6
+  [4,3,0,0,0,0,0,0,0],  // 7
+  [4,3,0,0,0,0,0,0,0],  // 8
+  [4,3,2,0,0,0,0,0,0],  // 9
+  [4,3,2,0,0,0,0,0,0],  // 10
+  [4,3,3,0,0,0,0,0,0],  // 11
+  [4,3,3,0,0,0,0,0,0],  // 12
+  [4,3,3,1,0,0,0,0,0],  // 13
+  [4,3,3,1,0,0,0,0,0],  // 14
+  [4,3,3,2,0,0,0,0,0],  // 15
+  [4,3,3,2,0,0,0,0,0],  // 16
+  [4,3,3,3,1,0,0,0,0],  // 17
+  [4,3,3,3,1,0,0,0,0],  // 18
+  [4,3,3,3,2,0,0,0,0],  // 19
+  [4,3,3,3,2,0,0,0,0],  // 20
 ];
 
 /**
@@ -87,12 +126,77 @@ const SPELL_SLOTS_PACT = [
   [4, 5],        // 20
 ];
 
+// ══════════════════════════════════════════════════════════════════════════════
+// TABELAS DE MAGIAS CONHECIDAS — PHB exatas por nível de classe
+// Fonte de verdade para classes de "known spells" (Bardo, Feiticeiro, Bruxo,
+// Patrulheiro). O Mago usa "known" apenas para o grimório físico.
+// ══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Magias Conhecidas por nível (excluindo truques).
+ * Índice = nível do personagem (1–20).
+ */
+const KNOWN_SPELLS_TABLE = {
+  // Bardo — PHB p.53
+  bard:     [null, 4,5,6,7,8,9,10,11,12,14,15,15,16,18,19,19,20,22,22,22,22],
+  // Feiticeiro — PHB p.99
+  sorcerer: [null, 2,3,4,5,6,7,8,9,10,11,12,12,13,13,14,14,15,15,16,16,16],
+  // Bruxo — PHB p.106
+  warlock:  [null, 2,3,4,5,6,7,8,9,10,10,11,11,12,12,13,13,14,14,15,15,15],
+  // Patrulheiro — PHB p.92
+  ranger:   [null, 0,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,11],
+};
+
+/**
+ * Truques conhecidos por classe e nível.
+ * Índice = nível do personagem.
+ */
+const CANTRIPS_KNOWN_TABLE = {
+  bard:     [null, 2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],
+  sorcerer: [null, 4,4,4,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
+  warlock:  [null, 2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],
+  // Ranger não tem truques
+  wizard:   [null, 3,3,3,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5],
+  druid:    [null, 2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],
+  cleric:   [null, 3,3,3,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5],
+};
+
+/**
+ * Magias do grimório inicial do Mago (nível 1) + ganho por nível.
+ * Nível 1: 6 magias (3 nível 1 de escolha livre + 3 copiadas). Simplificado
+ * como 6 no estado inicial; a cada level-up o jogador copia 2 magias.
+ * Essa tabela armazena o TOTAL acumulado esperado no grimório.
+ * (Para fins de UI — o estado real é o array `known` do personagem.)
+ */
+export const WIZARD_GRIMOIRE_START = 6;
+export const WIZARD_GRIMOIRE_PER_LEVEL = 2;
+
 /** Tipo de conjurador por classe */
 export const CASTER_TYPE = {
   bard:'full', cleric:'full', druid:'full', sorcerer:'full', wizard:'full',
-  warlock:'pact', // Magia de Pacto — slots únicos recuperados em descanso curto
+  warlock:'pact',   // Magia de Pacto — slots únicos recuperados em descanso curto
   paladin:'half', ranger:'half',
   barbarian:'none', fighter:'none', monk:'none', rogue:'none'
+};
+
+/**
+ * Sub-tipo de conjurador — determina o FLUXO da interface do grimório.
+ *  'prepared-list'  → Clérigo, Druida: prepara da lista completa da classe
+ *  'prepared-half'  → Paladino, Patrulheiro: prepara da lista (½ conjurador)
+ *  'known-fixed'    → Bardo, Feiticeiro, Bruxo: magias fixas, troca só no LvlUp
+ *  'grimoire'       → Mago: duas etapas — grimório (known) → preparadas (prepared)
+ *  'none'           → sem magia
+ */
+export const CASTER_SUBTYPE = {
+  cleric:    'prepared-list',
+  druid:     'prepared-list',
+  paladin:   'prepared-half',
+  ranger:    'prepared-half',
+  bard:      'known-fixed',
+  sorcerer:  'known-fixed',
+  warlock:   'known-fixed',
+  wizard:    'grimoire',
+  barbarian: 'none', fighter: 'none', monk: 'none', rogue: 'none'
 };
 
 /** Atributo de conjuração por classe */
@@ -103,7 +207,6 @@ export const CASTING_ATTR = {
 
 /**
  * Dado de vida canônico por classe (PHB).
- * Usado no levelUp como fonte de verdade, ignorando o campo editável hitDice.
  */
 export const HIT_DIE_BY_CLASS = {
   barbarian: 12,
@@ -113,19 +216,18 @@ export const HIT_DIE_BY_CLASS = {
 };
 
 /**
- * Níveis de ASI por classe (Aumento de Valor de Habilidade).
- * Guerreiro tem o maior número; Ladino ganha um extra no nível 10.
+ * Níveis de ASI por classe.
  */
 const ASI_LEVELS = {
   barbarian: [4, 8, 12, 16, 19],
   bard:      [4, 8, 12, 16, 19],
   cleric:    [4, 8, 12, 16, 19],
   druid:     [4, 8, 12, 16, 19],
-  fighter:   [4, 6, 8, 12, 14, 16, 19], // extra ASIs
+  fighter:   [4, 6, 8, 12, 14, 16, 19],
   monk:      [4, 8, 12, 16, 19],
   paladin:   [4, 8, 12, 16, 19],
   ranger:    [4, 8, 12, 16, 19],
-  rogue:     [4, 8, 10, 12, 16, 19],    // extra ASI at 10
+  rogue:     [4, 8, 10, 12, 16, 19],
   sorcerer:  [4, 8, 12, 16, 19],
   warlock:   [4, 8, 12, 16, 19],
   wizard:    [4, 8, 12, 16, 19]
@@ -138,7 +240,6 @@ export function getSpellSlots(classId, level) {
   if (type === 'pact') {
     const entry = SPELL_SLOTS_PACT[Math.min(level, 20)];
     if (!entry) return [];
-    // Retorna array de 9 posições; apenas o nível do pacto tem slots
     const result = [0,0,0,0,0,0,0,0,0];
     result[entry[1] - 1] = entry[0];
     return result;
@@ -147,15 +248,84 @@ export function getSpellSlots(classId, level) {
   return table[Math.min(level, 20)] || [];
 }
 
-/** Retorna número máximo de magias preparadas */
+/**
+ * Retorna o nível máximo de slot disponível para uma classe/nível.
+ * Usado para filtrar a lista de magias exibida no grimório.
+ */
+export function getMaxSpellLevel(classId, level) {
+  const slots = getSpellSlots(classId, level);
+  for (let i = slots.length - 1; i >= 0; i--) {
+    if (slots[i] > 0) return i + 1;
+  }
+  return 0;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// getMaxPrepared — FONTE DE VERDADE ÚNICA (refatorado)
+// ══════════════════════════════════════════════════════════════════════════════
+/**
+ * Retorna o limite de magias que o personagem pode preparar/conhecer.
+ *
+ * @param {string}  classId         — ID da classe (ex: 'cleric')
+ * @param {number}  level           — Nível atual do personagem
+ * @param {number}  castingAttrMod  — Modificador do atributo de conjuração
+ * @returns {{ type: 'prepared'|'known'|'grimoire'|'none', max: number|null }}
+ *   type:
+ *     'prepared'  → escolha diária limitada por fórmula (Clérigo, Druida, Paladino)
+ *     'known'     → lista fixa com max de magias conhecidas (Bardo, Feiticeiro, Bruxo, Patrulheiro)
+ *     'grimoire'  → Mago: grimório (known) + seleção diária (prepared = level + INT)
+ *     'none'      → classe não conjuradora
+ *   max:
+ *     número máximo de magias no pool relevante; null para 'none'
+ */
 export function getMaxPrepared(classId, level, castingAttrMod) {
-  const spellcastingClasses = ['cleric','druid','paladin','ranger','wizard','bard','sorcerer','warlock'];
-  if (!spellcastingClasses.includes(classId)) return 0;
-  if (['bard','sorcerer','warlock'].includes(classId)) return null; // known spells
-  if (classId === 'wizard') return Math.max(1, level + castingAttrMod);
-  if (['cleric','druid'].includes(classId)) return Math.max(1, level + castingAttrMod);
-  if (['paladin','ranger'].includes(classId)) return Math.max(1, Math.floor(level/2) + castingAttrMod);
-  return null;
+  const lvl = Math.min(Math.max(level, 1), 20);
+  const mod = castingAttrMod || 0;
+
+  switch (classId) {
+    // ── Classes que PREPARAM da lista completa ────────────────────────────
+    case 'cleric':
+    case 'druid':
+      return { type: 'prepared', max: Math.max(1, lvl + mod) };
+
+    // ── Meio-conjuradores que PREPARAM ────────────────────────────────────
+    case 'paladin':
+      // Paladino começa a conjurar no nível 2; fórmula: floor(nível/2) + CARmod
+      if (lvl < 2) return { type: 'prepared', max: 0 };
+      return { type: 'prepared', max: Math.max(1, Math.floor(lvl / 2) + mod) };
+
+    case 'ranger':
+      // Patrulheiro usa "magias conhecidas" (tabela PHB) — não prepara
+      // Nível 1 ainda não tem conjuração
+      if (lvl < 2) return { type: 'known', max: 0 };
+      return { type: 'known', max: KNOWN_SPELLS_TABLE.ranger[lvl] ?? 0 };
+
+    // ── Classes de MAGIAS CONHECIDAS (lista fixa) ─────────────────────────
+    case 'bard':
+      return { type: 'known', max: KNOWN_SPELLS_TABLE.bard[lvl] ?? 0 };
+
+    case 'sorcerer':
+      return { type: 'known', max: KNOWN_SPELLS_TABLE.sorcerer[lvl] ?? 0 };
+
+    case 'warlock':
+      return { type: 'known', max: KNOWN_SPELLS_TABLE.warlock[lvl] ?? 0 };
+
+    // ── Mago: grimório (known ilimitado) + prepared = nível + INTmod ──────
+    case 'wizard':
+      return { type: 'grimoire', max: Math.max(1, lvl + mod) };
+
+    default:
+      return { type: 'none', max: null };
+  }
+}
+
+/**
+ * Retorna o número de truques conhecidos para uma classe e nível.
+ * Truques não contam no limite de preparação.
+ */
+export function getMaxCantrips(classId, level) {
+  const lvl = Math.min(Math.max(level, 1), 20);
+  return CANTRIPS_KNOWN_TABLE[classId]?.[lvl] ?? null;
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -165,10 +335,11 @@ export const CharacterState = (() => {
   const STORAGE_KEY = 'rpg_character_sheet_v1';
 
   const _defaults = () => ({
-    meta: { createdAt: new Date().toISOString(), version: 4 },
+    meta: { createdAt: new Date().toISOString(), version: 5 },
     identity: {
       name: '', race: '', raceId: '', class: '', classId: '', level: 1,
-      background: '', alignment: '', xp: 0, playerName: ''
+      background: '', alignment: '', xp: 0, playerName: '',
+      subclass: ''   // subclasse escolhida (ex: 'life', 'devotion')
     },
     attributes: {
       str: { base: 10, racialBonus: 0 }, dex: { base: 10, racialBonus: 0 },
@@ -190,6 +361,20 @@ export const CharacterState = (() => {
       'Acessórios': [], 'Utilizáveis': []
     },
     spells: {
+      /**
+       * known  → armazena magias permanentemente aprendidas:
+       *   - Mago: magias transcritas no grimório físico
+       *   - Bardo/Feiticeiro/Bruxo/Patrulheiro: lista fixa de magias conhecidas
+       *   - Outros conjuradores: não utilizado (acesso à lista completa da classe)
+       */
+      known: [],
+      /**
+       * prepared → magias selecionadas para uso no dia atual:
+       *   - Clérigo/Druida/Paladino: seleção diária da lista da classe
+       *   - Mago: seleção diária do array `known` (grimório)
+       *   - Bardo/Feiticeiro/Bruxo/Patrulheiro: espelho de `known`
+       *     (atualizados juntos via learnSpell/forgetSpell)
+       */
       prepared: [],
       slots: {},
     },
@@ -247,8 +432,15 @@ export const CharacterState = (() => {
     slots.forEach((max, i) => {
       if (max > 0) obj[String(i+1)] = { max, used: _state.spells?.slots?.[String(i+1)]?.used || 0 };
     });
-    if (!_state.spells) _state.spells = { prepared: [], slots: {} };
+    if (!_state.spells) _state.spells = { known: [], prepared: [], slots: {} };
     _state.spells.slots = obj;
+  };
+
+  const _ensureSpells = () => {
+    if (!_state.spells) _state.spells = { known: [], prepared: [], slots: {} };
+    if (!Array.isArray(_state.spells.known))    _state.spells.known    = [];
+    if (!Array.isArray(_state.spells.prepared)) _state.spells.prepared = [];
+    if (!_state.spells.slots) _state.spells.slots = {};
   };
 
   const useSpellSlot = (level) => {
@@ -271,7 +463,6 @@ export const CharacterState = (() => {
     save();
   };
 
-  // Warlock recupera slots de pacto em descanso CURTO
   const resetPactSlots = () => {
     if (CASTER_TYPE[_state.identity?.classId] === 'pact') {
       Object.values(_state.spells?.slots || {}).forEach(s => s.used = 0);
@@ -279,12 +470,87 @@ export const CharacterState = (() => {
     }
   };
 
-  // ── Level Up (async, hybrid HP mode) ─────────────────────────────────
+  // ── Spell state mutations ───────────────────────────────────────────────
+
   /**
-   * @param {'average'|'virtual'|'manual'} hpMode
-   * @param {number} manualHpValue  — used only when hpMode === 'manual'
-   * @returns {Promise<false|{newLevel, hpGain, newProf, features, needsASI}>}
+   * Prepara uma magia (escolha diária).
+   * Para Clérigos/Druidas/Paladinos: adiciona a prepared.
+   * Para Mago: adiciona a prepared (deve já estar em known).
+   * Para classes known-fixed: irrelevante — use learnSpell.
    */
+  const prepareSpell = (spellId) => {
+    _ensureSpells();
+    if (!_state.spells.prepared.includes(spellId)) {
+      _state.spells.prepared.push(spellId);
+      save();
+    }
+  };
+
+  const unprepareSpell = (spellId) => {
+    _ensureSpells();
+    _state.spells.prepared = _state.spells.prepared.filter(id => id !== spellId);
+    save();
+  };
+
+  const isSpellPrepared = (spellId) => {
+    _ensureSpells();
+    return _state.spells.prepared.includes(spellId);
+  };
+
+  /**
+   * Aprende uma magia permanentemente (grimório do Mago ou troca de known).
+   * Para classes known-fixed: adiciona a known E a prepared simultaneamente.
+   * Para Mago: adiciona apenas a known (precisa preparar separadamente).
+   */
+  const learnSpell = (spellId) => {
+    _ensureSpells();
+    if (!_state.spells.known.includes(spellId)) {
+      _state.spells.known.push(spellId);
+      // Classes known-fixed: sincroniza prepared com known
+      const subtype = CASTER_SUBTYPE[_state.identity?.classId];
+      if (subtype === 'known-fixed') {
+        if (!_state.spells.prepared.includes(spellId)) {
+          _state.spells.prepared.push(spellId);
+        }
+      }
+      save();
+    }
+  };
+
+  /**
+   * Esquece/remove uma magia do grimório ou da lista de conhecidas.
+   * Para classes known-fixed: remove de known E de prepared.
+   * Para Mago: remove de known; se estiver em prepared, remove também.
+   */
+  const forgetSpell = (spellId) => {
+    _ensureSpells();
+    _state.spells.known    = _state.spells.known.filter(id => id !== spellId);
+    _state.spells.prepared = _state.spells.prepared.filter(id => id !== spellId);
+    save();
+  };
+
+  const isSpellKnown = (spellId) => {
+    _ensureSpells();
+    return _state.spells.known.includes(spellId);
+  };
+
+  /**
+   * Retorna as magias de subclasse que são "Sempre Preparadas" para o
+   * personagem atual. Carrega do class-features.json de forma síncrona
+   * (o DataLoader precisa ter sido chamado previamente para cachear).
+   * Retorna array de spellIds ou [] se não houver.
+   */
+  const getAlwaysPreparedSpells = async () => {
+    const classId  = _state.identity?.classId;
+    const subclass = _state.identity?.subclass;
+    if (!classId || !subclass) return [];
+    try {
+      const db = await DataLoader.load('./data/class-features.json');
+      return db?.[classId]?.subclasses?.[subclass]?.alwaysPrepared || [];
+    } catch { return []; }
+  };
+
+  // ── Level Up ─────────────────────────────────────────────────────────────
   const levelUp = async (hpMode = 'average', manualHpValue = 0) => {
     const state    = _state;
     const classId  = state.identity.classId;
@@ -292,14 +558,11 @@ export const CharacterState = (() => {
     const newLevel = Math.min(curLevel + 1, 20);
     if (newLevel === curLevel) return false;
 
-    // Hit die sides — usa tabela canônica da classe como fonte de verdade;
-    // cai para o campo hitDice do state como fallback (fichas importadas)
     const hitDieSides = HIT_DIE_BY_CLASS[classId]
       || parseInt((state.combat?.hitDice || '1d8').replace(/^\d*d/, ''))
       || 8;
-    const conMod     = getModifier('con');
+    const conMod = getModifier('con');
 
-    // HP gain
     let hpGain;
     if (hpMode === 'manual') {
       hpGain = Math.max(1, (parseInt(manualHpValue) || 1) + conMod);
@@ -307,16 +570,14 @@ export const CharacterState = (() => {
       const rolled = Math.floor(Math.random() * hitDieSides) + 1;
       hpGain = Math.max(1, rolled + conMod);
     } else {
-      // average: floor(sides/2)+1 + CON
       hpGain = Math.max(1, Math.floor(hitDieSides / 2) + 1 + conMod);
     }
 
-    const newMax = state.combat.hp.max + hpGain;
-    const newCur = state.combat.hp.current + hpGain;
-    const newProf = PROF_BY_LEVEL[newLevel];
+    const newMax   = state.combat.hp.max + hpGain;
+    const newCur   = state.combat.hp.current + hpGain;
+    const newProf  = PROF_BY_LEVEL[newLevel];
     const newHitDice = `${newLevel}d${hitDieSides}`;
 
-    // Load features from JSON
     let newFeatureText = '';
     try {
       const db = await DataLoader.load('./data/class-features.json');
@@ -337,11 +598,9 @@ export const CharacterState = (() => {
       ? existingFeatures + (existingFeatures ? '\n' : '') + newFeatureText
       : existingFeatures;
 
-    // ASI detection
     const asiLevels = ASI_LEVELS[classId] || [4, 8, 12, 16, 19];
     const needsASI  = asiLevels.includes(newLevel);
 
-    // Commit
     state.identity.level    = newLevel;
     state.combat.hp.max     = newMax;
     state.combat.hp.current = Math.min(newCur, newMax);
@@ -354,7 +613,7 @@ export const CharacterState = (() => {
     return { newLevel, hpGain, newProf, featureText: newFeatureText, needsASI };
   };
 
-  // ── CA Recalc ─────────────────────────────────────────────────────────
+  // ── CA Recalc ─────────────────────────────────────────────────────────────
   const recalcAC = () => {
     const dexMod = getModifier('dex');
     const strMod = getModifier('str');
@@ -367,25 +626,15 @@ export const CharacterState = (() => {
 
     let ac;
     if (!armour) {
-      if (classId === 'barbarian') {
-        ac = 10 + dexMod + strMod;
-      } else if (classId === 'monk') {
-        ac = 10 + dexMod + getModifier('wis');
-      } else {
-        ac = 10 + dexMod;
-      }
+      if (classId === 'barbarian') ac = 10 + dexMod + strMod;
+      else if (classId === 'monk') ac = 10 + dexMod + getModifier('wis');
+      else ac = 10 + dexMod;
     } else {
-      // CÁLCULO SEGURO VIA PROPRIEDADES FIXAS
       const base = parseInt(armour.aBaseAC) || 10;
       const tipo = armour.aType || 'light';
-      
-      if (tipo === 'heavy') {
-        ac = base;
-      } else if (tipo === 'medium') {
-        ac = base + Math.min(dexMod, 2);
-      } else {
-        ac = base + dexMod; // light ou fallback
-      }
+      if (tipo === 'heavy') ac = base;
+      else if (tipo === 'medium') ac = base + Math.min(dexMod, 2);
+      else ac = base + dexMod;
     }
 
     ac += shieldBonus;
@@ -393,7 +642,7 @@ export const CharacterState = (() => {
     save(); return ac;
   };
 
-  // ── Equipped weapons → attacks ─────────────────────────────────────────
+  // ── Equipped weapons → attacks ────────────────────────────────────────────
   const getEquippedAttacks = () => {
     const weapons = (_state.inventory?.['Armas'] || []).filter(i => i.status === 'Equipado');
     const profBonus = getProficiencyBonus();
@@ -413,22 +662,62 @@ export const CharacterState = (() => {
     });
   };
 
-  // ── Persistence ────────────────────────────────────────────────────────
+  // ── Persistence ────────────────────────────────────────────────────────────
   const save = () => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(_state)); }
-    catch(e) { console.warn('State save failed:', e); }
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(_state)); } catch(e) {}
   };
 
   const load = () => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) { _state = deepMerge(_defaults(), JSON.parse(raw)); return true; }
-    } catch(e) { console.warn('State load failed:', e); }
-    return false;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+
+      // 1. Sanitização estrutural de Magias ANTES do deepMerge
+      if (parsed.spells) {
+        if (Array.isArray(parsed.spells)) {
+          // Converte o Array antigo para o novo formato de Objeto
+          parsed.spells = {
+            known: [],
+            prepared: parsed.spells,
+            slots: {}
+          };
+        } else if (!parsed.spells.prepared) {
+          // Fallback caso seja um objeto sem a chave obrigatória
+          parsed.spells = { known: [], prepared: [], slots: {} };
+        }
+      }
+
+      // 2. Aplicação do estado com a estrutura já sanitizada
+      _state = deepMerge(_defaults(), parsed);
+
+      // 3. Execução das lógicas de migração de versão v4→v5
+      if (!_state.spells.known || !Array.isArray(_state.spells.known)) {
+        _state.spells.known = [];
+      }
+
+      if (!_state.meta) _state.meta = { version: 1 }; // Prevenção contra ausência do nó meta
+
+      if (_state.meta.version < 5) {
+        // Validação adicional para evitar quebra caso identity ou classId sejam undefined
+        const classId = _state.identity ? _state.identity.classId : null;
+        
+        if (classId && typeof CASTER_SUBTYPE !== 'undefined') {
+          const subtype = CASTER_SUBTYPE[classId];
+          if (subtype === 'known-fixed' && Array.isArray(_state.spells.prepared) && _state.spells.prepared.length > 0) {
+            _state.spells.known = [..._state.spells.prepared];
+          }
+        }
+        _state.meta.version = 5;
+      }
+    }
+  } catch(e) { 
+    console.warn('CharacterState.load error:', e); 
+  }
   };
 
   const exportJSON = () => {
-    const blob = new Blob([JSON.stringify(_state, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(_state, null, 2)], { type:'application/json' });
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement('a');
     a.href = url;
@@ -447,7 +736,7 @@ export const CharacterState = (() => {
   const set    = (path, value) => { setNestedValue(_state, path, value); save(); };
   const patch  = (partialState) => { _state = deepMerge(_state, partialState); save(); };
 
-  // ── Inventory CRUD ────────────────────────────────────────────────────
+  // ── Inventory CRUD ─────────────────────────────────────────────────────────
   const CATEGORIES = ['Equipamentos','Armas','Poções','Acessórios','Utilizáveis'];
   const SLOTS_MAX  = 50;
 
@@ -473,8 +762,8 @@ export const CharacterState = (() => {
       weight: parseFloat(item.weight)||0,
       wDmgType: item.wDmgType||'', wDice: item.wDice||'',
       wRange: item.wRange||'', wAtk: item.wAtk||'', wProps: item.wProps||'',
-      aBaseAC: item.aBaseAC || null, // <- NOVA LINHA
-      aType: item.aType || null      // <- NOVA LINHA
+      aBaseAC: item.aBaseAC || null,
+      aType: item.aType || null
     };
     list.push(newItem); save(); return newItem;
   };
@@ -509,7 +798,7 @@ export const CharacterState = (() => {
         s + ((parseFloat(item.weight)||0) * (item.qty||1)), 0), 0);
   };
 
-  // ── Coins ──────────────────────────────────────────────────────────────
+  // ── Coins ──────────────────────────────────────────────────────────────────
   const TO_PO = { pp:10, po:1, pe:0.5, pa:0.1, pc:0.01 };
 
   const updateCoins = (key, delta) => {
@@ -529,18 +818,6 @@ export const CharacterState = (() => {
     return Object.keys(TO_PO).reduce((s,k) => s+(c[k]||0)*TO_PO[k], 0);
   };
 
-  // ── Spells ────────────────────────────────────────────────────────────
-  const prepareSpell = (spellId) => {
-    if (!_state.spells.prepared.includes(spellId)) {
-      _state.spells.prepared.push(spellId); save();
-    }
-  };
-  const unprepareSpell = (spellId) => {
-    _state.spells.prepared = _state.spells.prepared.filter(id => id !== spellId);
-    save();
-  };
-  const isSpellPrepared = (spellId) => _state.spells.prepared.includes(spellId);
-
   return {
     get, set, patch, save, load, reset, exportJSON, importJSON,
     getTotalAttr, getModifier, getProficiencyBonus,
@@ -548,7 +825,10 @@ export const CharacterState = (() => {
     addItem, updateItem, deleteItem, getTotalWeight,
     getItemsByCategory, CATEGORIES, SLOTS_MAX,
     updateCoins, setCoins, getTotalPO,
+    // Spell API refatorada
     prepareSpell, unprepareSpell, isSpellPrepared,
+    learnSpell, forgetSpell, isSpellKnown,
+    getAlwaysPreparedSpells,
     initSpellSlots, useSpellSlot, restoreSpellSlot, resetSpellSlots, resetPactSlots,
     levelUp, recalcAC, getEquippedAttacks
   };
@@ -562,7 +842,6 @@ function deepMerge(target, source) {
   if (isObject(target) && isObject(source)) {
     Object.keys(source).forEach(key => {
       if (Array.isArray(source[key])) {
-        // Arrays are always replaced wholesale — never recursively merged
         output[key] = source[key];
       } else if (isObject(source[key])) {
         if (!(key in target)) Object.assign(output, { [key]: source[key] });
@@ -676,19 +955,16 @@ export const ThemeManager = (() => {
 // ══════════════════════════════════════════════════════════════════════════════
 export const DiceRoller = (() => {
   const DICE = [4, 6, 8, 10, 12, 20, 100];
-
   const rollVirtual = (sides) => Math.floor(Math.random() * sides) + 1;
 
   const init = () => {
     if (document.getElementById('dice-fab')) return;
 
-    // ── FAB button ─────────────────────────────────────────────────────
     const fab = document.createElement('button');
     fab.id = 'dice-fab'; fab.className = 'dice-fab'; fab.title = 'Rolar Dado';
     fab.innerHTML = '🎲';
     document.body.appendChild(fab);
 
-    // ── Dice selection menu ────────────────────────────────────────────
     const menu = document.createElement('div');
     menu.id = 'dice-menu'; menu.className = 'dice-menu';
     menu.innerHTML = DICE.map(d =>
@@ -696,23 +972,19 @@ export const DiceRoller = (() => {
     ).join('');
     document.body.appendChild(menu);
 
-    // ── Result overlay (hybrid) ────────────────────────────────────────
     const overlay = document.createElement('div');
     overlay.id = 'dice-overlay'; overlay.className = 'dice-overlay';
     overlay.innerHTML = `
       <div class="dice-result-box" id="dice-result-box">
         <div class="dice-result-die" id="dice-result-die">d20</div>
         <div class="dice-result-num" id="dice-result-num">—</div>
-
         <div class="dice-hybrid-tabs" id="dice-hybrid-tabs">
           <button class="dice-tab-btn active" data-mode="virtual">🎲 Virtual</button>
           <button class="dice-tab-btn" data-mode="manual">✍ Físico</button>
         </div>
-
         <div id="dice-virtual-panel">
           <button class="btn btn-secondary btn-sm" id="dice-reroll">Rolar Virtualmente</button>
         </div>
-
         <div id="dice-manual-panel" style="display:none">
           <div style="display:flex;align-items:center;gap:0.5rem;justify-content:center;margin-bottom:0.5rem">
             <input type="number" id="dice-manual-input" class="form-control"
@@ -724,17 +996,15 @@ export const DiceRoller = (() => {
             Digite o valor do seu dado físico
           </div>
         </div>
-
         <div class="dice-history" id="dice-history"></div>
         <button class="btn btn-ghost btn-sm" id="dice-close" style="margin-top:0.5rem">Fechar</button>
       </div>`;
     document.body.appendChild(overlay);
 
     let currentSides = 20;
-    let currentMode  = 'virtual'; // 'virtual' | 'manual'
+    let currentMode  = 'virtual';
     const history    = [];
 
-    // ── Helpers ────────────────────────────────────────────────────────
     const _pushHistory = (sides, value, source) => {
       history.unshift({ sides, value, source, ts: new Date().toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' }) });
       if (history.length > 5) history.pop();
@@ -757,17 +1027,17 @@ export const DiceRoller = (() => {
     };
 
     const _showResult = (sides, value, source = 'Virtual') => {
-      const overlay = document.getElementById('dice-overlay');
-      const numEl   = document.getElementById('dice-result-num');
-      const dieEl   = document.getElementById('dice-result-die');
-      if (!overlay) return;
+      const overlayEl = document.getElementById('dice-overlay');
+      const numEl     = document.getElementById('dice-result-num');
+      const dieEl     = document.getElementById('dice-result-die');
+      if (!overlayEl) return;
       dieEl.textContent = `d${sides}`;
       numEl.textContent  = value;
       numEl.style.color  = value === sides ? 'var(--gold-bright)'
                          : value === 1     ? 'var(--crimson-bright)'
                          : 'var(--text-primary)';
       _pushHistory(sides, value, source);
-      overlay.classList.add('open');
+      overlayEl.classList.add('open');
     };
 
     const _setMode = (mode) => {
@@ -784,7 +1054,6 @@ export const DiceRoller = (() => {
       }
     };
 
-    // ── FAB → menu ─────────────────────────────────────────────────────
     fab.addEventListener('click', (e) => {
       e.stopPropagation(); menu.classList.toggle('open');
     });
@@ -793,10 +1062,8 @@ export const DiceRoller = (() => {
       btn.addEventListener('click', () => {
         currentSides = parseInt(btn.dataset.sides);
         menu.classList.remove('open');
-        // Update manual input max
         const inp = document.getElementById('dice-manual-input');
         if (inp) inp.max = currentSides;
-        // Auto-roll virtual on selection
         if (currentMode === 'virtual') {
           _showResult(currentSides, rollVirtual(currentSides), 'Virtual');
         } else {
@@ -806,17 +1073,14 @@ export const DiceRoller = (() => {
       });
     });
 
-    // ── Hybrid tabs ─────────────────────────────────────────────────────
     overlay.querySelectorAll('.dice-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => _setMode(btn.dataset.mode));
     });
 
-    // ── Virtual re-roll ────────────────────────────────────────────────
     document.getElementById('dice-reroll')?.addEventListener('click', () => {
       _showResult(currentSides, rollVirtual(currentSides), 'Virtual');
     });
 
-    // ── Manual confirm ─────────────────────────────────────────────────
     document.getElementById('dice-manual-confirm')?.addEventListener('click', () => {
       const inp = document.getElementById('dice-manual-input');
       const val = parseInt(inp?.value);
@@ -831,7 +1095,6 @@ export const DiceRoller = (() => {
       if (e.key === 'Enter') document.getElementById('dice-manual-confirm')?.click();
     });
 
-    // ── Close / outside click ──────────────────────────────────────────
     document.getElementById('dice-close')?.addEventListener('click', () => {
       overlay.classList.remove('open');
     });

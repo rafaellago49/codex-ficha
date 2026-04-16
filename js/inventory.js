@@ -35,6 +35,7 @@ export const InventoryModule = (() => {
       _htmlCarryBar() + _htmlCoins() + _htmlCatTabs() + _htmlGrid() +
       _htmlViewModal() + _htmlAddModal() + _htmlEditModal();
     _attachAll();
+    refreshItemIcons();
   };
 
   // ── Carry Bar ─────────────────────────────────────────────────────────────
@@ -117,8 +118,8 @@ export const InventoryModule = (() => {
       if (item) {
         const isEquipped = item.status === 'Equipado';
         const img = item.img
-          ? `<img src="${item.img}" alt="${_esc(item.name)}">`
-          : `<span class="eico">${CAT_ICONS[_activeCat]}</span>`;
+       ? `<img class="item-icon" data-image-id="${item.img}" alt="${_esc(item.name)}" style="width:100%; height:100%; object-fit:cover; border-radius:4px;">`
+        : `<span class="eico">${CAT_ICONS[_activeCat]}</span>`;
         const badge  = item.qty > 1 ? `<span class="qty-badge">×${item.qty}</span>` : '';
         const eqMark = isEquipped ? `<span style="position:absolute;top:3px;right:3px;font-size:0.65rem;color:var(--gold)">⚙</span>` : '';
         slots += `
@@ -636,14 +637,14 @@ export const InventoryModule = (() => {
     const reader = new FileReader();
     reader.onload = (ev) => {
       const img = new Image();
-      img.onload = () => {
-        // Criar canvas para redimensionamento
+      
+      // 1. Adicionado 'async' na declaração da função
+      img.onload = async () => { 
         const canvas = document.createElement('canvas');
-        const MAX_SIZE = 128; // Tamanho ideal para ícones de inventário
+        const MAX_SIZE = 128; 
         let width = img.width;
         let height = img.height;
 
-        // Manter proporção
         if (width > height) {
           if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
         } else {
@@ -655,14 +656,33 @@ export const InventoryModule = (() => {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
 
-        // Converter para Base64 comprimido (JPEG, qualidade 70%)
+        // Variável com a string Base64 pesada
         const data = canvas.toDataURL('image/jpeg', 0.7);
 
-        if (mode === 'add') _pendingImgAdd = data;
-        else _pendingImgEdit = data;
+        // ==========================================
+        // NOVO FLUXO: SALVAMENTO NO INDEXED DB
+        // ==========================================
+        const uniqueImageId = 'img_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+        
+        try {
+            await ImageStorage.save(uniqueImageId, data);
+            
+            // Agora as variáveis pendentes guardam apenas o ID leve
+            if (mode === 'add') _pendingImgAdd = uniqueImageId;
+            else _pendingImgEdit = uniqueImageId;
+            
+        } catch (error) {
+            console.error("Falha ao salvar imagem no cache assíncrono", error);
+            // Em caso de erro, anula a operação para não corromper o inventário
+            if (mode === 'add') _pendingImgAdd = null;
+            else _pendingImgEdit = null;
+            return;
+        }
+        // ==========================================
 
         const pEl = _panelEl.querySelector(`#${prevId}`);
-        if (pEl) pEl.innerHTML = `<img src="${data}">`;
+        // O preview visual continua usando o Base64 ('data') porque precisa renderizar imediatamente na tela
+        if (pEl) pEl.innerHTML = `<img src="${data}">`; 
         const fEl = _panelEl.querySelector(`#${fnameId}`);
         if (fEl) fEl.textContent = file.name;
       };
@@ -687,6 +707,22 @@ export const InventoryModule = (() => {
   };
 
   const _esc=(s)=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+  // ── Refresh Item Icons ───────────────────────────────────────────────────
+  const refreshItemIcons = async () => {
+    const images = _panelEl ? _panelEl.querySelectorAll('img[data-image-id]') : [];
+    for (const img of images) {
+      const imageId = img.getAttribute('data-image-id');
+      // Usa getAttribute para evitar o problema de img.src retornar a URL base da página
+      if (img.getAttribute('src') || !imageId) continue;
+      try {
+        const base64 = await window.ImageStorage.get(imageId);
+        if (base64) img.src = base64;
+      } catch (err) {
+        console.error('Erro ao carregar imagem do IndexedDB:', err);
+      }
+    }
+  };
 
   return { init, render };
 })();

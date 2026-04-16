@@ -1,9 +1,19 @@
 /**
- * sheet.js — Main Character Sheet Renderer v4
- * Novidades: Modal de Level-Up híbrido (virtual/físico/média), ASI toast
+ * sheet.js — Main Character Sheet Renderer v5
+ * Grimório refatorado: fluxos distintos por subtipo de conjurador.
+ *   'prepared-list'  → Clérigo, Druida
+ *   'prepared-half'  → Paladino, Patrulheiro
+ *   'known-fixed'    → Bardo, Feiticeiro, Bruxo
+ *   'grimoire'       → Mago (duas etapas: grimório → preparar)
+ *   'none'           → sem magia
  */
 
-import { CharacterState, DataLoader, Toast, fmt, CASTER_TYPE, CASTING_ATTR, getMaxPrepared, HIT_DIE_BY_CLASS } from './app.js';
+import {
+  CharacterState, DataLoader, Toast, fmt,
+  CASTER_TYPE, CASTER_SUBTYPE, CASTING_ATTR,
+  getMaxPrepared, getMaxSpellLevel,
+  HIT_DIE_BY_CLASS
+} from './app.js';
 import { InventoryModule } from './inventory.js';
 
 const ATTR_LABELS = {
@@ -16,41 +26,52 @@ const ATTR_LABELS = {
 };
 
 const SKILLS = [
-  { id:'acrobatics',     label:'Acrobacia',        attr:'dex' },
-  { id:'animal-handling',label:'Lidar c/ Animais',  attr:'wis' },
-  { id:'arcana',         label:'Arcanismo',         attr:'int' },
-  { id:'athletics',      label:'Atletismo',         attr:'str' },
-  { id:'deception',      label:'Enganação',         attr:'cha' },
-  { id:'history',        label:'História',          attr:'int' },
-  { id:'insight',        label:'Intuição',          attr:'wis' },
-  { id:'intimidation',   label:'Intimidação',       attr:'cha' },
-  { id:'investigation',  label:'Investigação',      attr:'int' },
-  { id:'medicine',       label:'Medicina',          attr:'wis' },
-  { id:'nature',         label:'Natureza',          attr:'int' },
-  { id:'perception',     label:'Percepção',         attr:'wis' },
-  { id:'performance',    label:'Atuação',           attr:'cha' },
-  { id:'persuasion',     label:'Persuasão',         attr:'cha' },
-  { id:'religion',       label:'Religião',          attr:'int' },
-  { id:'sleight-of-hand',   label:'Prestidigitação',   attr:'dex' },
-  { id:'stealth',        label:'Furtividade',       attr:'dex' },
-  { id:'survival',       label:'Sobrevivência',     attr:'wis' }
+  { id:'acrobatics',      label:'Acrobacia',         attr:'dex' },
+  { id:'animal-handling', label:'Lidar c/ Animais',  attr:'wis' },
+  { id:'arcana',          label:'Arcanismo',          attr:'int' },
+  { id:'athletics',       label:'Atletismo',          attr:'str' },
+  { id:'deception',       label:'Enganação',          attr:'cha' },
+  { id:'history',         label:'História',           attr:'int' },
+  { id:'insight',         label:'Intuição',           attr:'wis' },
+  { id:'intimidation',    label:'Intimidação',        attr:'cha' },
+  { id:'investigation',   label:'Investigação',       attr:'int' },
+  { id:'medicine',        label:'Medicina',           attr:'wis' },
+  { id:'nature',          label:'Natureza',           attr:'int' },
+  { id:'perception',      label:'Percepção',          attr:'wis' },
+  { id:'performance',     label:'Atuação',            attr:'cha' },
+  { id:'persuasion',      label:'Persuasão',          attr:'cha' },
+  { id:'religion',        label:'Religião',           attr:'int' },
+  { id:'sleight-of-hand', label:'Prestidigitação',    attr:'dex' },
+  { id:'stealth',         label:'Furtividade',        attr:'dex' },
+  { id:'survival',        label:'Sobrevivência',      attr:'wis' }
 ];
 
 const SPELL_LVL_LABELS = {
-  0:'Truques', 1:'1º', 2:'2º', 3:'3º', 4:'4º',
-  5:'5º', 6:'6º', 7:'7º', 8:'8º', 9:'9º'
+  0:'Truques', 1:'1º Círculo', 2:'2º Círculo', 3:'3º Círculo', 4:'4º Círculo',
+  5:'5º Círculo', 6:'6º Círculo', 7:'7º Círculo', 8:'8º Círculo', 9:'9º Círculo'
+};
+
+// Mapa interno: classId → nome PT-BR como aparece em spells.json
+const CLASS_NAME_PT = {
+  barbarian:'Bárbaro', bard:'Bardo', cleric:'Clérigo', druid:'Druida',
+  fighter:'Guerreiro', monk:'Monge', paladin:'Paladino', ranger:'Patrulheiro',
+  rogue:'Ladino', sorcerer:'Feiticeiro', warlock:'Bruxo', wizard:'Mago'
 };
 
 export const Sheet = (() => {
-  let _viewEl     = null;
-  let _activeTab  = 'registro';
-  let _spells     = [];
+  let _viewEl      = null;
+  let _activeTab   = 'registro';
+  let _spells      = [];           // todos os spells do JSON
   let _spellFilter = 'all';
+  let _grimoireTab = 'grimoire';   // sub-aba do Mago: 'grimoire' | 'prepared'
+  let _alwaysPrepared = [];        // IDs das magias "Sempre Preparadas" da subclasse
 
-  // ── Public ───────────────────────────────────────────────────────────────
+  // ── Public ────────────────────────────────────────────────────────────────
   const init = async (viewEl) => {
     _viewEl = viewEl;
     _spells = await DataLoader.load('./data/spells.json') || [];
+    // Pré-carrega magias sempre preparadas da subclasse
+    _alwaysPrepared = await CharacterState.getAlwaysPreparedSpells();
     _render();
   };
 
@@ -107,27 +128,26 @@ export const Sheet = (() => {
     _viewEl.querySelectorAll('.sheet-tab').forEach(btn => {
       btn.addEventListener('click', () => {
         const target = btn.dataset.tab;
-        if (_activeTab === target) return; // Evita re-renderizar a mesma aba
-
+        if (_activeTab === target) return;
         _activeTab = target;
         _viewEl.querySelectorAll('.sheet-tab').forEach(b => b.classList.remove('active'));
         _viewEl.querySelectorAll('.sheet-panel').forEach(p => {
-            p.classList.remove('active');
-            p.innerHTML = ''; // Limpa o painel anterior para evitar IDs duplicados
+          p.classList.remove('active');
+          p.innerHTML = '';
         });
-
         btn.classList.add('active');
         const panel = document.getElementById(`panel-${_activeTab}`);
-        if (panel) {
-            panel.classList.add('active');
-            _renderActivePanel();
-        }
+        if (panel) { panel.classList.add('active'); _renderActivePanel(); }
       });
     });
   };
 
-  // ── Topbar ────────────────────────────────────────────────────────────────
+  // ── Topbar ─────────────────────────────────────────────────────────────────
   const _attachTopbar = () => {
+    document.getElementById('btn-home-back')?.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('navigate-home'));
+    });
+
     document.getElementById('btn-export')?.addEventListener('click', () => {
       CharacterState.exportJSON(); Toast.show('✦ Ficha exportada.');
     });
@@ -147,6 +167,13 @@ export const Sheet = (() => {
         }
       });
       CharacterState.resetSpellSlots();
+      // Clérigos/Druidas/Paladinos: limpa prepared para nova seleção
+      const subtype = CASTER_SUBTYPE[state.identity?.classId];
+      if (subtype === 'prepared-list' || subtype === 'prepared-half' || subtype === 'grimoire') {
+        const ap = _alwaysPrepared;
+        const freshState = CharacterState.get();
+        CharacterState.patch({ spells: { ...freshState.spells, prepared: [...ap] } });
+      }
       Toast.show('☾ Descanso Longo realizado. Completamente restaurado!');
       _renderActivePanel();
     });
@@ -164,7 +191,6 @@ export const Sheet = (() => {
       const conTxt = conMod >= 0 ? `+${conMod}` : `${conMod}`;
       const isWarlock = CASTER_TYPE[state.identity?.classId] === 'pact';
 
-      // Remove modal anterior se existir
       document.getElementById('short-rest-modal-overlay')?.remove();
 
       const overlay = document.createElement('div');
@@ -176,90 +202,63 @@ export const Sheet = (() => {
             <div class="modal-title">⛺ Descanso Curto</div>
             <button class="modal-close-btn" id="sr-modal-close">✕</button>
           </div>
-          <div class="modal-body">
-            <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:1rem">
-              Dados de Vida disponíveis:
-              <strong style="color:var(--gold)">${available}</strong> / ${level}
-              &nbsp;·&nbsp; d${sides} ${conTxt} CON
-              ${isWarlock ? '<br><span style="color:var(--arcane-bright);font-size:0.8rem">✦ Warlock: slots de pacto recuperados</span>' : ''}
+          <div class="modal-body" style="text-align:center">
+            <p style="margin-bottom:0.75rem;color:var(--text-muted)">
+              Dados de Vida disponíveis: <strong>${available}</strong> / ${level}
             </p>
-            <div style="display:flex;align-items:center;gap:0.75rem;justify-content:center;margin-bottom:1rem">
-              <label style="color:var(--text-muted);font-size:0.88rem">Gastar:</label>
-              <button class="cbtn" id="sr-down" style="width:28px;height:28px">−</button>
-              <span id="sr-count" style="font-family:var(--font-heading);font-size:1.5rem;color:var(--gold);min-width:28px;text-align:center">1</span>
-              <button class="cbtn" id="sr-up" style="width:28px;height:28px">+</button>
-              <span style="color:var(--text-muted);font-size:0.85rem">dado(s)</span>
+            <p style="margin-bottom:1rem;font-size:0.85rem;color:var(--text-dim)">
+              Cada dado: 1d${sides} ${conTxt} PV
+            </p>
+            ${isWarlock ? `<p style="margin-bottom:1rem;color:var(--gold);font-size:0.85rem">✦ Warlock recupera todos os Spell Slots de Pacto.</p>` : ''}
+            <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1rem">
+              <button class="btn btn-secondary btn-sm" id="sr-use-dice">Usar 1 Dado de Vida</button>
             </div>
-            <div class="lu-result-display" id="sr-preview" style="text-align:center;padding:0.75rem;background:var(--bg-input);border-radius:8px;border:1px solid var(--border-faint)">
-              <span style="font-size:0.82rem;color:var(--text-dim)">Clique em Confirmar para rolar</span>
-            </div>
+            <div id="sr-result" style="font-size:1.5rem;font-weight:700;color:var(--gold);min-height:2rem"></div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-ghost btn-sm" id="sr-cancel">Cancelar</button>
-            <button class="btn btn-primary" id="sr-confirm">⛺ Confirmar</button>
+            <button class="btn btn-primary btn-sm" id="sr-confirm">Confirmar</button>
           </div>
         </div>`;
       document.body.appendChild(overlay);
       overlay.classList.add('open');
 
-      let srCount = 1;
-      const countEl   = overlay.querySelector('#sr-count');
-      const previewEl = overlay.querySelector('#sr-preview');
+      let totalHeal = 0;
+      let diceUsed  = 0;
 
-      const _updatePreview = () => {
-        const hp = CharacterState.get().combat.hp;
-        const maxGain = hp.max - hp.current;
-        const avgTotal = srCount * (Math.floor(sides / 2) + 1 + conMod);
-        const capped   = Math.min(Math.max(0, avgTotal), maxGain);
-        previewEl.innerHTML = `
-          <span style="font-size:0.8rem;color:var(--text-muted)">
-            Estimativa: <strong style="color:var(--gold)">+${capped}</strong> HP
-            <span style="font-size:0.72rem">(${srCount}d${sides}${conTxt} CON, cap ${maxGain})</span>
-          </span>`;
-      };
-      _updatePreview();
-
-      overlay.querySelector('#sr-up').addEventListener('click', () => {
-        if (srCount < available) { srCount++; countEl.textContent = srCount; _updatePreview(); }
-      });
-      overlay.querySelector('#sr-down').addEventListener('click', () => {
-        if (srCount > 1) { srCount--; countEl.textContent = srCount; _updatePreview(); }
+      overlay.querySelector('#sr-use-dice')?.addEventListener('click', () => {
+        const cur = CharacterState.get();
+        const usedNow = cur.combat?.hitDiceUsed || 0;
+        if (cur.identity.level - usedNow <= 0) {
+          Toast.show('Sem dados de vida restantes.'); return;
+        }
+        const roll = Math.floor(Math.random() * sides) + 1;
+        const heal = Math.max(1, roll + conMod);
+        totalHeal += heal; diceUsed++;
+        document.getElementById('sr-result').textContent = `+${totalHeal} PV (${diceUsed} dado${diceUsed>1?'s':''})`;
+        CharacterState.patch({ combat: { ...cur.combat, hitDiceUsed: usedNow + 1 } });
       });
 
-      const _close = () => overlay.remove();
-      overlay.querySelector('#sr-modal-close').addEventListener('click', _close);
-      overlay.querySelector('#sr-cancel').addEventListener('click', _close);
-      overlay.addEventListener('click', e => { if (e.target === overlay) _close(); });
-
-      overlay.querySelector('#sr-confirm').addEventListener('click', () => {
-        const n = Math.min(srCount, available);
-        let total = 0;
-        for (let i = 0; i < n; i++) total += Math.floor(Math.random() * sides) + 1 + conMod;
-        total = Math.max(0, total);
-        const st  = CharacterState.get();
-        const hp  = st.combat.hp;
-        const newHP    = Math.min(hp.current + total, hp.max);
-        const hpGained = newHP - hp.current;
-        CharacterState.patch({
-          combat: { ...st.combat, hp: { ...hp, current: newHP }, hitDiceUsed: (st.combat?.hitDiceUsed || 0) + n }
-        });
-        CharacterState.resetPactSlots();
-        _close();
-        Toast.show(`⛺ Descanso Curto: +${hpGained} HP (${n}d${sides}${conTxt} CON)`);
+      overlay.querySelector('#sr-confirm')?.addEventListener('click', () => {
+        const cur = CharacterState.get();
+        if (totalHeal > 0) {
+          const newHp = Math.min(cur.combat.hp.current + totalHeal, cur.combat.hp.max);
+          CharacterState.patch({ combat: { ...cur.combat, hp: { ...cur.combat.hp, current: newHp } } });
+          Toast.show(`⛺ Descanso Curto: +${totalHeal} PV recuperados.`);
+        }
+        if (isWarlock) { CharacterState.resetPactSlots(); Toast.show('✦ Slots de Pacto recuperados.'); }
+        overlay.remove();
         _renderActivePanel();
       });
-    });
 
-    document.getElementById('btn-home-back')?.addEventListener('click', () => {
-      if (confirm('Voltar ao início? Dados salvos.'))
-        window.dispatchEvent(new CustomEvent('navigate-home'));
+      overlay.querySelector('#sr-modal-close')?.addEventListener('click', () => overlay.remove());
+      overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
     });
   };
 
   // ══════════════════════════════════════════════════════════════════════════
-  // PANEL 1 — REGISTRO
+  // PANEL 1 — REGISTRO (mantido idêntico ao original; omitido por brevidade)
   // ══════════════════════════════════════════════════════════════════════════
-  const _renderRegistro = () => {
+const _renderRegistro = () => {
     const el = document.getElementById('panel-registro');
     if (!el) return;
 
@@ -517,7 +516,7 @@ export const Sheet = (() => {
                ${i < s.used ? 'checked' : ''}>`).join('');
       return `
         <div class="slot-row">
-          <span class="slot-lbl">${SPELL_LVL_LABELS[lvl]||lvl+'º'}</span>
+          <span class="slot-lbl">${SPELL_LVL_LABELS[+lvl]||lvl+'º'}</span>
           <div class="slot-boxes">${boxes}</div>
         </div>`;
     }).join('');
@@ -966,7 +965,7 @@ el.querySelector('#btn-level-up')?.addEventListener('click', _openLevelUpModal);
   };
 
   // ══════════════════════════════════════════════════════════════════════════
-  // PANEL 3 — GRIMÓRIO
+  // PANEL 3 — GRIMÓRIO (completamente refatorado)
   // ══════════════════════════════════════════════════════════════════════════
   const _renderGrimorio = () => {
     const el = document.getElementById('panel-grimorio');
@@ -974,124 +973,443 @@ el.querySelector('#btn-level-up')?.addEventListener('click', _openLevelUpModal);
 
     const state    = CharacterState.get();
     const classId  = state.identity?.classId || '';
-    const prepared = state.spells?.prepared || [];
+    const subtype  = CASTER_SUBTYPE[classId] || 'none';
 
-    const classMap = {
-      barbarian:'Bárbaro', bard:'Bardo', cleric:'Clérigo', druid:'Druida',
-      fighter:'Guerreiro', monk:'Monge', paladin:'Paladino', ranger:'Patrulheiro',
-      rogue:'Ladino', sorcerer:'Feiticeiro', warlock:'Bruxo', wizard:'Mago'
-    };
-    const className  = classMap[classId] || '';
-    const classSpells = className ? _spells.filter(s => s.classes?.includes(className)) : _spells;
+    // Classe sem conjuração
+    if (subtype === 'none') {
+      el.innerHTML = `
+        <div class="grimoire-empty">
+          <div style="font-size:2.5rem;margin-bottom:0.75rem">📚</div>
+          <div style="font-size:1rem;color:var(--text-muted)">
+            ${CLASS_NAME_PT[classId] || 'Esta classe'} não possui conjuração de magias.
+          </div>
+        </div>`;
+      return;
+    }
 
-    const castAttr = CASTING_ATTR[classId] || 'int';
-    const castMod  = CharacterState.getModifier(castAttr);
-    const maxPrep  = getMaxPrepared(classId, state.identity?.level||1, castMod);
+    // Despacha para o renderizador correto
+    switch (subtype) {
+      case 'prepared-list':
+      case 'prepared-half':
+        _renderGrimorioPreparado(el, state, classId, subtype);
+        break;
+      case 'known-fixed':
+        _renderGrimorioKnownFixed(el, state, classId);
+        break;
+      case 'grimoire':
+        _renderGrimorioMago(el, state);
+        break;
+    }
+  };
 
-    const slots = state.spells?.slots || {};
-    const availLevels = new Set(Object.keys(slots).map(Number));
-    availLevels.add(0);
+  // ── Helpers compartilhados ──────────────────────────────────────────────
 
-    const levels = [...new Set(classSpells.map(s=>s.level))].sort((a,b)=>a-b);
-    const filterOpts = [
-      `<option value="all" ${_spellFilter==='all'?'selected':''}>Todos</option>`,
-      ...levels.map(l => `<option value="${l}" ${_spellFilter==l?'selected':''}>${SPELL_LVL_LABELS[l]||'Nível '+l}</option>`)
-    ].join('');
+  /**
+   * Retorna magias da classe filtradas pelo nível máximo de slot disponível.
+   * Truques (nível 0) sempre são incluídos.
+   */
+  const _getClassSpells = (classId, level) => {
+    const className  = CLASS_NAME_PT[classId] || '';
+    const maxSl      = getMaxSpellLevel(classId, level);
+    return _spells.filter(s =>
+      s.classes?.includes(className) &&
+      (s.level === 0 || s.level <= maxSl)
+    );
+  };
 
-    const filtered = _spellFilter === 'all' ? classSpells
-      : classSpells.filter(s => s.level === parseInt(_spellFilter));
-
+  /** Renderiza um grupo de magias por nível */
+  const _spellGroupHtml = (spells, { checkboxAttr, checkedFn, disabledFn, badgeFn } = {}) => {
     const grouped = {};
-    filtered.forEach(s => { if (!grouped[s.level]) grouped[s.level]=[]; grouped[s.level].push(s); });
+    spells.forEach(s => { if (!grouped[s.level]) grouped[s.level]=[]; grouped[s.level].push(s); });
 
-    const spellListHtml = Object.entries(grouped).sort((a,b)=>+a[0]-+b[0]).map(([lvl,spells]) => {
-      const items = spells.map(s => {
-        const isPrepared = prepared.includes(s.id);
-        const hasSlot    = s.level === 0 || availLevels.has(s.level);
+    return Object.entries(grouped).sort((a,b) => +a[0]-+b[0]).map(([lvl, list]) => {
+      const items = list.map(s => {
+        const checked  = checkedFn ? checkedFn(s) : false;
+        const disabled = disabledFn ? disabledFn(s) : false;
+        const badge    = badgeFn   ? badgeFn(s)    : '';
         return `
-          <div class="spell-entry ${isPrepared?'prepared':''}" id="spell-${s.id}">
-            <input type="checkbox" class="spell-checkbox" data-spell-id="${s.id}"
-                   ${isPrepared?'checked':''} ${!hasSlot&&s.level>0?'title="Sem slots disponíveis"':''}>
+          <div class="spell-entry ${checked?'prepared':''}" id="spell-${s.id}">
+            <input type="checkbox" class="spell-checkbox"
+              data-spell-id="${s.id}" data-spell-level="${s.level}"
+              ${checkboxAttr||''}
+              ${checked ? 'checked' : ''}
+              ${disabled ? 'disabled title="Sempre Preparada"' : ''}>
             <div class="spell-info">
-              <div class="spell-name">${s.name}</div>
+              <div class="spell-name">
+                ${s.name}
+                ${badge}
+              </div>
               <div class="spell-meta">
                 <span class="badge badge-gold">${SPELL_LVL_LABELS[s.level]||'Truque'}</span>
                 <span class="badge badge-arcane">${s.school}</span>
                 <span style="font-size:0.78rem;color:var(--text-dim)">${s.castingTime}</span>
+                <span style="font-size:0.78rem;color:var(--text-dim)">${s.range}</span>
               </div>
               <div class="spell-desc-text">${s.description}</div>
+              <div class="spell-components" style="font-size:0.76rem;color:var(--text-dim);margin-top:0.2rem">
+                ${s.components} · ${s.duration}
+              </div>
               <button class="spell-toggle" data-spell-toggle="${s.id}">▸ Detalhes</button>
             </div>
           </div>`;
       }).join('');
+
       return `
-        <div style="margin-bottom:1.25rem">
-          <div style="font-family:var(--font-heading);font-size:0.72rem;text-transform:uppercase;letter-spacing:2px;color:var(--gold-dim);margin-bottom:0.5rem;padding-bottom:0.35rem;border-bottom:1px solid var(--border-faint)">
-            ${SPELL_LVL_LABELS[lvl]||'Nível '+lvl}</div>
+        <div class="spell-group" style="margin-bottom:1.25rem">
+          <div class="spell-group-header">
+            ${SPELL_LVL_LABELS[lvl]||'Nível '+lvl}
+          </div>
           ${items}
         </div>`;
     }).join('');
+  };
 
-    const activeItems = prepared.length > 0
-      ? prepared.map(id => {
+  /** Renderiza o painel lateral de preparadas/conhecidas */
+  const _activePanelHtml = (spellIds, title) => {
+    const items = spellIds.length === 0
+      ? `<div class="spells-empty">Nenhuma magia.</div>`
+      : spellIds.map(id => {
           const s = _spells.find(sp => sp.id === id);
-          return s ? `<div class="active-spell-item">
+          if (!s) return '';
+          const isAP = _alwaysPrepared.includes(id);
+          return `<div class="active-spell-item ${isAP?'always-prepared':''}">
             <span class="active-spell-name">${s.name}</span>
             <span class="active-spell-level">${SPELL_LVL_LABELS[s.level]||'Truque'}</span>
-          </div>` : '';
-        }).join('')
-      : `<div class="spells-empty">Nenhuma magia preparada.</div>`;
+            ${isAP ? `<span class="badge badge-gold" title="Sempre Preparada" style="font-size:0.65rem">✦</span>` : ''}
+          </div>`;
+        }).join('');
+    return { title: `${title} (${spellIds.length})`, items };
+  };
 
-    const prepInfo = maxPrep !== null
-      ? `<div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem">
-           Máx. preparadas: <strong style="color:var(--gold)">${maxPrep}</strong>
-           · Preparadas: <strong style="color:${prepared.filter(id => { const s = _spells.find(sp=>sp.id===id); return s&&s.level>0; }).length > maxPrep?'var(--crimson-bright)':'var(--gold-bright)'}">${prepared.filter(id => { const s = _spells.find(sp=>sp.id===id); return s&&s.level>0; }).length}</strong>
-         </div>`
-      : '';
+  /** Filtro de nível de magia */
+  const _filterBarHtml = (available, current) => {
+    const opts = [
+      `<option value="all" ${current==='all'?'selected':''}>Todos os círculos</option>`,
+      ...available.map(l =>
+        `<option value="${l}" ${current==l?'selected':''}>${SPELL_LVL_LABELS[l]||'Nível '+l}</option>`)
+    ].join('');
+    return `<select class="filter-select" id="spell-level-filter">${opts}</select>`;
+  };
+
+  /** Aplica eventos comuns (toggle de detalhes, filtro de nível) */
+  const _attachCommonEvents = (el) => {
+    el.querySelectorAll('[data-spell-toggle]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const entry = document.getElementById(`spell-${btn.dataset.spellToggle}`);
+        if (entry) {
+          const expanded = entry.classList.toggle('expanded');
+          btn.textContent = expanded ? '▾ Ocultar' : '▸ Detalhes';
+        }
+      });
+    });
+    el.querySelector('#spell-level-filter')?.addEventListener('change', e => {
+      _spellFilter = e.target.value; _renderGrimorio();
+    });
+  };
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // FLUXO A: Clérigo, Druida, Paladino — Preparação diária da lista da classe
+  // ──────────────────────────────────────────────────────────────────────────
+  const _renderGrimorioPreparado = (el, state, classId, subtype) => {
+    const level    = state.identity?.level || 1;
+    const castAttr = CASTING_ATTR[classId] || 'wis';
+    const castMod  = CharacterState.getModifier(castAttr);
+    const { max: maxPrep } = getMaxPrepared(classId, level, castMod);
+
+    // Lista de magias acessíveis (todos os círculos até o máximo de slots)
+    let classSpells = _getClassSpells(classId, level);
+
+    // Injeta magias "sempre preparadas" da subclasse (não saem do prepared)
+    _alwaysPrepared.forEach(id => {
+      if (!state.spells.prepared.includes(id)) {
+        CharacterState.prepareSpell(id);
+      }
+    });
+
+    const prepared = CharacterState.get().spells?.prepared || [];
+
+    // Filtro
+    const levels  = [...new Set(classSpells.map(s => s.level))].sort((a,b) => a-b);
+    const filtered = _spellFilter === 'all' ? classSpells
+      : classSpells.filter(s => s.level === parseInt(_spellFilter));
+
+    const preparedNonCantrips = prepared.filter(id => {
+      const s = _spells.find(sp => sp.id === id);
+      return s && s.level > 0;
+    }).length;
+
+    const prepInfo = `
+      <div class="prep-info-bar">
+        <span>Preparadas hoje:</span>
+        <strong style="color:${preparedNonCantrips > maxPrep ? 'var(--crimson-bright)' : 'var(--gold-bright)'}">
+          ${preparedNonCantrips}</strong>
+        <span>/ ${maxPrep}</span>
+        <span style="color:var(--text-dim);margin-left:0.5rem;font-size:0.8rem">
+          (${CLASS_NAME_PT[classId]} · nível ${level} + mod. ${castAttr.toUpperCase()} ${castMod >= 0 ? '+'+castMod : castMod})
+        </span>
+      </div>`;
+
+    const spellListHtml = _spellGroupHtml(filtered, {
+      checkedFn:  s => prepared.includes(s.id),
+      disabledFn: s => _alwaysPrepared.includes(s.id),
+      badgeFn:    s => _alwaysPrepared.includes(s.id)
+        ? `<span class="badge badge-gold" style="font-size:0.65rem;margin-left:0.4rem" title="Sempre Preparada">✦ Sempre</span>`
+        : ''
+    });
+
+    const { title: activeTitle, items: activeItems } = _activePanelHtml(prepared, '✦ Preparadas');
 
     el.innerHTML = `
       <div class="grimoire-layout">
-        <div>
+        <div class="grimoire-main">
           ${prepInfo}
           <div class="spell-filters">
             <span class="filter-label">Filtrar:</span>
-            <select class="filter-select" id="spell-level-filter">${filterOpts}</select>
-            <span style="font-size:0.82rem;color:var(--text-muted)">${classSpells.length} magias</span>
+            ${_filterBarHtml(levels, _spellFilter)}
+            <span style="font-size:0.82rem;color:var(--text-muted)">${classSpells.length} magias disponíveis</span>
           </div>
           <div id="spell-list-container">${spellListHtml}</div>
         </div>
         <div class="active-spells-panel">
           <div class="card" style="position:sticky;top:1rem">
-            <div class="card-title" id="active-spells-title">✦ Preparadas (${prepared.length})</div>
+            <div class="card-title" id="active-spells-title">${activeTitle}</div>
             <div id="active-spells-list">${activeItems}</div>
           </div>
         </div>
       </div>`;
 
-    document.getElementById('spell-level-filter')?.addEventListener('change', e => {
-      _spellFilter = e.target.value; _renderGrimorio();
-    });
+    _attachCommonEvents(el);
 
     el.querySelectorAll('.spell-checkbox').forEach(chk => {
       chk.addEventListener('change', () => {
         const id = chk.dataset.spellId;
         const sp = _spells.find(s => s.id === id);
+        if (!sp) return;
+
         if (chk.checked) {
-          if (sp && sp.level > 0 && maxPrep !== null) {
-            const curNonCantrips = prepared.filter(pid => {
-              const s = _spells.find(s=>s.id===pid); return s && s.level > 0;
+          // Truques não contam no limite
+          if (sp.level > 0) {
+            const curPrep = CharacterState.get().spells?.prepared || [];
+            const curNonCantrips = curPrep.filter(pid => {
+              const s = _spells.find(s => s.id === pid); return s && s.level > 0;
             }).length;
             if (curNonCantrips >= maxPrep) {
               chk.checked = false;
-              Toast.show(`Limite de magias preparadas: ${maxPrep}`); return;
+              Toast.show(`⚔ Limite de ${maxPrep} magia${maxPrep!==1?'s':''} preparada${maxPrep!==1?'s':''}.`);
+              return;
             }
           }
           CharacterState.prepareSpell(id);
-        } else { CharacterState.unprepareSpell(id); }
-        const entry = document.getElementById(`spell-${id}`);
-        if (entry) entry.classList.toggle('prepared', chk.checked);
-        _refreshActiveSidePanel(el);
+        } else {
+          // Impede remoção de magias sempre preparadas
+          if (_alwaysPrepared.includes(id)) {
+            chk.checked = true;
+            Toast.show('✦ Esta magia é sempre preparada pela sua subclasse.');
+            return;
+          }
+          CharacterState.unprepareSpell(id);
+        }
+
+        document.getElementById(`spell-${id}`)?.classList.toggle('prepared', chk.checked);
+        _refreshSidePanel(el, '✦ Preparadas');
       });
+    });
+  };
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // FLUXO B: Bardo, Feiticeiro, Bruxo — Magias Conhecidas (lista fixa)
+  // Patrulheiro também usa este fluxo (tabela de known do PHB)
+  // ──────────────────────────────────────────────────────────────────────────
+  const _renderGrimorioKnownFixed = (el, state, classId) => {
+    const level    = state.identity?.level || 1;
+    const castAttr = CASTING_ATTR[classId] || 'cha';
+    const castMod  = CharacterState.getModifier(castAttr);
+    const { max: maxKnown } = getMaxPrepared(classId, level, castMod);
+
+    // Para classes "known-fixed" o Patrulheiro não tem truques; os outros têm
+    let classSpells = _getClassSpells(classId, level);
+
+    const known   = state.spells?.known    || [];
+    const prepared = state.spells?.prepared || [];
+
+    const levels  = [...new Set(classSpells.map(s => s.level))].sort((a,b) => a-b);
+    const filtered = _spellFilter === 'all' ? classSpells
+      : classSpells.filter(s => s.level === parseInt(_spellFilter));
+
+    const knownNonCantrips = known.filter(id => {
+      const s = _spells.find(sp => sp.id === id); return s && s.level > 0;
+    }).length;
+
+    const canLearnMore = knownNonCantrips < maxKnown;
+    const isRanger     = classId === 'ranger';
+
+    const infoBar = `
+      <div class="prep-info-bar">
+        <span>Magias conhecidas:</span>
+        <strong style="color:${knownNonCantrips > maxKnown ? 'var(--crimson-bright)' : 'var(--gold-bright)'}">
+          ${knownNonCantrips}</strong>
+        <span>/ ${maxKnown}</span>
+        <span style="font-size:0.78rem;color:var(--text-dim);margin-left:0.5rem">
+          · A lista muda apenas ao subir de nível.
+        </span>
+      </div>`;
+
+    const spellListHtml = _spellGroupHtml(filtered, {
+      checkedFn:  s => known.includes(s.id),
+      disabledFn: s => {
+        // Desabilita adição se limite atingido E a magia não está conhecida
+        if (s.level === 0) return false; // truques: sem limite aqui
+        return !known.includes(s.id) && !canLearnMore;
+      },
+      badgeFn: s => known.includes(s.id)
+        ? `<span style="font-size:0.65rem;color:var(--gold-dim);margin-left:4px">✔ Conhecida</span>`
+        : (!canLearnMore && s.level > 0 ? `<span style="font-size:0.65rem;color:var(--text-dim);margin-left:4px">Limite</span>` : '')
+    });
+
+    const { title: activeTitle, items: activeItems } = _activePanelHtml(known, '📖 Conhecidas');
+
+    el.innerHTML = `
+      <div class="grimoire-layout">
+        <div class="grimoire-main">
+          <div class="grimoire-mode-banner">
+            <span style="font-size:0.85rem;color:var(--text-muted)">
+              🔒 Magias conhecidas são permanentes e só mudam ao ganhar um nível.
+              ${isRanger ? 'Patrulheiros não possuem truques.' : ''}
+            </span>
+          </div>
+          ${infoBar}
+          <div class="spell-filters">
+            <span class="filter-label">Filtrar:</span>
+            ${_filterBarHtml(levels, _spellFilter)}
+            <span style="font-size:0.82rem;color:var(--text-muted)">${classSpells.length} magias disponíveis</span>
+          </div>
+          <div id="spell-list-container">${spellListHtml}</div>
+        </div>
+        <div class="active-spells-panel">
+          <div class="card" style="position:sticky;top:1rem">
+            <div class="card-title" id="active-spells-title">${activeTitle}</div>
+            <div id="active-spells-list">${activeItems}</div>
+          </div>
+        </div>
+      </div>`;
+
+    _attachCommonEvents(el);
+
+    el.querySelectorAll('.spell-checkbox').forEach(chk => {
+      chk.addEventListener('change', () => {
+        const id = chk.dataset.spellId;
+        const sp = _spells.find(s => s.id === id);
+        if (!sp) return;
+
+        if (chk.checked) {
+          // Truques não contam no limite de known (classes fixas têm tabela separada)
+          if (sp.level > 0) {
+            const curKnown = CharacterState.get().spells?.known || [];
+            const curNonCantrips = curKnown.filter(pid => {
+              const s = _spells.find(s => s.id === pid); return s && s.level > 0;
+            }).length;
+            if (curNonCantrips >= maxKnown) {
+              chk.checked = false;
+              Toast.show(`📖 Limite de ${maxKnown} magia${maxKnown!==1?'s':''} conhecida${maxKnown!==1?'s':''}.`);
+              return;
+            }
+          }
+          CharacterState.learnSpell(id);
+        } else {
+          CharacterState.forgetSpell(id);
+        }
+
+        document.getElementById(`spell-${id}`)?.classList.toggle('prepared', chk.checked);
+        _refreshSidePanel(el, '📖 Conhecidas', true);
+      });
+    });
+  };
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // FLUXO C: Mago — Grimório (duas etapas)
+  //  Sub-aba "grimorio" → adiciona ao grimório físico (known)
+  //  Sub-aba "prepared" → seleciona do grimório para preparo diário
+  // ──────────────────────────────────────────────────────────────────────────
+  const _renderGrimorioMago = (el, state) => {
+    const classId  = 'wizard';
+    const level    = state.identity?.level || 1;
+    const castMod  = CharacterState.getModifier('int');
+    const { max: maxPrep } = getMaxPrepared(classId, level, castMod);
+
+    const known   = state.spells?.known    || [];
+    const prepared = state.spells?.prepared || [];
+
+    // Sub-tabs do Mago
+    el.innerHTML = `
+      <div class="grimoire-wizard-tabs">
+        <button class="grimoire-subtab ${_grimoireTab==='grimoire'?'active':''}"
+          data-subtab="grimoire">📜 Grimório (${known.length})</button>
+        <button class="grimoire-subtab ${_grimoireTab==='prepared'?'active':''}"
+          data-subtab="prepared">✦ Preparar (${prepared.filter(id=>{ const s=_spells.find(s=>s.id===id);return s&&s.level>0; }).length}/${maxPrep})</button>
+      </div>
+      <div id="wizard-subtab-content"></div>`;
+
+    el.querySelectorAll('.grimoire-subtab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        _grimoireTab = btn.dataset.subtab;
+        el.querySelectorAll('.grimoire-subtab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        _renderWizardSubtab(document.getElementById('wizard-subtab-content'), state, known, prepared, maxPrep, level, castMod);
+      });
+    });
+
+    _renderWizardSubtab(
+      document.getElementById('wizard-subtab-content'),
+      state, known, prepared, maxPrep, level, castMod
+    );
+  };
+
+  const _renderWizardSubtab = (el, state, known, prepared, maxPrep, level, castMod) => {
+    if (!el) return;
+
+    if (_grimoireTab === 'grimoire') {
+      _renderWizardGrimoire(el, known, level);
+    } else {
+      _renderWizardPrepared(el, known, prepared, maxPrep, level);
+    }
+  };
+
+  /** Sub-aba A do Mago: adiciona/remove magias do grimório físico */
+  const _renderWizardGrimoire = (el, known, level) => {
+    const classId    = 'wizard';
+    const allWizard  = _getClassSpells(classId, level);
+    const levels     = [...new Set(allWizard.map(s => s.level))].sort((a,b) => a-b);
+    const filtered   = _spellFilter === 'all' ? allWizard
+      : allWizard.filter(s => s.level === parseInt(_spellFilter));
+
+    const spellListHtml = _spellGroupHtml(filtered, {
+      checkedFn: s => known.includes(s.id),
+      badgeFn:   s => known.includes(s.id)
+        ? `<span style="font-size:0.65rem;color:var(--gold-dim);margin-left:4px">✔ No grimório</span>`
+        : ''
+    });
+
+    el.innerHTML = `
+      <div style="padding:0.5rem 0 0.75rem">
+        <div style="font-size:0.83rem;color:var(--text-muted);margin-bottom:0.5rem">
+          📜 Adicione magias ao seu grimório físico. Magias no grimório podem ser
+          preparadas diariamente. Marque para transcrever, desmarque para apagar.
+        </div>
+        <div style="font-size:0.83rem;color:var(--gold-dim)">
+          Magias no grimório: <strong>${known.filter(id=>{ const s=_spells.find(s=>s.id===id);return s&&s.level>0; }).length}</strong>
+          (truques: ${known.filter(id=>{ const s=_spells.find(s=>s.id===id);return s&&s.level===0; }).length})
+        </div>
+      </div>
+      <div class="spell-filters">
+        <span class="filter-label">Filtrar:</span>
+        ${_filterBarHtml(levels, _spellFilter)}
+        <span style="font-size:0.82rem;color:var(--text-muted)">${allWizard.length} magias de Mago</span>
+      </div>
+      <div id="spell-list-container">${spellListHtml}</div>`;
+
+    el.querySelector('#spell-level-filter')?.addEventListener('change', e => {
+      _spellFilter = e.target.value;
+      _renderGrimorio();
     });
 
     el.querySelectorAll('[data-spell-toggle]').forEach(btn => {
@@ -1103,24 +1421,145 @@ el.querySelector('#btn-level-up')?.addEventListener('click', _openLevelUpModal);
         }
       });
     });
+
+    el.querySelectorAll('.spell-checkbox').forEach(chk => {
+      chk.addEventListener('change', () => {
+        const id = chk.dataset.spellId;
+        if (chk.checked) {
+          CharacterState.learnSpell(id);
+          Toast.show('📜 Magia transcrita no grimório.');
+        } else {
+          // Aviso se a magia está preparada
+          if (CharacterState.isSpellPrepared(id)) {
+            if (!confirm('Esta magia está preparada hoje. Apagá-la do grimório também a removerá das preparadas. Continuar?')) {
+              chk.checked = true; return;
+            }
+          }
+          CharacterState.forgetSpell(id);
+          Toast.show('🗑 Magia removida do grimório.');
+        }
+        document.getElementById(`spell-${id}`)?.classList.toggle('prepared', chk.checked);
+        // Atualiza contador da sub-aba
+        _renderGrimorio();
+      });
+    });
   };
 
-  const _refreshActiveSidePanel = (el) => {
-    const prepared = CharacterState.get().spells?.prepared || [];
+  /** Sub-aba B do Mago: seleciona do grimório para o dia */
+  const _renderWizardPrepared = (el, known, prepared, maxPrep, level) => {
+    // Apenas magias que estão no grimório
+    const grimmSpells = _spells.filter(s => known.includes(s.id));
+    const levels      = [...new Set(grimmSpells.map(s => s.level))].sort((a,b) => a-b);
+    const filtered    = _spellFilter === 'all' ? grimmSpells
+      : grimmSpells.filter(s => s.level === parseInt(_spellFilter));
+
+    const preparedNonCantrips = prepared.filter(id => {
+      const s = _spells.find(sp => sp.id === id); return s && s.level > 0;
+    }).length;
+
+    const prepInfo = `
+      <div class="prep-info-bar">
+        <span>Preparadas hoje (do grimório):</span>
+        <strong style="color:${preparedNonCantrips > maxPrep ? 'var(--crimson-bright)' : 'var(--gold-bright)'}">
+          ${preparedNonCantrips}</strong>
+        <span>/ ${maxPrep}</span>
+        <span style="color:var(--text-dim);font-size:0.8rem;margin-left:0.4rem">
+          (nível ${level} + INT ${CharacterState.getModifier('int') >= 0 ? '+' : ''}${CharacterState.getModifier('int')})
+        </span>
+      </div>`;
+
+    if (grimmSpells.length === 0) {
+      el.innerHTML = `
+        ${prepInfo}
+        <div class="grimoire-empty" style="margin-top:1rem">
+          <div style="font-size:0.9rem;color:var(--text-muted)">
+            Adicione magias ao grimório primeiro (aba "Grimório").
+          </div>
+        </div>`;
+      return;
+    }
+
+    const spellListHtml = _spellGroupHtml(filtered, {
+      checkedFn: s => prepared.includes(s.id),
+    });
+
+    const { title: activeTitle, items: activeItems } = _activePanelHtml(prepared, '✦ Preparadas');
+
+    el.innerHTML = `
+      <div class="grimoire-layout">
+        <div class="grimoire-main">
+          ${prepInfo}
+          <div class="spell-filters">
+            <span class="filter-label">Filtrar:</span>
+            ${_filterBarHtml(levels, _spellFilter)}
+            <span style="font-size:0.82rem;color:var(--text-muted)">
+              ${grimmSpells.length} magias no grimório
+            </span>
+          </div>
+          <div id="spell-list-container">${spellListHtml}</div>
+        </div>
+        <div class="active-spells-panel">
+          <div class="card" style="position:sticky;top:1rem">
+            <div class="card-title" id="active-spells-title">${activeTitle}</div>
+            <div id="active-spells-list">${activeItems}</div>
+          </div>
+        </div>
+      </div>`;
+
+    el.querySelector('#spell-level-filter')?.addEventListener('change', e => {
+      _spellFilter = e.target.value; _renderGrimorio();
+    });
+
+    el.querySelectorAll('[data-spell-toggle]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const entry = document.getElementById(`spell-${btn.dataset.spellToggle}`);
+        if (entry) {
+          const expanded = entry.classList.toggle('expanded');
+          btn.textContent = expanded ? '▾ Ocultar' : '▸ Detalhes';
+        }
+      });
+    });
+
+    el.querySelectorAll('.spell-checkbox').forEach(chk => {
+      chk.addEventListener('change', () => {
+        const id = chk.dataset.spellId;
+        const sp = _spells.find(s => s.id === id);
+        if (!sp) return;
+
+        if (chk.checked) {
+          if (sp.level > 0) {
+            const curPrep = CharacterState.get().spells?.prepared || [];
+            const curNonCantrips = curPrep.filter(pid => {
+              const s = _spells.find(s => s.id === pid); return s && s.level > 0;
+            }).length;
+            if (curNonCantrips >= maxPrep) {
+              chk.checked = false;
+              Toast.show(`✦ Limite de ${maxPrep} magia${maxPrep!==1?'s':''} preparada${maxPrep!==1?'s':''}.`);
+              return;
+            }
+          }
+          CharacterState.prepareSpell(id);
+        } else {
+          CharacterState.unprepareSpell(id);
+        }
+
+        document.getElementById(`spell-${id}`)?.classList.toggle('prepared', chk.checked);
+        _refreshSidePanel(el, '✦ Preparadas');
+      });
+    });
+  };
+
+  // ── Atualização do painel lateral sem re-render completo ──────────────────
+  const _refreshSidePanel = (el, title, useKnown = false) => {
+    const state    = CharacterState.get();
+    const ids      = useKnown
+      ? (state.spells?.known    || [])
+      : (state.spells?.prepared || []);
     const listEl   = document.getElementById('active-spells-list');
     const titleEl  = document.getElementById('active-spells-title');
-    if (listEl) {
-      listEl.innerHTML = prepared.length === 0
-        ? `<div class="spells-empty">Nenhuma magia preparada.</div>`
-        : prepared.map(id => {
-            const s = _spells.find(sp => sp.id === id);
-            return s ? `<div class="active-spell-item">
-              <span class="active-spell-name">${s.name}</span>
-              <span class="active-spell-level">${SPELL_LVL_LABELS[s.level]||'Truque'}</span>
-            </div>` : '';
-          }).join('');
-    }
-    if (titleEl) titleEl.textContent = `✦ Preparadas (${prepared.length})`;
+    const { title: newTitle, items } = _activePanelHtml(ids, title);
+    if (listEl)  listEl.innerHTML  = items;
+    if (titleEl) titleEl.textContent = newTitle;
   };
 
   return { init };

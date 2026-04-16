@@ -22,6 +22,7 @@
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true },
     "20": { "features": ["Campeão Primitivo (+4 FOR, +4 CON)"] }
   },
+
   "bard": {
     "hitDie": 8,
     "1":  { "features": ["Conjuração", "Inspiração de Bardo (d6)"] },
@@ -43,8 +44,10 @@
     "17": { "features": ["Canção do Descanso (d12)"] },
     "18": { "features": ["Segredos Mágicos"] },
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true },
-    "20": { "features": ["Inspiração Superior"] }
+    "20": { "features": ["Inspiração Superior"] },
+    "subclasses": {}
   },
+
   "cleric": {
     "hitDie": 8,
     "1":  { "features": ["Conjuração", "Domínio Divino"] },
@@ -66,8 +69,130 @@
     "17": { "features": ["Destruir Mortos-Vivos (ND 4)", "Característica de Domínio"] },
     "18": { "features": ["Canalizar Divindade (3/descanso)"] },
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true },
-    "20": { "features": ["Intervenção Divina Aprimorada"] }
+    "20": { "features": ["Intervenção Divina Aprimorada"] },
+    "subclasses": {
+      "life": {
+        "name": "Domínio da Vida",
+        "alwaysPrepared": [
+          "bless", "cure-wounds",
+          "lesser-restoration", "spiritual-weapon",
+          "beacon-of-hope", "revivify",
+          "death-ward", "guardian-of-faith",
+          "mass-cure-wounds", "raise-dead"
+        ],
+        "features": {
+          "1":  "Discípulo da Vida",
+          "2":  "Canalizar Divindade: Preservar Vida",
+          "6":  "Cura Abençoada",
+          "8":  "Golpe Divino (radiante)",
+          "17": "Cura Suprema"
+        }
+      },
+      "light": {
+        "name": "Domínio da Luz",
+        "alwaysPrepared": [
+          "burning-hands", "faerie-fire",
+          "flaming-sphere", "scorching-ray",
+          "daylight", "fireball",
+          "guardian-of-faith", "wall-of-fire",
+          "flame-strike", "scrying"
+        ],
+        "features": {
+          "1":  "Bônus de Truque (Luz), Escudo Protetor",
+          "2":  "Canalizar Divindade: Radiância do Amanhecer",
+          "6":  "Chama Aprimorada",
+          "8":  "Golpe Divino (fogo)",
+          "17": "Corona de Luz"
+        }
+      },
+      "knowledge": {
+        "name": "Domínio do Conhecimento",
+        "alwaysPrepared": [
+          "command", "identify",
+          "augury", "suggestion",
+          "nondetection", "speak-with-dead",
+          "arcane-eye", "confusion",
+          "legend-lore", "scrying"
+        ],
+        "features": {
+          "1":  "Bênçãos do Conhecimento",
+          "2":  "Canalizar Divindade: Conhecimento das Eras / Ler Pensamentos",
+          "6":  "Feitiços Potencializados",
+          "8":  "Golpe Divino (psíquico)",
+          "17": "Visões do Passado"
+        }
+      },
+      "nature": {
+        "name": "Domínio da Natureza",
+        "alwaysPrepared": [
+          "animal-friendship", "speak-with-animals",
+          "barkskin", "spike-growth",
+          "plant-growth", "wind-wall",
+          "dominate-beast", "grasping-vine",
+          "insect-plague", "tree-stride"
+        ],
+        "features": {
+          "1":  "Acólito da Natureza, Armadura de Sacerdote",
+          "2":  "Canalizar Divindade: Charmar Animais e Plantas",
+          "6":  "Ira da Natureza",
+          "8":  "Golpe Divino (trovão ou relâmpago)",
+          "17": "Mestre da Natureza"
+        }
+      },
+      "tempest": {
+        "name": "Domínio das Tempestades",
+        "alwaysPrepared": [
+          "fog-cloud", "thunderwave",
+          "gust-of-wind", "shatter",
+          "call-lightning", "sleet-storm",
+          "control-water", "ice-storm",
+          "destructive-wave", "insect-plague"
+        ],
+        "features": {
+          "1":  "Armadura de Sacerdote, Ira da Tempestade",
+          "2":  "Canalizar Divindade: Destrutividade, Ventania",
+          "6":  "Ataque Relâmpago",
+          "8":  "Golpe Divino (trovão)",
+          "17": "Olho da Tempestade"
+        }
+      },
+      "trickery": {
+        "name": "Domínio da Trapaça",
+        "alwaysPrepared": [
+          "charm-person", "disguise-self",
+          "mirror-image", "pass-without-trace",
+          "blink", "dispel-magic",
+          "dimension-door", "polymorph",
+          "dominate-person", "modify-memory"
+        ],
+        "features": {
+          "1":  "Bênção do Trapaceiro",
+          "2":  "Canalizar Divindade: Invocação de Duplicata / Capa de Sombras",
+          "6":  "Golpe de Sombra",
+          "8":  "Golpe Divino (veneno)",
+          "17": "Avatar de Enganos Melhorado"
+        }
+      },
+      "war": {
+        "name": "Domínio da Guerra",
+        "alwaysPrepared": [
+          "divine-favor", "shield-of-faith",
+          "magic-weapon", "spiritual-weapon",
+          "crusaders-mantle", "spirit-guardians",
+          "freedom-of-movement", "stoneskin",
+          "flame-strike", "hold-monster"
+        ],
+        "features": {
+          "1":  "Armadura de Sacerdote, Sacerdote da Guerra",
+          "2":  "Canalizar Divindade: Golpe Guiado / Bênção de Deus da Guerra",
+          "6":  "Ataque de Divindade",
+          "8":  "Golpe Divino (necrótico ou radiante)",
+          "17": "Avatar da Batalha"
+        }
+      }
+    }
   },
+
   "druid": {
     "hitDie": 8,
     "1":  { "features": ["Druídico", "Conjuração"] },
@@ -89,8 +214,49 @@
     "17": { "features": [] },
     "18": { "features": ["Alma Atemporal", "Magias da Besta"] },
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true },
-    "20": { "features": ["Arquidruida"] }
+    "20": { "features": ["Arquidruida"] },
+    "subclasses": {
+      "land-arctic": {
+        "name": "Círculo da Terra — Ártico",
+        "alwaysPrepared": ["hold-person", "spike-growth", "sleet-storm", "slow", "freedom-of-movement", "ice-storm", "commune-with-nature", "cone-of-cold"]
+      },
+      "land-coast": {
+        "name": "Círculo da Terra — Costa",
+        "alwaysPrepared": ["mirror-image", "misty-step", "water-breathing", "water-walk", "control-water", "freedom-of-movement", "conjure-elemental", "scrying"]
+      },
+      "land-desert": {
+        "name": "Círculo da Terra — Deserto",
+        "alwaysPrepared": ["blur", "silence", "create-food-and-water", "protection-from-energy", "blight", "hallucinatory-terrain", "insect-plague", "wall-of-stone"]
+      },
+      "land-forest": {
+        "name": "Círculo da Terra — Floresta",
+        "alwaysPrepared": ["barkskin", "spider-climb", "call-lightning", "plant-growth", "divination", "freedom-of-movement", "commune-with-nature", "tree-stride"]
+      },
+      "land-grassland": {
+        "name": "Círculo da Terra — Pradaria",
+        "alwaysPrepared": ["invisibility", "pass-without-trace", "daylight", "haste", "divination", "freedom-of-movement", "dream", "insect-plague"]
+      },
+      "land-mountain": {
+        "name": "Círculo da Terra — Montanha",
+        "alwaysPrepared": ["spider-climb", "spike-growth", "lightning-bolt", "meld-into-stone", "stone-shape", "stoneskin", "passwall", "wall-of-stone"]
+      },
+      "land-swamp": {
+        "name": "Círculo da Terra — Pântano",
+        "alwaysPrepared": ["darkness", "melfs-acid-arrow", "water-walk", "stinking-cloud", "freedom-of-movement", "locate-creature", "insect-plague", "scrying"]
+      },
+      "moon": {
+        "name": "Círculo da Lua",
+        "alwaysPrepared": [],
+        "features": {
+          "2":  "Formas de Combate, Forma Selvagem Aprimorada (CR 1)",
+          "6":  "Forma Elementar Primal",
+          "10": "Forma Elementar",
+          "14": "Forma Selvagem do Mestre"
+        }
+      }
+    }
   },
+
   "fighter": {
     "hitDie": 10,
     "1":  { "features": ["Estilo de Luta", "Retomar o Fôlego"] },
@@ -112,8 +278,10 @@
     "17": { "features": ["Surto de Ação (2 usos)", "Indomável (3 usos)"] },
     "18": { "features": ["Característica de Arquétipo"] },
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true },
-    "20": { "features": ["Ataque Extra (3)"] }
+    "20": { "features": ["Ataque Extra (3)"] },
+    "subclasses": {}
   },
+
   "monk": {
     "hitDie": 8,
     "1":  { "features": ["Defesa sem Armadura", "Artes Marciais"], "martialArtsDie": "1d4" },
@@ -135,8 +303,10 @@
     "17": { "features": ["Característica de Tradição"], "martialArtsDie": "1d10" },
     "18": { "features": ["Corpo Vazio"] },
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true },
-    "20": { "features": ["Eu Perfeito"], "martialArtsDie": "1d10" }
+    "20": { "features": ["Eu Perfeito"], "martialArtsDie": "1d10" },
+    "subclasses": {}
   },
+
   "paladin": {
     "hitDie": 10,
     "1":  { "features": ["Sentido Divino", "Cura pelas Mãos (5×nível PV/DL)"] },
@@ -158,8 +328,59 @@
     "17": { "features": [] },
     "18": { "features": ["Melhoria de Auras (18m)"] },
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true },
-    "20": { "features": ["Característica de Juramento (Forma Sagrada)"] }
+    "20": { "features": ["Característica de Juramento (Forma Sagrada)"] },
+    "subclasses": {
+      "devotion": {
+        "name": "Juramento da Devoção",
+        "alwaysPrepared": [
+          "protection-from-evil-and-good", "sanctuary",
+          "lesser-restoration", "zone-of-truth",
+          "beacon-of-hope", "dispel-magic",
+          "freedom-of-movement", "guardian-of-faith",
+          "commune", "flame-strike"
+        ],
+        "features": {
+          "3":  "Canal Sagrado: Arma Sagrada, Expulsar os Ímpios",
+          "7":  "Aura da Devoção",
+          "15": "Pureza de Espírito",
+          "20": "Forma Sagrada"
+        }
+      },
+      "ancients": {
+        "name": "Juramento dos Antigos",
+        "alwaysPrepared": [
+          "ensnaring-strike", "speak-with-animals",
+          "moonbeam", "misty-step",
+          "plant-growth", "protection-from-energy",
+          "ice-storm", "stoneskin",
+          "commune-with-nature", "tree-stride"
+        ],
+        "features": {
+          "3":  "Canal Sagrado: Punição da Natureza, Virar os Ímpios",
+          "7":  "Aura da Guarda",
+          "15": "Guardião da Floresta Eterna",
+          "20": "Senhor do Gelo Antigo"
+        }
+      },
+      "vengeance": {
+        "name": "Juramento da Vingança",
+        "alwaysPrepared": [
+          "bane", "hunters-mark",
+          "hold-person", "misty-step",
+          "haste", "protection-from-energy",
+          "banishment", "dimension-door",
+          "hold-monster", "scrying"
+        ],
+        "features": {
+          "3":  "Canal Sagrado: Abjurar o Inimigo, Voto de Inimizade",
+          "7":  "Perseguição Implacável",
+          "15": "Alma da Vingança",
+          "20": "Exterminador"
+        }
+      }
+    }
   },
+
   "ranger": {
     "hitDie": 10,
     "1":  { "features": ["Inimigo Favorecido", "Explorador Natural"] },
@@ -181,8 +402,31 @@
     "17": { "features": [] },
     "18": { "features": ["Sentidos Selvagens"] },
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true },
-    "20": { "features": ["Matador de Inimigos"] }
+    "20": { "features": ["Matador de Inimigos"] },
+    "subclasses": {
+      "hunter": {
+        "name": "Caçador",
+        "alwaysPrepared": [],
+        "features": {
+          "3":  "Presa do Caçador",
+          "7":  "Táticas Defensivas",
+          "11": "Ataque Múltiplo",
+          "15": "Defesas Superiores"
+        }
+      },
+      "beast-master": {
+        "name": "Mestre de Bestas",
+        "alwaysPrepared": [],
+        "features": {
+          "3":  "Companheiro Besta",
+          "7":  "Treinamento Excepcional",
+          "11": "Fúria da Besta",
+          "15": "Compartilhar Feitiços"
+        }
+      }
+    }
   },
+
   "rogue": {
     "hitDie": 8,
     "1":  { "features": ["Especialização", "Ataque Furtivo", "Linguagem dos Ladrões"], "sneakAttack": "1d6" },
@@ -204,8 +448,10 @@
     "17": { "features": ["Característica de Arquétipo"], "sneakAttack": "9d6" },
     "18": { "features": ["Elusivo"], "sneakAttack": "9d6" },
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true, "sneakAttack": "10d6" },
-    "20": { "features": ["Golpe de Sorte"], "sneakAttack": "10d6" }
+    "20": { "features": ["Golpe de Sorte"], "sneakAttack": "10d6" },
+    "subclasses": {}
   },
+
   "sorcerer": {
     "hitDie": 6,
     "1":  { "features": ["Conjuração", "Origem Feiticeira"] },
@@ -227,8 +473,10 @@
     "17": { "features": ["Metamagia (4 opções)"] },
     "18": { "features": ["Característica de Origem"] },
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true },
-    "20": { "features": ["Restauração Feérica"] }
+    "20": { "features": ["Restauração Feérica"] },
+    "subclasses": {}
   },
+
   "warlock": {
     "hitDie": 8,
     "1":  { "features": ["Patrono Transcendental", "Magia de Pacto"] },
@@ -250,8 +498,59 @@
     "17": { "features": ["Arcana Mística (9º Círculo)"] },
     "18": { "features": [] },
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true },
-    "20": { "features": ["Mestre Místico"] }
+    "20": { "features": ["Mestre Místico"] },
+    "subclasses": {
+      "archfey": {
+        "name": "O Arquifey",
+        "alwaysPrepared": [
+          "faerie-fire", "sleep",
+          "calm-emotions", "phantasmal-force",
+          "blink", "plant-growth",
+          "dominate-beast", "greater-invisibility",
+          "dominate-person", "seeming"
+        ],
+        "features": {
+          "1":  "Presença da Feéria, Fuga da Feéria",
+          "6":  "Escudo Sedutora",
+          "10": "Boon of the Summer Court",
+          "14": "Presença Maravilhosa"
+        }
+      },
+      "fiend": {
+        "name": "O Demônio",
+        "alwaysPrepared": [
+          "burning-hands", "command",
+          "blindness-deafness", "scorching-ray",
+          "fireball", "stinking-cloud",
+          "fire-shield", "wall-of-fire",
+          "flame-strike", "hallow"
+        ],
+        "features": {
+          "1":  "Bênção das Trevas (PV Temporários), Sorte do Demônio",
+          "6":  "Resistência do Averno",
+          "10": "Andar no Fogo",
+          "14": "Hurl Through Hell"
+        }
+      },
+      "great-old-one": {
+        "name": "O Grande Ancião",
+        "alwaysPrepared": [
+          "dissonant-whispers", "tashas-hideous-laughter",
+          "detect-thoughts", "phantasmal-force",
+          "clairvoyance", "sending",
+          "dominate-beast", "evards-black-tentacles",
+          "dominate-person", "telekinesis"
+        ],
+        "features": {
+          "1":  "Despertar da Mente, Mente Blindada",
+          "6":  "Proteção Entrópica",
+          "10": "Pensamentos Criadores",
+          "14": "Criar Aberração"
+        }
+      }
+    }
   },
+
   "wizard": {
     "hitDie": 6,
     "1":  { "features": ["Conjuração", "Recuperação Arcana"] },
@@ -273,6 +572,88 @@
     "17": { "features": [] },
     "18": { "features": ["Maestria em Magias"] },
     "19": { "features": ["Aumento de Valor de Habilidade"], "asi": true },
-    "20": { "features": ["Assinatura Mágica (2 magias gratuitas/DL)"] }
+    "20": { "features": ["Assinatura Mágica (2 magias gratuitas/DL)"] },
+    "subclasses": {
+      "abjuration": {
+        "name": "Escola de Abjuração",
+        "alwaysPrepared": [],
+        "features": {
+          "2":  "Estudioso de Abjuração, Proteção Arcana",
+          "6":  "Proteção Projetada",
+          "10": "Proteção Aprimorada",
+          "14": "Defesa de Feitiço"
+        }
+      },
+      "conjuration": {
+        "name": "Escola de Conjuração",
+        "alwaysPrepared": [],
+        "features": {
+          "2":  "Estudioso de Conjuração, Conjuração Menor",
+          "6":  "Reposicionamento",
+          "10": "Conjuração Focada",
+          "14": "Conjuração Sustentável"
+        }
+      },
+      "divination": {
+        "name": "Escola de Adivinhação",
+        "alwaysPrepared": [],
+        "features": {
+          "2":  "Estudioso de Adivinhação, Presságios",
+          "6":  "Terceiro Olho",
+          "10": "Adivinhação Maior",
+          "14": "Presságios Superiores"
+        }
+      },
+      "enchantment": {
+        "name": "Escola de Encantamento",
+        "alwaysPrepared": [],
+        "features": {
+          "2":  "Estudioso de Encantamento, Encantamento Hipnótico",
+          "6":  "Palavra Tentadora",
+          "10": "Dobrar a Mente",
+          "14": "Alter Memory"
+        }
+      },
+      "evocation": {
+        "name": "Escola de Evocação",
+        "alwaysPrepared": [],
+        "features": {
+          "2":  "Estudioso de Evocação, Esculpir Feitiços",
+          "6":  "Feitiços Potentes",
+          "10": "Feitiços Capacitados",
+          "14": "Explosão Overchanneled"
+        }
+      },
+      "illusion": {
+        "name": "Escola de Ilusão",
+        "alwaysPrepared": [],
+        "features": {
+          "2":  "Estudioso de Ilusão, Tecelagem de Ilusão",
+          "6":  "Criações Maleáveis",
+          "10": "Defesa de Ilusão",
+          "14": "Realidade Ilusória"
+        }
+      },
+      "necromancy": {
+        "name": "Escola de Necromancia",
+        "alwaysPrepared": [],
+        "features": {
+          "2":  "Estudioso de Necromancia, Colheita Sombria",
+          "6":  "Mortos-Vivos Aprimorados",
+          "10": "Inescapável Destruição",
+          "14": "Comando dos Mortos"
+        }
+      },
+      "transmutation": {
+        "name": "Escola de Transmutação",
+        "alwaysPrepared": [],
+        "features": {
+          "2":  "Estudioso de Transmutação, Magia Menor de Transmutação",
+          "6":  "Corpo de Pedra",
+          "10": "Transformar",
+          "14": "Mestre Transmutador"
+        }
+      }
+    }
   }
 }
