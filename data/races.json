@@ -1,0 +1,247 @@
+[
+  {
+    "id": "human",
+    "name": "Humano",
+    "description": "Versáteis e adaptáveis. +1 em todos os atributos.",
+    "size": "Médio", "speed": 9,
+    "abilityBonuses": { "str":1,"dex":1,"con":1,"int":1,"wis":1,"cha":1 },
+    "choosableBonus": null,
+    "subraces": null,
+    "traits": [
+      { "name": "Idioma Extra", "description": "Fala, lê e escreve um idioma extra à sua escolha." }
+    ],
+    "languages": ["Comum", "Um idioma à escolha"],
+    "darkvision": false, "proficiencies": [],
+    "racialSkills": []
+  },
+  {
+    "id": "half-elf",
+    "name": "Meio-Elfo",
+    "description": "+2 CAR, +1 em dois atributos à escolha (exceto CAR).",
+    "size": "Médio", "speed": 9,
+    "abilityBonuses": { "cha": 2 },
+    "choosableBonus": { "count":2, "amount":1, "exclude":["cha"], "description":"Escolha 2 atributos (exceto CAR) para +1 cada." },
+    "subraces": null,
+    "traits": [
+      { "name": "Visão no Escuro", "description": "Vê no escuro até 18 m." },
+      { "name": "Ancestralidade Feérica", "description": "Vantagem vs encantamento; imune ao sono mágico." },
+      { "name": "Versatilidade em Perícias", "description": "Proficiência em 2 perícias à escolha." }
+    ],
+    "languages": ["Comum", "Élfico", "Um idioma à escolha"],
+    "darkvision": true, "darkvisionRange": 18, "proficiencies": [],
+    "racialSkills": [],
+    "choosableSkills": { "count": 2, "from": "any" }
+  },
+  {
+    "id": "elf",
+    "name": "Elfo",
+    "description": "+2 DES. Escolhe sub-raça.",
+    "size": "Médio", "speed": 9,
+    "abilityBonuses": { "dex": 2 },
+    "choosableBonus": null,
+    "subraces": [
+      {
+        "id": "elf-high",
+        "name": "Alto Elfo",
+        "description": "+1 INT, conhece um truque de Mago.",
+        "abilityBonuses": { "int": 1 },
+        "traits": [
+          { "name": "Treino com Armas Élficas", "description": "Prof. espada longa, espada curta, arco curto, arco longo." },
+          { "name": "Truque", "description": "Conhece um truque da lista do Mago (INT)." }
+        ],
+        "proficiencies": ["Espada Longa","Espada Curta","Arco Curto","Arco Longo"]
+      },
+      {
+        "id": "elf-wood",
+        "name": "Elfo da Floresta",
+        "description": "+1 SAB, Velocidade 10,5 m, Máscara da Natureza Selvagem.",
+        "abilityBonuses": { "wis": 1 },
+        "speed": 10.5,
+        "traits": [
+          { "name": "Treino com Armas Élficas", "description": "Prof. espada longa, espada curta, arco curto, arco longo." },
+          { "name": "Passo Rápido", "description": "Velocidade base aumenta para 10,5 m." },
+          { "name": "Máscara da Natureza Selvagem", "description": "Pode esconder-se quando levemente obscurecido por vegetação, chuva, neve, névoa ou outras condições naturais." }
+        ],
+        "proficiencies": ["Espada Longa","Espada Curta","Arco Curto","Arco Longo"]
+      },
+      {
+        "id": "elf-drow",
+        "name": "Elfo Negro (Drow)",
+        "description": "+1 CAR, Visão no Escuro Superior, magias inatas.",
+        "abilityBonuses": { "cha": 1 },
+        "traits": [
+          { "name": "Visão no Escuro Superior", "description": "Vê no escuro até 36 m." },
+          { "name": "Sensibilidade à Luz Solar", "description": "Desvantagem em ataques e Percepção (SAB) quando você ou o alvo estiver em luz solar direta." },
+          { "name": "Magia Drow", "description": "Conhece o truque Luz Dançante. Ao nível 3 lança Escuridão 1×/descanso longo. Ao nível 5 lança Voo de Fadas 1×/descanso longo." }
+        ],
+        "proficiencies": ["Espada de Mão","Arco Curto","Besta de Mão"]
+      }
+    ],
+    "traits": [
+      { "name": "Visão no Escuro", "description": "Vê no escuro até 18 m." },
+      { "name": "Sentidos Aguçados", "description": "Proficiência em Percepção." },
+      { "name": "Ancestralidade Feérica", "description": "Vantagem vs encantamento; imune ao sono mágico." },
+      { "name": "Transe", "description": "Meditação de 4 h substitui o sono de 8 h." }
+    ],
+    "languages": ["Comum", "Élfico"],
+    "darkvision": true, "darkvisionRange": 18,
+    "proficiencies": [],
+    "racialSkills": ["perception"]
+  },
+  {
+    "id": "dwarf",
+    "name": "Anão",
+    "description": "+2 CON. Escolhe sub-raça.",
+    "size": "Médio", "speed": 7.5,
+    "abilityBonuses": { "con": 2 },
+    "choosableBonus": null,
+    "subraces": [
+      {
+        "id": "dwarf-hill",
+        "name": "Anão das Colinas",
+        "description": "+1 SAB, +1 PM máx por nível.",
+        "abilityBonuses": { "wis": 1 },
+        "traits": [
+          { "name": "Tenacidade Anã", "description": "Máx. de PM aumenta em 1 e +1 a cada nível." }
+        ],
+        "proficiencies": []
+      },
+      {
+        "id": "dwarf-mountain",
+        "name": "Anão das Montanhas",
+        "description": "+2 FOR, proficiência com armaduras leves e médias.",
+        "abilityBonuses": { "str": 2 },
+        "traits": [
+          { "name": "Treinamento Anão com Armaduras", "description": "Proficiência com armaduras leves e médias." }
+        ],
+        "proficiencies": ["Armadura Leve","Armadura Média"]
+      }
+    ],
+    "traits": [
+      { "name": "Visão no Escuro", "description": "Vê no escuro até 18 m." },
+      { "name": "Resiliência Anã", "description": "Vantagem vs veneno; resistência a dano de veneno." },
+      { "name": "Treino com Armas Anãs", "description": "Prof. machadinha, machado de batalha, martelo leve, martelo de guerra." },
+      { "name": "Proficiência com Ferramentas", "description": "Prof. com ferramentas de ferreiro, cervejeiro ou pedreiro (à escolha)." },
+      { "name": "Conhecimento de Pedra", "description": "Vantagem em verificações de Int (História) sobre origem de trabalho em pedra." }
+    ],
+    "languages": ["Comum", "Anão"],
+    "darkvision": true, "darkvisionRange": 18,
+    "proficiencies": [],
+    "racialSkills": []
+  },
+  {
+    "id": "halfling",
+    "name": "Halfling",
+    "description": "+2 DES. Escolhe sub-raça.",
+    "size": "Pequeno", "speed": 7.5,
+    "abilityBonuses": { "dex": 2 },
+    "choosableBonus": null,
+    "subraces": [
+      {
+        "id": "halfling-lightfoot",
+        "name": "Pés-Leves",
+        "description": "+1 CAR, Naturalmente Furtivo.",
+        "abilityBonuses": { "cha": 1 },
+        "traits": [
+          { "name": "Naturalmente Furtivo", "description": "Pode tentar esconder-se mesmo atrás de criatura Médio ou maior." }
+        ],
+        "proficiencies": []
+      },
+      {
+        "id": "halfling-stout",
+        "name": "Robusto",
+        "description": "+1 CON, Resiliência Robusto.",
+        "abilityBonuses": { "con": 1 },
+        "traits": [
+          { "name": "Resiliência Robusto", "description": "Vantagem em salvaguardas vs veneno; resistência a dano de veneno." }
+        ],
+        "proficiencies": []
+      }
+    ],
+    "traits": [
+      { "name": "Sorte", "description": "Ao rolar 1 em ataque, teste ou salvaguarda, role novamente e use o novo resultado." },
+      { "name": "Valente", "description": "Vantagem em salvaguardas vs amedrontado." },
+      { "name": "Agilidade Halfling", "description": "Pode mover-se pelo espaço de criaturas Médio ou maior." }
+    ],
+    "languages": ["Comum", "Halfling"],
+    "darkvision": false,
+    "proficiencies": [],
+    "racialSkills": []
+  },
+  {
+    "id": "tiefling",
+    "name": "Tiefling",
+    "description": "+1 INT, +2 CAR. Herança infernal.",
+    "size": "Médio", "speed": 9,
+    "abilityBonuses": { "int": 1, "cha": 2 },
+    "choosableBonus": null,
+    "subraces": null,
+    "traits": [
+      { "name": "Visão no Escuro", "description": "Vê no escuro até 18 m." },
+      { "name": "Resistência Infernal", "description": "Resistência a dano de fogo." },
+      { "name": "Herança Infernal", "description": "Taumaturgia (truque). Nív. 3: Rajada Infernal 1×/DL. Nív. 5: Escuridão 1×/DL." }
+    ],
+    "languages": ["Comum", "Infernal"],
+    "darkvision": true, "darkvisionRange": 18,
+    "proficiencies": [],
+    "racialSkills": []
+  },
+  {
+    "id": "dragonborn",
+    "name": "Draconato",
+    "description": "+2 FOR, +1 CAR. Arma de sopro e resistência.",
+    "size": "Médio", "speed": 9,
+    "abilityBonuses": { "str": 2, "cha": 1 },
+    "choosableBonus": null,
+    "subraces": null,
+    "traits": [
+      { "name": "Ancestralidade Dracônica", "description": "Escolhe tipo de dragão (define dano do sopro e resistência)." },
+      { "name": "Arma de Sopro", "description": "Ação: exala dano (CD = 8 + mod CON + prof). Recupera em descanso curto/longo." },
+      { "name": "Resistência Dracônica", "description": "Resistência ao tipo de dano da sua ancestralidade." }
+    ],
+    "languages": ["Comum", "Dracônico"],
+    "darkvision": false,
+    "proficiencies": [],
+    "racialSkills": []
+  },
+  {
+    "id": "gnome",
+    "name": "Gnomo",
+    "description": "+2 INT. Escolhe sub-raça.",
+    "size": "Pequeno", "speed": 7.5,
+    "abilityBonuses": { "int": 2 },
+    "choosableBonus": null,
+    "subraces": [
+      {
+        "id": "gnome-rock",
+        "name": "Gnomo da Rocha",
+        "description": "+1 CON, Engenheiro Competente.",
+        "abilityBonuses": { "con": 1 },
+        "traits": [
+          { "name": "Conhecimento Artificial", "description": "Prof. com ferramentas de ourives e Arcanismo." },
+          { "name": "Engenheiro Competente", "description": "Pode construir pequenos autômatos com 10 dias e 100 PO." }
+        ],
+        "proficiencies": ["Arcanismo"]
+      },
+      {
+        "id": "gnome-forest",
+        "name": "Gnomo da Floresta",
+        "description": "+1 DES, Ilusão Menor, fala com animais pequenos.",
+        "abilityBonuses": { "dex": 1 },
+        "traits": [
+          { "name": "Ilusionista Natural", "description": "Conhece o truque Ilusão Menor." },
+          { "name": "Falar com Animais Pequenos", "description": "Pode comunicar-se com animais Pequenos ou menores." }
+        ],
+        "proficiencies": []
+      }
+    ],
+    "traits": [
+      { "name": "Visão no Escuro", "description": "Vê no escuro até 18 m." },
+      { "name": "Astúcia Gnômica", "description": "Vantagem em salvaguardas de INT, SAB e CAR contra magia." }
+    ],
+    "languages": ["Comum", "Gnômico"],
+    "darkvision": true, "darkvisionRange": 18,
+    "proficiencies": [],
+    "racialSkills": []
+  }
+]

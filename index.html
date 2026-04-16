@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codex — Ficha de Personagem D&D 5e</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/styles-additions.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ════════════════════════════════════════════
+       VIEW: HOME
+       ════════════════════════════════════════════ -->
+  <div class="view active" id="view-home">
+    <div class="home-inner">
+      <div class="home-rune">⚜</div>
+      <h1>Codex</h1>
+      <p class="home-subtitle">Ficha de Personagem — D&amp;D 5e</p>
+      <hr class="divider divider-gold">
+
+      <div class="home-actions">
+        <div class="home-btn-card" id="btn-create">
+          <span class="icon">✦</span>
+          <div>
+            <div class="label">Criar Novo Personagem</div>
+            <div class="sub">Assistente passo a passo — raça, classe, atributos</div>
+          </div>
+        </div>
+
+        <div class="home-btn-card" id="btn-load">
+          <span class="icon">📂</span>
+          <div>
+            <div class="label">Carregar Ficha</div>
+            <div class="sub">Importar um arquivo <code>.json</code> salvo anteriormente</div>
+          </div>
+        </div>
+
+        <div class="home-btn-card" id="btn-continue" style="display:none">
+          <span class="icon">↩</span>
+          <div>
+            <div class="label" id="btn-continue-name">Continuar</div>
+            <div class="sub">Retomar ficha salva no navegador</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top:2rem;font-size:0.78rem;color:var(--text-dim)">
+        Os dados são salvos automaticamente no seu navegador (localStorage).
+      </p>
+    </div>
+    <input type="file" id="file-import" accept=".json" style="display:none">
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       VIEW: WIZARD
+       ════════════════════════════════════════════ -->
+  <div class="view" id="view-wizard">
+    <!-- Wizard content injected by wizard.js -->
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       VIEW: SHEET
+       ════════════════════════════════════════════ -->
+  <div class="view" id="view-sheet">
+    <!-- Sheet content injected by sheet.js -->
+  </div>
+
+</div><!-- #app -->
+
+<!-- Toast container injected dynamically by app.js -->
+
+<script type="module">
+  import { CharacterState, Router, Toast, DataLoader, ThemeManager, DiceRoller } from './js/app.js';
+  import { Wizard } from './js/wizard.js';
+  import { Sheet }  from './js/sheet.js';
+
+  // ── Register views ──────────────────────────────────────────────────────
+  Router.register('home',   document.getElementById('view-home'));
+  Router.register('wizard', document.getElementById('view-wizard'));
+  Router.register('sheet',  document.getElementById('view-sheet'));
+
+  // ── Home view logic ─────────────────────────────────────────────────────
+  let _homeInitialized = false;
+  const initHome = () => {
+    const hasData = CharacterState.load();
+    const btnContinue = document.getElementById('btn-continue');
+    const btnName     = document.getElementById('btn-continue-name');
+
+    if (hasData && CharacterState.get().identity?.name) {
+      const name = CharacterState.get().identity.name;
+      btnContinue.style.display = 'flex';
+      btnName.textContent = `Continuar — ${name}`;
+    } else {
+      btnContinue.style.display = 'none';
+    }
+
+    // Listeners são registrados apenas uma vez
+    if (_homeInitialized) return;
+    _homeInitialized = true;
+
+    document.getElementById('btn-create').addEventListener('click', () => {
+      CharacterState.reset();
+      Router.navigate('wizard');
+      Wizard.init(document.getElementById('view-wizard'));
+    });
+
+    document.getElementById('btn-load').addEventListener('click', () => {
+      document.getElementById('file-import').click();
+    });
+
+    document.getElementById('file-import').addEventListener('change', async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const text = await file.text();
+      const ok   = CharacterState.importJSON(text);
+      e.target.value = '';
+      if (ok) {
+        Toast.show('✦ Ficha carregada com sucesso!');
+        Router.navigate('sheet');
+        Sheet.init(document.getElementById('view-sheet'));
+      } else {
+        Toast.show('❌ Arquivo JSON inválido.');
+      }
+    });
+
+    document.getElementById('btn-continue')?.addEventListener('click', () => {
+      Router.navigate('sheet');
+      Sheet.init(document.getElementById('view-sheet'));
+    });
+  };
+
+  // ── Cross-view event bus ────────────────────────────────────────────────
+  window.addEventListener('wizard-complete', () => {
+    Router.navigate('sheet');
+    Sheet.init(document.getElementById('view-sheet'));
+  });
+
+  window.addEventListener('navigate-home', () => {
+    Router.navigate('home');
+    initHome();
+  });
+
+  // ── Theme Panel ──────────────────────────────────────────────────────────
+  const _initThemePanel = () => {
+    if (document.getElementById('settings-btn')) return;
+    const swatchColors = { dark:'#d4af37', emerald:'#6dbf6d', frost:'#6ab4f0', infernal:'#e86520', parchment:'#1e3264' };
+    const btn = document.createElement('button');
+    btn.id = 'settings-btn'; btn.className = 'settings-btn'; btn.title = 'Temas'; btn.textContent = '⚙';
+    document.body.appendChild(btn);
+    const panel = document.createElement('div');
+    panel.id = 'theme-panel'; panel.className = 'theme-panel';
+    panel.innerHTML = `<div class="theme-panel-title">Escolher Tema</div>` +
+      ThemeManager.getAll().map(t =>
+        `<div class="theme-option" data-theme-id="${t.id}">
+          <span class="theme-icon">${t.icon}</span>
+          <span>${t.label}</span>
+          <span class="theme-swatch" style="background:${swatchColors[t.id]}"></span>
+        </div>`).join('');
+    document.body.appendChild(panel);
+    const markActive = (id) => panel.querySelectorAll('.theme-option').forEach(el =>
+      el.classList.toggle('active', el.dataset.themeId === id));
+    markActive(ThemeManager.getTheme());
+    btn.addEventListener('click', e => { e.stopPropagation(); panel.classList.toggle('open'); });
+    panel.querySelectorAll('.theme-option').forEach(el => {
+      el.addEventListener('click', () => {
+        ThemeManager.setTheme(el.dataset.themeId);
+        markActive(el.dataset.themeId);
+        panel.classList.remove('open');
+      });
+    });
+    document.addEventListener('click', e => {
+      if (!panel.contains(e.target) && e.target !== btn) panel.classList.remove('open');
+    });
+  };
+
+  // ── Boot ────────────────────────────────────────────────────────────────
+  ThemeManager.init();
+  DiceRoller.init();
+  Router.navigate('home');
+  initHome();
+  _initThemePanel();
+</script>
+
+</body>
+</html>
