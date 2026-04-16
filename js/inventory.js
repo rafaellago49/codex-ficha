@@ -148,7 +148,7 @@ export const InventoryModule = (() => {
           </div>
           <button class="modal-close" id="vm-close">✕</button>
         </div>
-        <div class="inv-modal-body">
+        <div class="inv-modal-body modal-body">
           <div id="vm-weapon" class="weapon-stats" style="display:none">
             <div class="ws-row"><span class="ws-label">Tipo de Dano</span><span class="ws-val" id="vm-wdmg">—</span></div>
             <div class="ws-row"><span class="ws-label">Dados de Dano</span><span class="ws-val" id="vm-wdice">—</span></div>
@@ -181,7 +181,7 @@ export const InventoryModule = (() => {
             <span class="modal-title">✦ Registrar Novo Item</span>
             <button class="modal-close" id="add-close">✕</button>
           </div>
-          <div style="padding:0 1.2rem 1.2rem">
+          <div class="modal-body" style="padding:0 1.2rem 1.2rem">
             <div class="form-group mt-2"><label>Nome *</label><input type="text" class="form-control" id="add-name" placeholder="Ex: Adaga das Sombras"></div>
             <div class="form-row2">
               <div class="form-group" style="margin-bottom:0"><label>Categoria</label><select class="form-control" id="add-cat">${catOpts}</select></div>
@@ -241,7 +241,7 @@ export const InventoryModule = (() => {
             <span class="modal-title" id="edit-modal-title">✏ Editar Item</span>
             <button class="modal-close" id="edit-close">✕</button>
           </div>
-          <div style="padding:0 1.2rem 1.2rem">
+          <div class="modal-body" style="padding:0 1.2rem 1.2rem">
             <div class="form-group mt-2"><label>Nome *</label><input type="text" class="form-control" id="edit-name"></div>
             <div class="form-row2">
               <div class="form-group" style="margin-bottom:0"><label>Categoria</label><select class="form-control" id="edit-cat">${catOpts}</select></div>
