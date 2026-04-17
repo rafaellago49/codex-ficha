@@ -200,58 +200,91 @@ export const Sheet = (() => {
         <div class="modal-box" style="max-width:360px" role="dialog" aria-modal="true">
           <div class="modal-header">
             <div class="modal-title">⛺ Descanso Curto</div>
-            <button class="modal-close-btn" id="sr-modal-close">✕</button>
+            <button class="modal-close-btn" id="sr-modal-close" title="Cancelar">✕</button>
           </div>
           <div class="modal-body" style="text-align:center">
             <p style="margin-bottom:0.75rem;color:var(--text-muted)">
-              Dados de Vida disponíveis: <strong>${available}</strong> / ${level}
+              Dados de Vida disponíveis: <strong id="sr-avail-display">${available}</strong> / ${level}
             </p>
             <p style="margin-bottom:1rem;font-size:0.85rem;color:var(--text-dim)">
               Cada dado: 1d${sides} ${conTxt} PV
             </p>
             ${isWarlock ? `<p style="margin-bottom:1rem;color:var(--gold);font-size:0.85rem">✦ Warlock recupera todos os Spell Slots de Pacto.</p>` : ''}
             <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1rem">
-              <button class="btn btn-secondary btn-sm" id="sr-use-dice">Usar 1 Dado de Vida</button>
+              <button class="btn btn-secondary btn-sm" id="sr-use-dice">🎲 Usar 1 Dado de Vida (1d${sides})</button>
             </div>
             <div id="sr-result" style="font-size:1.5rem;font-weight:700;color:var(--gold);min-height:2rem"></div>
+            <div id="sr-rolls-log" style="font-size:0.78rem;color:var(--text-dim);margin-top:0.4rem"></div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-primary btn-sm" id="sr-confirm">Confirmar</button>
+            <button class="btn btn-secondary btn-sm" id="sr-cancel">Cancelar</button>
+            <button class="btn btn-primary btn-sm" id="sr-confirm">Confirmar Descanso</button>
           </div>
         </div>`;
       document.body.appendChild(overlay);
       overlay.classList.add('open');
 
-      let totalHeal = 0;
-      let diceUsed  = 0;
+      // ── State local — dados só são gastos ao confirmar ──────────────────
+      let totalHeal  = 0;
+      let diceUsed   = 0;
+      let availLocal = available;  // rastreia disponibilidade sem tocar no estado global
+
+      const rollsLog = [];
+
+      const _updateDisplay = () => {
+        document.getElementById('sr-avail-display').textContent = availLocal;
+        document.getElementById('sr-result').textContent =
+          totalHeal > 0 ? `+${totalHeal} PV (${diceUsed} dado${diceUsed > 1 ? 's' : ''})` : '';
+        document.getElementById('sr-rolls-log').innerHTML =
+          rollsLog.map(r => `<span style="color:var(--text-dim)">${r}</span>`).join(' · ');
+        document.getElementById('sr-use-dice').disabled = availLocal <= 0;
+      };
+
+      const _closeAndCancel = () => {
+        // Fecha sem salvar nada — estado global não foi tocado
+        overlay.remove();
+      };
 
       overlay.querySelector('#sr-use-dice')?.addEventListener('click', () => {
-        const cur = CharacterState.get();
-        const usedNow = cur.combat?.hitDiceUsed || 0;
-        if (cur.identity.level - usedNow <= 0) {
-          Toast.show('Sem dados de vida restantes.'); return;
-        }
+        if (availLocal <= 0) { Toast.show('Sem dados de vida restantes.'); return; }
         const roll = Math.floor(Math.random() * sides) + 1;
         const heal = Math.max(1, roll + conMod);
-        totalHeal += heal; diceUsed++;
-        document.getElementById('sr-result').textContent = `+${totalHeal} PV (${diceUsed} dado${diceUsed>1?'s':''})`;
-        CharacterState.patch({ combat: { ...cur.combat, hitDiceUsed: usedNow + 1 } });
+        totalHeal += heal;
+        diceUsed++;
+        availLocal--;
+        rollsLog.push(`d${sides}=${roll}${conMod !== 0 ? (conMod > 0 ? `+${conMod}` : conMod) : ''}→${heal}`);
+        _updateDisplay();
       });
 
       overlay.querySelector('#sr-confirm')?.addEventListener('click', () => {
         const cur = CharacterState.get();
-        if (totalHeal > 0) {
-          const newHp = Math.min(cur.combat.hp.current + totalHeal, cur.combat.hp.max);
-          CharacterState.patch({ combat: { ...cur.combat, hp: { ...cur.combat.hp, current: newHp } } });
-          Toast.show(`⛺ Descanso Curto: +${totalHeal} PV recuperados.`);
+        // Gasta os dados de vida usados
+        if (diceUsed > 0) {
+          const newUsed = (cur.combat?.hitDiceUsed || 0) + diceUsed;
+          const newHp   = Math.min(cur.combat.hp.current + totalHeal, cur.combat.hp.max);
+          CharacterState.patch({
+            combat: {
+              ...cur.combat,
+              hitDiceUsed: newUsed,
+              hp: { ...cur.combat.hp, current: newHp }
+            }
+          });
+          Toast.show(`⛺ Descanso Curto: +${totalHeal} PV recuperados (${diceUsed} dado${diceUsed > 1 ? 's' : ''} gastos).`);
+        } else if (!isWarlock) {
+          Toast.show('⛺ Descanso Curto concluído (nenhum dado usado).');
         }
-        if (isWarlock) { CharacterState.resetPactSlots(); Toast.show('✦ Slots de Pacto recuperados.'); }
+        if (isWarlock) {
+          CharacterState.resetPactSlots();
+          Toast.show('✦ Slots de Pacto recuperados.');
+        }
         overlay.remove();
         _renderActivePanel();
       });
 
-      overlay.querySelector('#sr-modal-close')?.addEventListener('click', () => overlay.remove());
-      overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+      // Botão Cancelar e X: descartam sem salvar
+      overlay.querySelector('#sr-cancel')?.addEventListener('click', _closeAndCancel);
+      overlay.querySelector('#sr-modal-close')?.addEventListener('click', _closeAndCancel);
+      overlay.addEventListener('click', e => { if (e.target === overlay) _closeAndCancel(); });
     });
   };
 
@@ -1115,6 +1148,21 @@ el.querySelector('#btn-level-up')?.addEventListener('click', _openLevelUpModal);
     const castAttr = CASTING_ATTR[classId] || 'wis';
     const castMod  = CharacterState.getModifier(castAttr);
     const { max: maxPrep } = getMaxPrepared(classId, level, castMod);
+
+    // Meio-conjuradores só começam a conjurar a partir do nível 2 (Paladino e Patrulheiro)
+    if (subtype === 'prepared-half' && level < 2) {
+      el.innerHTML = `
+        <div class="grimoire-empty">
+          <div style="font-size:2rem;margin-bottom:0.75rem">🔒</div>
+          <div style="font-size:1rem;color:var(--text-muted)">
+            ${CLASS_NAME_PT[classId]} começa a conjurar magias a partir do <strong>nível 2</strong>.
+          </div>
+          <div style="font-size:0.85rem;color:var(--text-dim);margin-top:0.5rem">
+            Suba de nível para desbloquear o grimório.
+          </div>
+        </div>`;
+      return;
+    }
 
     // Lista de magias acessíveis (todos os círculos até o máximo de slots)
     let classSpells = _getClassSpells(classId, level);

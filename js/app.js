@@ -710,10 +710,12 @@ export const CharacterState = (() => {
         }
         _state.meta.version = 5;
       }
+      return true; // ← dados carregados com sucesso
     }
   } catch(e) { 
     console.warn('CharacterState.load error:', e); 
   }
+  return false; // ← sem dados salvos ou erro
   };
 
   const exportJSON = () => {

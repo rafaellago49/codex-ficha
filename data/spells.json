@@ -1,6 +1,63 @@
 [
   {
-    "id": "sacred-flame",
+    "id": "amizade",
+    "name": "Amizade",
+    "level": 0,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Amizade. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "ataque-certeiro",
+    "name": "Ataque Certeiro",
+    "level": 0,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Ataque Certeiro. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "bordao-mistico",
+    "name": "Bordão Místico",
+    "level": 0,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Bordão Místico. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "chama-sagrada",
     "name": "Chama Sagrada",
     "level": 0,
     "school": "Evocação",
@@ -12,25 +69,577 @@
     "ritual": false,
     "description": "Radiância semelhante a uma chama desce sobre uma criatura que você possa ver dentro do alcance. O alvo deve ser bem-sucedido numa salvaguarda de Destreza ou sofrer 1d8 de dano radiante. O alvo não se beneficia de cobertura para essa salvaguarda.",
     "atHigherLevels": "O dano aumenta para 2d8 no nível 5, 3d8 no nível 11 e 4d8 no nível 17.",
-    "classes": ["Clérigo"]
+    "classes": [
+      "Clérigo"
+    ]
   },
   {
-    "id": "toll-the-dead",
-    "name": "Toque da Morte",
+    "id": "chicote-de-espinhos",
+    "name": "Chicote de Espinhos",
     "level": 0,
-    "school": "Necromancia",
+    "school": "Transmutação",
     "castingTime": "1 ação",
-    "range": "18 metros",
+    "range": "Variável",
     "components": "V, S",
     "duration": "Instantânea",
     "concentration": false,
     "ritual": false,
-    "description": "Você aponta para uma criatura que possa ver dentro do alcance e o som de um sino fúnebre ecoa por um momento. O alvo deve ter sucesso numa salvaguarda de Sabedoria ou sofrer 1d8 de dano necrótico. Se o alvo estiver faltando algum ponto de vida, ele sofre 1d12 de dano necrótico em vez disso.",
-    "atHigherLevels": "O dano aumenta para 2d8 / 2d12 no nível 5, 3d8 / 3d12 no nível 11 e 4d8 / 4d12 no nível 17.",
-    "classes": ["Clérigo", "Bruxo", "Mago"]
+    "description": "Chicote de Espinhos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
   },
   {
-    "id": "bless",
+    "id": "consertar",
+    "name": "Consertar",
+    "level": 0,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Conservar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "criar-chamas",
+    "name": "Criar Chamas",
+    "level": 0,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Criar Chamas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "druidismo",
+    "name": "Druidismo",
+    "level": 0,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Druidismo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "espirro-acido",
+    "name": "Espirro Ácido",
+    "level": 0,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Espirro Ácido. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "estabilizar",
+    "name": "Estabilizar",
+    "level": 0,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Estabilizar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "globos-de-luz",
+    "name": "Globos de Luz",
+    "level": 0,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Globos de Luz. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "ilusao-menor",
+    "name": "Ilusão Menor",
+    "level": 0,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Ilusão Menor. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "luz",
+    "name": "Luz",
+    "level": 0,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Luz. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "mensagem",
+    "name": "Mensagem",
+    "level": 0,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Mensagem. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "maos-magicas",
+    "name": "Mãos Mágicas",
+    "level": 0,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Mãos Mágicas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "orientacao",
+    "name": "Orientação",
+    "level": 0,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Orientação. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "prestidigitacao",
+    "name": "Prestidigitação",
+    "level": 0,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Prestidigitação. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "protecao-contra-laminas",
+    "name": "Proteção contra Lâminas",
+    "level": 0,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Proteção contra Lâminas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "raio-de-fogo",
+    "name": "Raio de Fogo",
+    "level": 0,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Raio de Fogo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "raio-de-gelo",
+    "name": "Raio de Gelo",
+    "level": 0,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Raio de Gelo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "rajada-mistica",
+    "name": "Rajada Mística",
+    "level": 0,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Rajada Mística. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo"
+    ]
+  },
+  {
+    "id": "rajada-de-veneno",
+    "name": "Rajada de Veneno",
+    "level": 0,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Rajada de Veneno. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "resistencia",
+    "name": "Resistência",
+    "level": 0,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Resistência. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "taumaturgia",
+    "name": "Taumaturgia",
+    "level": 0,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Taumaturgia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "toque-arrepiante",
+    "name": "Toque Arrepiante",
+    "level": 0,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Toque Arrepiante. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "toque-chocante",
+    "name": "Toque Chocante",
+    "level": 0,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Toque Chocante. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "zombaria-viciosa",
+    "name": "Zombaria Viciosa",
+    "level": 0,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Zombaria Viciosa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo"
+    ]
+  },
+  {
+    "id": "alarme",
+    "name": "Alarme",
+    "level": 1,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Alarme. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "amizade-animal",
+    "name": "Amizade Animal",
+    "level": 1,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Amizade Animal. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "armadura-arcana",
+    "name": "Armadura Arcana",
+    "level": 1,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Armadura Arcana. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "armadura-de-agathys",
+    "name": "Armadura de Agathys",
+    "level": 1,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Armadura de Agathys. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo"
+    ]
+  },
+  {
+    "id": "auxilio-divino",
+    "name": "Auxílio Divino",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Auxílio Divino. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "bom-fruto",
+    "name": "Bom Fruto",
+    "level": 1,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Bom Fruto. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "bracos-de-hadar",
+    "name": "Braços de Hadar",
+    "level": 1,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Braços de Hadar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo"
+    ]
+  },
+  {
+    "id": "bruxaria",
+    "name": "Bruxaria",
+    "level": 1,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Bruxaria. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo"
+    ]
+  },
+  {
+    "id": "bencao",
     "name": "Bênção",
     "level": 1,
     "school": "Encantamento",
@@ -42,10 +651,103 @@
     "ritual": false,
     "description": "Você abençoa até três criaturas à sua escolha dentro do alcance. Cada vez que um alvo faz uma jogada de ataque ou salvaguarda antes do fim da magia, o alvo pode rolar 1d4 e adicionar o resultado à jogada de ataque ou salvaguarda.",
     "atHigherLevels": "Ao conjurar essa magia usando um slot de 2º nível ou superior, você pode visar uma criatura adicional para cada nível acima do 1º.",
-    "classes": ["Clérigo", "Paladino"]
+    "classes": [
+      "Clérigo",
+      "Paladino"
+    ]
   },
   {
-    "id": "cure-wounds",
+    "id": "comando",
+    "name": "Comando",
+    "level": 1,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Comando. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "compreender-idiomas",
+    "name": "Compreender Idiomas",
+    "level": 1,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Compreender Idiomas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "constricao",
+    "name": "Constrição",
+    "level": 1,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Constrição. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "convocar-familiar",
+    "name": "Convocar Familiar",
+    "level": 1,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Convocar Familiar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "criar-ou-destruir-agua",
+    "name": "Criar ou Destruir Água",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Criar ou Destruir Água. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "curar-ferimentos",
     "name": "Curar Ferimentos",
     "level": 1,
     "school": "Evocação",
@@ -57,25 +759,67 @@
     "ritual": false,
     "description": "Uma criatura que você toca recupera um número de pontos de vida igual a 1d8 + o seu modificador de habilidade de conjuração. Essa magia não tem efeito em mortos-vivos ou constructos.",
     "atHigherLevels": "Ao conjurar usando um slot de 2º nível ou superior, a cura aumenta em 1d8 para cada nível acima do 1º.",
-    "classes": ["Bardo", "Clérigo", "Druida", "Paladino", "Patrulheiro"]
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Paladino",
+      "Patrulheiro"
+    ]
   },
   {
-    "id": "shield-of-faith",
-    "name": "Escudo da Fé",
+    "id": "destruicao-colerica",
+    "name": "Destruição Colérica",
     "level": 1,
-    "school": "Abjuração",
-    "castingTime": "1 ação bônus",
-    "range": "18 metros",
-    "components": "V, S, M (um pequeno pergaminho com texto sagrado)",
-    "duration": "Concentração, até 10 minutos",
-    "concentration": true,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
     "ritual": false,
-    "description": "Um campo de energia brilhante envolve uma criatura à sua escolha dentro do alcance, concedendo-lhe +2 de bônus na Classe de Armadura pelo tempo que a magia durar.",
+    "description": "Destruição Colérica. Consulte o Livro do Jogador para detalhes completos.",
     "atHigherLevels": "",
-    "classes": ["Clérigo", "Paladino"]
+    "classes": [
+      "Paladino"
+    ]
   },
   {
-    "id": "detect-magic",
+    "id": "destruicao-lancinante",
+    "name": "Destruição Lancinante",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Destruição Lancinante. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "destruicao-trovejante",
+    "name": "Destruição Trovejante",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Destruição Trovejante. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "detectar-magia",
     "name": "Detectar Magia",
     "level": 1,
     "school": "Adivinhação",
@@ -87,10 +831,239 @@
     "ritual": true,
     "description": "Pelo tempo que essa magia durar, você percebe a presença de magia a 9 metros de você. Se você perceber magia dessa forma, você pode usar sua ação para ver uma aura tênue ao redor de qualquer criatura ou objeto visível na área que tem magia sobre ela, e você aprende sua escola de magia, se houver.",
     "atHigherLevels": "",
-    "classes": ["Bardo", "Clérigo", "Druida", "Mago", "Paladino", "Patrulheiro", "Feiticeiro", "Bruxo"]
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Feiticeiro",
+      "Mago",
+      "Paladino",
+      "Patrulheiro"
+    ]
   },
   {
-    "id": "heroism",
+    "id": "detectar-veneno-e-doenca",
+    "name": "Detectar Veneno e Doença",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Detectar Veneno e Doença. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Paladino",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "detectar-o-bem-e-mal",
+    "name": "Detectar o Bem e Mal",
+    "level": 1,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Detectar o Bem e Mal. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "disco-flutuante-de-tenser",
+    "name": "Disco Flutuante de Tenser",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Disco Flutuante de Tenser. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "disfarcar-se",
+    "name": "Disfarçar-se",
+    "level": 1,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Disfarçar-se. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "duelo-compelido",
+    "name": "Duelo Compelido",
+    "level": 1,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Duelo Compelido. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "enfeiticar-pessoa",
+    "name": "Enfeitiçar Pessoa",
+    "level": 1,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Enfeitiçar Pessoa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "escrita-ilusoria",
+    "name": "Escrita Ilusória",
+    "level": 1,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Escrita Ilusória. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "escudo-arcano",
+    "name": "Escudo Arcano",
+    "level": 1,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Escudo Arcano. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "escudo-da-fe",
+    "name": "Escudo da Fé",
+    "level": 1,
+    "school": "Abjuração",
+    "castingTime": "1 ação bônus",
+    "range": "18 metros",
+    "components": "V, S, M (um pequeno pergaminho com texto sagrado)",
+    "duration": "Concentração, até 10 minutos",
+    "concentration": true,
+    "ritual": false,
+    "description": "Um campo de energia brilhante envolve uma criatura à sua escolha dentro do alcance, concedendo-lhe +2 de bônus na Classe de Armadura pelo tempo que a magia durar.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "falar-com-animais",
+    "name": "Falar com Animais",
+    "level": 1,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Falar com Animais. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "fogo-das-fadas",
+    "name": "Fogo das Fadas",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Fogo das Fadas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "golpe-constritor",
+    "name": "Golpe Constritor",
+    "level": 1,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Golpe Constritor. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "heroismo",
     "name": "Heroísmo",
     "level": 1,
     "school": "Encantamento",
@@ -102,25 +1075,85 @@
     "ritual": false,
     "description": "Uma criatura voluntária que você toca fica imbuída de bravura. Até a magia terminar, a criatura é imune à condição amedrontado e ganha pontos de vida temporários iguais ao seu modificador de habilidade de conjuração no início de cada um de seus turnos. Quando a magia termina, o alvo perde os pontos de vida temporários restantes dessa magia.",
     "atHigherLevels": "Ao conjurar usando um slot de 2º nível ou superior, você pode visar uma criatura adicional para cada nível acima do 1º.",
-    "classes": ["Bardo", "Paladino"]
+    "classes": [
+      "Bardo",
+      "Paladino"
+    ]
   },
   {
-    "id": "divine-favor",
-    "name": "Favor Divino",
+    "id": "identificacao",
+    "name": "Identificação",
     "level": 1,
-    "school": "Evocação",
-    "castingTime": "1 ação bônus",
-    "range": "Pessoal",
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
     "components": "V, S",
-    "duration": "Concentração, até 1 minuto",
-    "concentration": true,
+    "duration": "Instantânea",
+    "concentration": false,
     "ritual": false,
-    "description": "Seus orações concedem você um brilho divino temporário. Até a magia terminar, seus ataques de arma causam 1d4 de dano radiante adicional no acerto.",
+    "description": "Identificação. Consulte o Livro do Jogador para detalhes completos.",
     "atHigherLevels": "",
-    "classes": ["Paladino"]
+    "classes": [
+      "Bardo",
+      "Mago"
+    ]
   },
   {
-    "id": "hunters-mark",
+    "id": "imagem-silenciosa",
+    "name": "Imagem Silenciosa",
+    "level": 1,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Imagem Silenciosa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "infringir-ferimentos",
+    "name": "Infringir Ferimentos",
+    "level": 1,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Infringir Ferimentos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "leque-cromatico",
+    "name": "Leque Cromático",
+    "level": 1,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Leque Cromático. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "marca-do-cacador",
     "name": "Marca do Caçador",
     "level": 1,
     "school": "Adivinhação",
@@ -132,25 +1165,491 @@
     "ritual": false,
     "description": "Você escolhe uma criatura que você possa ver dentro do alcance e a marca misticamente como sua presa. Até a magia terminar, você causa 1d6 de dano extra na criatura alvo quando você a acertar com um ataque de arma, e você tem vantagem em qualquer verificação de Sabedoria (Percepção) ou Sabedoria (Sobrevivência) feita para encontrar a criatura. Se a criatura cair a 0 pontos de vida antes dessa magia terminar, você pode usar uma ação bônus no seu próximo turno para marcar uma nova criatura.",
     "atHigherLevels": "Ao conjurar usando um slot de 3º ou 4º nível, a duração aumenta para 8 horas. Com slot de 5º nível ou superior, a duração é de 24 horas.",
-    "classes": ["Patrulheiro"]
+    "classes": [
+      "Patrulheiro"
+    ]
   },
   {
-    "id": "animal-friendship",
-    "name": "Amizade com os Animais",
+    "id": "maos-flamejantes",
+    "name": "Mãos Flamejantes",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Mãos Flamejantes. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "misseis-magicos",
+    "name": "Mísseis Mágicos",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Mísseis Mágicos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "nevoa-obscurecente",
+    "name": "Névoa Obscurecente",
+    "level": 1,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Névoa Obscurecente. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "onda-trovejante",
+    "name": "Onda Trovejante",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Onda Trovejante. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "orbe-cromatica",
+    "name": "Orbe Cromática",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Orbe Cromática. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "palavra-curativa",
+    "name": "Palavra Curativa",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Palavra Curativa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "passos-longos",
+    "name": "Passos Longos",
+    "level": 1,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Passos Longos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida",
+      "Mago",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "perdicao",
+    "name": "Perdição",
     "level": 1,
     "school": "Encantamento",
     "castingTime": "1 ação",
-    "range": "9 metros",
-    "components": "V, S, M (alimento)",
-    "duration": "24 horas",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
     "concentration": false,
     "ritual": false,
-    "description": "Essa magia permite que você convença uma besta de que você não pretende lhe causar nenhum mal. Escolha uma besta que você possa ver dentro do alcance. A besta deve ver e ouvir você. Se a Inteligência da besta for 4 ou maior, a magia falha. Caso contrário, a besta deve ser bem-sucedida numa salvaguarda de Sabedoria ou ficará enfeitiçada por você pelo tempo que a magia durar.",
-    "atHigherLevels": "Ao conjurar usando um slot de 2º nível ou superior, você pode afetar uma besta adicional para cada nível acima do 1º.",
-    "classes": ["Bardo", "Druida", "Patrulheiro"]
+    "description": "Perdição. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo"
+    ]
   },
   {
-    "id": "aid",
+    "id": "protecao-contra-o-bem-e-mal",
+    "name": "Proteção contra o Bem e Mal",
+    "level": 1,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Proteção contra o Bem e Mal. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Clérigo",
+      "Mago",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "purificar-alimentos",
+    "name": "Purificar Alimentos",
+    "level": 1,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Purificar Alimentos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "queda-suave",
+    "name": "Queda Suave",
+    "level": 1,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Queda Suave. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "raio-adoecente",
+    "name": "Raio Adoecente",
+    "level": 1,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Raio Adoecente. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "raio-guiador",
+    "name": "Raio Guiador",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Raio Guiador. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "raio-de-bruxa",
+    "name": "Raio de Bruxa",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Raio de Bruxa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "recuo-acelerado",
+    "name": "Recuo Acelerado",
+    "level": 1,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Recuo Acelerado. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "repreensao-infernal",
+    "name": "Repreensão Infernal",
+    "level": 1,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Repreensão Infernal. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo"
+    ]
+  },
+  {
+    "id": "riso-histerico-de-tasha",
+    "name": "Riso Histérico de Tasha",
+    "level": 1,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Riso Histérico de Tasha. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "salto",
+    "name": "Salto",
+    "level": 1,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Salto. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "santuario",
+    "name": "Santuário",
+    "level": 1,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Santuário. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "saraivada-de-espinhos",
+    "name": "Saraivada de Espinhos",
+    "level": 1,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Saraivada de Espinhos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "servo-invisivel",
+    "name": "Servo Invisível",
+    "level": 1,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Servo Invisível. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "sono",
+    "name": "Sono",
+    "level": 1,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Sono. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "sussurros-dissonantes",
+    "name": "Sussurros Dissonantes",
+    "level": 1,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Sussurros Dissonantes. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo"
+    ]
+  },
+  {
+    "id": "vitalidade-falsa",
+    "name": "Vitalidade Falsa",
+    "level": 1,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Vitalidade Falsa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "area-escorregadia",
+    "name": "Área Escorregadia",
+    "level": 1,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Área Escorregadia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "acalmar-emocoes",
+    "name": "Acalmar Emoções",
+    "level": 2,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Acalmar Emoções. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "ajuda",
     "name": "Ajuda",
     "level": 2,
     "school": "Abjuração",
@@ -162,55 +1661,51 @@
     "ritual": false,
     "description": "Sua magia fortalece e encoraja aliados. Escolha até três criaturas dentro do alcance. O máximo de pontos de vida de cada alvo e os seus pontos de vida atuais aumentam em 5 pelo tempo que a magia durar.",
     "atHigherLevels": "Ao conjurar usando um slot de 3º nível ou superior, os pontos de vida aumentam em 5 adicionais para cada nível acima do 2º.",
-    "classes": ["Clérigo", "Paladino"]
+    "classes": [
+      "Clérigo",
+      "Paladino"
+    ]
   },
   {
-    "id": "magic-weapon",
-    "name": "Arma Mágica",
+    "id": "alterar-se",
+    "name": "Alterar-se",
     "level": 2,
     "school": "Transmutação",
-    "castingTime": "1 ação bônus",
-    "range": "Toque",
-    "components": "V, S",
-    "duration": "Concentração, até 1 hora",
-    "concentration": true,
-    "ritual": false,
-    "description": "Você toca uma arma não-mágica. Até a magia terminar, essa arma conta como mágica para o propósito de superar resistências e imunidades a ataques e danos não-mágicos. Além disso, os ataques feitos com a arma têm +1 de bônus nas jogadas de ataque e dano.",
-    "atHigherLevels": "Ao conjurar usando um slot de 4º nível ou superior, o bônus aumenta para +2. Com slot de 6º nível ou superior, o bônus aumenta para +3.",
-    "classes": ["Paladino", "Mago", "Feiticeiro"]
-  },
-  {
-    "id": "zone-of-truth",
-    "name": "Zona da Verdade",
-    "level": 2,
-    "school": "Encantamento",
     "castingTime": "1 ação",
-    "range": "18 metros",
-    "components": "V, S",
-    "duration": "10 minutos",
-    "concentration": false,
-    "ritual": false,
-    "description": "Você cria uma zona mágica que guarda contra o engano numa esfera de 4,5 metros de raio centrada em um ponto de sua escolha dentro do alcance. Até a magia terminar, uma criatura que entre na área da magia pela primeira vez num turno ou que comece o seu turno na área deve ser bem-sucedida numa salvaguarda de Carisma ou ficará incapaz de dizer uma mentira deliberada enquanto estiver na área.",
-    "atHigherLevels": "",
-    "classes": ["Clérigo", "Paladino"]
-  },
-  {
-    "id": "lesser-restoration",
-    "name": "Restauração Menor",
-    "level": 2,
-    "school": "Abjuração",
-    "castingTime": "1 ação",
-    "range": "Toque",
+    "range": "Variável",
     "components": "V, S",
     "duration": "Instantânea",
     "concentration": false,
     "ritual": false,
-    "description": "Você toca uma criatura e pode acabar com uma doença ou uma condição afetando ela. A condição pode ser amedrontado, cego, ensurdecido, envenenado ou paralisado.",
+    "description": "Alterar-se. Consulte o Livro do Jogador para detalhes completos.",
     "atHigherLevels": "",
-    "classes": ["Bardo", "Clérigo", "Druida", "Paladino", "Patrulheiro"]
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
   },
   {
-    "id": "spiritual-weapon",
+    "id": "aprimorar-habilidade",
+    "name": "Aprimorar Habilidade",
+    "level": 2,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Aprimorar Habilidade. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Feiticeiro"
+    ]
+  },
+  {
+    "id": "arma-espiritual",
     "name": "Arma Espiritual",
     "level": 2,
     "school": "Evocação",
@@ -222,10 +1717,1150 @@
     "ritual": false,
     "description": "Você cria uma arma espectral flutuante dentro do alcance que dura pelo tempo que a magia durar ou até que você conjure essa magia novamente. Quando você conjura essa magia, você pode fazer um ataque corpo a corpo de magia contra uma criatura dentro de 1,5 metro da arma. No acerto, o alvo sofre dano de força igual a 1d8 + o seu modificador de habilidade de conjuração. Como uma ação bônus no seu turno, você pode mover a arma até 6 metros e repetir o ataque contra uma criatura dentro de 1,5 metro dela.",
     "atHigherLevels": "Ao conjurar usando um slot de 3º nível ou superior, o dano aumenta em 1d8 para cada dois níveis acima do 2º.",
-    "classes": ["Clérigo"]
+    "classes": [
+      "Clérigo"
+    ]
   },
   {
-    "id": "fireball",
+    "id": "arma-magica",
+    "name": "Arma Mágica",
+    "level": 2,
+    "school": "Transmutação",
+    "castingTime": "1 ação bônus",
+    "range": "Toque",
+    "components": "V, S",
+    "duration": "Concentração, até 1 hora",
+    "concentration": true,
+    "ritual": false,
+    "description": "Você toca uma arma não-mágica. Até a magia terminar, essa arma conta como mágica para o propósito de superar resistências e imunidades a ataques e danos não-mágicos. Além disso, os ataques feitos com a arma têm +1 de bônus nas jogadas de ataque e dano.",
+    "atHigherLevels": "Ao conjurar usando um slot de 4º nível ou superior, o bônus aumenta para +2. Com slot de 6º nível ou superior, o bônus aumenta para +3.",
+    "classes": [
+      "Mago",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "arrombar",
+    "name": "Arrombar",
+    "level": 2,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Arrombar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "augurio",
+    "name": "Augúrio",
+    "level": 2,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Augúrio. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "aumentar-reduzir",
+    "name": "Aumentar/Reduzir",
+    "level": 2,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Aumentar/Reduzir. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "aura-magica-de-nystul",
+    "name": "Aura Mágica de Nystul",
+    "level": 2,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Aura Mágica de Nystul. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "boca-encantada",
+    "name": "Boca Encantada",
+    "level": 2,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Boca Encantada. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "cativar",
+    "name": "Cativar",
+    "level": 2,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Cativar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo"
+    ]
+  },
+  {
+    "id": "cegueira-surdez",
+    "name": "Cegueira/Surdez",
+    "level": 2,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Cegueira/Surdez. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "chama-continua",
+    "name": "Chama Contínua",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Chama Contínua. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "convocar-montaria",
+    "name": "Convocar Montaria",
+    "level": 2,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Convocar Montaria. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "cordao-de-flechas",
+    "name": "Cordão de Flechas",
+    "level": 2,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Cordão de Flechas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "coroa-da-loucura",
+    "name": "Coroa da Loucura",
+    "level": 2,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Coroa da Loucura. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "crescer-espinhos",
+    "name": "Crescer Espinhos",
+    "level": 2,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Crescer Espinhos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "despedacar",
+    "name": "Despedaçar",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Despedaçar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "detectar-pensamentos",
+    "name": "Detectar Pensamentos",
+    "level": 2,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Detectar Pensamentos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "encontrar-armadilhas",
+    "name": "Encontrar Armadilhas",
+    "level": 2,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Encontrar Armadilhas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "escuridao",
+    "name": "Escuridão",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Escuridão. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "esfera-flamejante",
+    "name": "Esfera Flamejante",
+    "level": 2,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Esfera Flamejante. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "esquentar-metal",
+    "name": "Esquentar Metal",
+    "level": 2,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Esquentar Metal. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "flecha-acida-de-melf",
+    "name": "Flecha Ácida de Melf",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Flecha Ácida de Melf. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "forca-fantasmagorica",
+    "name": "Força Fantasmagórica",
+    "level": 2,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Força Fantasmagórica. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "imobilizar-pessoa",
+    "name": "Imobilizar Pessoa",
+    "level": 2,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Imobilizar Pessoa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Clérigo",
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "invisibilidade",
+    "name": "Invisibilidade",
+    "level": 2,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Invisibilidade. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "levitacao",
+    "name": "Levitação",
+    "level": 2,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Levitação. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "localizar-animais-ou-plantas",
+    "name": "Localizar Animais ou Plantas",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Localizar Animais ou Plantas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "localizar-objeto",
+    "name": "Localizar Objeto",
+    "level": 2,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Localizar Objeto. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Mago",
+      "Paladino",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "lua-das-fadas",
+    "name": "Lua das Fadas",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Lua das Fadas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "lufada-de-vento",
+    "name": "Lufada de Vento",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Lufada de Vento. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "lamina-flamejante",
+    "name": "Lâmina Flamejante",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Lâmina Flamejante. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "marca-da-punicao",
+    "name": "Marca da Punição",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Marca da Punição. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "mensageiro-animal",
+    "name": "Mensageiro Animal",
+    "level": 2,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Mensageiro Animal. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "nublar",
+    "name": "Nublar",
+    "level": 2,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Nublar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "nuvem-de-adagas",
+    "name": "Nuvem de Adagas",
+    "level": 2,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Nuvem de Adagas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "oracao-curativa",
+    "name": "Oração Curativa",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Oração Curativa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "passar-sem-vestigio",
+    "name": "Passar sem Vestígio",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Passar sem Vestígio. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "passo-nebuloso",
+    "name": "Passo Nebuloso",
+    "level": 2,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Passo Nebuloso. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "passos-sem-pegadas",
+    "name": "Passos sem Pegadas",
+    "level": 2,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Passos sem Pegadas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "patas-de-aranha",
+    "name": "Patas de Aranha",
+    "level": 2,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Patas de Aranha. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "pele-de-arvore",
+    "name": "Pele de Árvore",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Pele de Árvore. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "protecao-contra-veneno",
+    "name": "Proteção contra Veneno",
+    "level": 2,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Proteção contra Veneno. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Paladino",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "raio-ardente",
+    "name": "Raio Ardente",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Raio Ardente. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "raio-lunar",
+    "name": "Raio Lunar",
+    "level": 2,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Raio Lunar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "raio-do-enfraquecimento",
+    "name": "Raio do Enfraquecimento",
+    "level": 2,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Raio do Enfraquecimento. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "reflexos",
+    "name": "Reflexos",
+    "level": 2,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Reflexos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "repouso-tranquilo",
+    "name": "Repouso Tranquilo",
+    "level": 2,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Repouso Tranquilo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "restauracao-menor",
+    "name": "Restauração Menor",
+    "level": 2,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Toque",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Você toca uma criatura e pode acabar com uma doença ou uma condição afetando ela. A condição pode ser amedrontado, cego, ensurdecido, envenenado ou paralisado.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Paladino",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "sentido-bestial",
+    "name": "Sentido Bestial",
+    "level": 2,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Sentido Bestial. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "silencio",
+    "name": "Silêncio",
+    "level": 2,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Silêncio. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "sugestao",
+    "name": "Sugestão",
+    "level": 2,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Sugestão. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "teia",
+    "name": "Teia",
+    "level": 2,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Teia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "tranca-arcana",
+    "name": "Tranca Arcana",
+    "level": 2,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Tranca Arcana. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "truque-de-corda",
+    "name": "Truque de Corda",
+    "level": 2,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Truque de Corda. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "ver-o-invisivel",
+    "name": "Ver o Invisível",
+    "level": 2,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Ver o Invisível. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "visao-no-escuro",
+    "name": "Visão no Escuro",
+    "level": 2,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Visão no Escuro. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "vinculo-protetor",
+    "name": "Vínculo Protetor",
+    "level": 2,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Vínculo Protetor. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "zona-da-verdade",
+    "name": "Zona da Verdade",
+    "level": 2,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "18 metros",
+    "components": "V, S",
+    "duration": "10 minutos",
+    "concentration": false,
+    "ritual": false,
+    "description": "Você cria uma zona mágica que guarda contra o engano numa esfera de 4,5 metros de raio centrada em um ponto de sua escolha dentro do alcance. Até a magia terminar, uma criatura que entre na área da magia pela primeira vez num turno ou que comece o seu turno na área deve ser bem-sucedida numa salvaguarda de Carisma ou ficará incapaz de dizer uma mentira deliberada enquanto estiver na área.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "ampliar-plantas",
+    "name": "Ampliar Plantas",
+    "level": 3,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Ampliar Plantas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "andar-na-agua",
+    "name": "Andar na Água",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Andar na Água. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Feiticeiro",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "animar-mortos",
+    "name": "Animar Mortos",
+    "level": 3,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Animar Mortos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "arma-elemental",
+    "name": "Arma Elemental",
+    "level": 3,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Arma Elemental. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "aura-elemental",
+    "name": "Aura Elemental",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Aura Elemental. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "aura-de-vitalidade",
+    "name": "Aura de Vitalidade",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Aura de Vitalidade. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "bola-de-fogo",
     "name": "Bola de Fogo",
     "level": 3,
     "school": "Evocação",
@@ -237,25 +2872,743 @@
     "ritual": false,
     "description": "Um ponto brilhante de luz laranja você projeta para um ponto que você escolher dentro do alcance e que então floresce com um rugido baixo em uma explosão de chamas. Cada criatura numa esfera de 6 metros de raio centrada naquele ponto deve fazer uma salvaguarda de Destreza. Um alvo sofre 8d6 de dano de fogo numa falha, ou metade desse dano num sucesso.",
     "atHigherLevels": "Ao conjurar usando um slot de 4º nível ou superior, o dano aumenta em 1d6 para cada nível acima do 3º.",
-    "classes": ["Mago", "Feiticeiro"]
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
   },
   {
-    "id": "spirit-guardians",
-    "name": "Guardiões Espirituais",
+    "id": "clarividencia",
+    "name": "Clarividência",
+    "level": 3,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Clarividência. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "conjurar-animais",
+    "name": "Conjurar Animais",
     "level": 3,
     "school": "Conjuração",
     "castingTime": "1 ação",
-    "range": "Pessoal (4,5 metros de raio)",
-    "components": "V, S, M (um símbolo sagrado)",
-    "duration": "Concentração, até 10 minutos",
-    "concentration": true,
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
     "ritual": false,
-    "description": "Você chama espíritos para protegê-lo. Eles desvanecem quando a magia termina. Até a magia terminar, sempre que uma criatura hostil entrar na área pela primeira vez num turno ou começar o seu turno lá, a criatura deve ser bem-sucedida numa salvaguarda de Sabedoria ou sofrer 3d8 de dano radiante (ou necrótico se você escolheu). Na falha, a velocidade da criatura é reduzida à metade até o início do próximo turno delas.",
-    "atHigherLevels": "Ao conjurar usando um slot de 4º nível ou superior, o dano aumenta em 1d8 para cada nível acima do 3º.",
-    "classes": ["Clérigo"]
+    "description": "Conjurar Animais. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Patrulheiro"
+    ]
   },
   {
-    "id": "revivify",
+    "id": "conjurar-rajada",
+    "name": "Conjurar Rajada",
+    "level": 3,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Conjurar Rajada. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "contramagica",
+    "name": "Contramágica",
+    "level": 3,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Contramágica. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "convocar-relampagos",
+    "name": "Convocar Relâmpagos",
+    "level": 3,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Convocar Relâmpagos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "criar-alimentos",
+    "name": "Criar Alimentos",
+    "level": 3,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Criar Alimentos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "circulo-magico",
+    "name": "Círculo Mágico",
+    "level": 3,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Círculo Mágico. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Clérigo",
+      "Mago",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "destruicao-cegante",
+    "name": "Destruição Cegante",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Destruição Cegante. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "dificultar-deteccao",
+    "name": "Dificultar Detecção",
+    "level": 3,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Dificultar Detecção. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Mago",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "dissipar-magia",
+    "name": "Dissipar Magia",
+    "level": 3,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Dissipar Magia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Clérigo",
+      "Druida",
+      "Feiticeiro",
+      "Mago",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "elemento-protetor",
+    "name": "Elemento Protetor",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Elemento Protetor. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "enviar-mensagem",
+    "name": "Enviar Mensagem",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Enviar Mensagem. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "espiritos-guardioes",
+    "name": "Espíritos Guardiões",
+    "level": 3,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Espíritos Guardiões. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "falar-com-plantas",
+    "name": "Falar com Plantas",
+    "level": 3,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Falar com Plantas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "falar-com-os-mortos",
+    "name": "Falar com os Mortos",
+    "level": 3,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Falar com os Mortos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "flecha-relampejante",
+    "name": "Flecha Relampejante",
+    "level": 3,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Flecha Relampejante. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "fome-de-hadar",
+    "name": "Fome de Hadar",
+    "level": 3,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Fome de Hadar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo"
+    ]
+  },
+  {
+    "id": "forjar-morte",
+    "name": "Forjar Morte",
+    "level": 3,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Forjar Morte. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "forma-gasosa",
+    "name": "Forma Gasosa",
+    "level": 3,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Forma Gasosa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "glifo-de-vigilancia",
+    "name": "Glifo de Vigilância",
+    "level": 3,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Glifo de Vigilância. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "idiomas",
+    "name": "Idiomas",
+    "level": 3,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Idiomas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Clérigo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "imagem-maior",
+    "name": "Imagem Maior",
+    "level": 3,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Imagem Maior. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "lentidao",
+    "name": "Lentidão",
+    "level": 3,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Lentidão. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "luz-do-dia",
+    "name": "Luz do Dia",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Luz do Dia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Feiticeiro",
+      "Paladino",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "manto-do-cruzado",
+    "name": "Manto do Cruzado",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Manto do Cruzado. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "medo",
+    "name": "Medo",
+    "level": 3,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Medo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "mesclar-se-as-rochas",
+    "name": "Mesclar-se às Rochas",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Mesclar-se às Rochas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "montaria-fantasmagorica",
+    "name": "Montaria Fantasmagórica",
+    "level": 3,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Montaria Fantasmagórica. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "muralha-de-vento",
+    "name": "Muralha de Vento",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Muralha de Vento. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "nevasca",
+    "name": "Nevasca",
+    "level": 3,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Nevasca. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "nevoa-fetida",
+    "name": "Névoa Fétida",
+    "level": 3,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Névoa Fétida. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "padrao-hipnotico",
+    "name": "Padrão Hipnótico",
+    "level": 3,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Padrão Hipnótico. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "palavra-curativa-em-massa",
+    "name": "Palavra Curativa em Massa",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Palavra Curativa em Massa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "pequena-cabana-de-leomund",
+    "name": "Pequena Cabana de Leomund",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Pequena Cabana de Leomund. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "piscar",
+    "name": "Piscar",
+    "level": 3,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Piscar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "protecao-contra-energia",
+    "name": "Proteção contra Energia",
+    "level": 3,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Proteção contra Energia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Feiticeiro",
+      "Mago",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "relampago",
+    "name": "Relâmpago",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Relâmpago. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "remover-maldicao",
+    "name": "Remover Maldição",
+    "level": 3,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Remover Maldição. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Clérigo",
+      "Mago",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "respirar-na-agua",
+    "name": "Respirar na Água",
+    "level": 3,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Respirar na Água. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "revivificar",
     "name": "Revivificar",
     "level": 3,
     "school": "Necromancia",
@@ -267,40 +3620,189 @@
     "ritual": false,
     "description": "Você toca uma criatura que morreu no último minuto. Essa criatura retorna à vida com 1 ponto de vida. Essa magia não pode reanimar criaturas que morreram de velhice, nem pode restaurar nenhuma parte ausente do corpo.",
     "atHigherLevels": "",
-    "classes": ["Clérigo", "Paladino"]
+    "classes": [
+      "Clérigo",
+      "Paladino"
+    ]
   },
   {
-    "id": "counterspell",
-    "name": "Contrafeitiço",
+    "id": "rogar-maldicao",
+    "name": "Rogar Maldição",
     "level": 3,
-    "school": "Abjuração",
-    "castingTime": "1 reação, que você toma quando vê uma criatura a até 18 metros de você conjurando uma magia",
-    "range": "18 metros",
-    "components": "S",
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
     "duration": "Instantânea",
     "concentration": false,
     "ritual": false,
-    "description": "Você tenta interromper uma criatura no processo de conjurar uma magia. Se a criatura estiver conjurando uma magia de 3º nível ou mais baixo, a magia falha e não tem efeito. Se estiver conjurando uma magia de 4º nível ou mais alto, faça uma verificação de habilidade usando o seu modificador de habilidade de conjuração. A CD é igual a 10 + o nível da magia. Em caso de sucesso, a magia da criatura falha e não tem efeito.",
-    "atHigherLevels": "Ao conjurar usando um slot de 4º nível ou superior, a magia interrompida automaticamente falha se o nível do slot dela for menor ou igual ao nível do slot que você usou.",
-    "classes": ["Mago", "Feiticeiro", "Bruxo"]
+    "description": "Rogar Maldição. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Mago"
+    ]
   },
   {
-    "id": "beacon-of-hope",
-    "name": "Farol de Esperança",
+    "id": "sinal-de-esperanca",
+    "name": "Sinal de Esperança",
     "level": 3,
     "school": "Abjuração",
     "castingTime": "1 ação",
-    "range": "9 metros",
+    "range": "Variável",
     "components": "V, S",
-    "duration": "Concentração, até 1 minuto",
-    "concentration": true,
+    "duration": "Instantânea",
+    "concentration": false,
     "ritual": false,
-    "description": "Essa magia confere esperança e vitalidade. Escolha qualquer número de criaturas dentro do alcance. Pelo tempo que a magia durar, cada alvo tem vantagem nas salvaguardas de Sabedoria e nos testes de morte, e recupera o máximo de pontos de vida possível a partir de qualquer cura.",
+    "description": "Sinal de Esperança. Consulte o Livro do Jogador para detalhes completos.",
     "atHigherLevels": "",
-    "classes": ["Clérigo"]
+    "classes": [
+      "Clérigo"
+    ]
   },
   {
-    "id": "banishment",
+    "id": "toque-vampirico",
+    "name": "Toque Vampírico",
+    "level": 3,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Toque Vampírico. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "velocidade",
+    "name": "Velocidade",
+    "level": 3,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Velocidade. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "voo",
+    "name": "Voo",
+    "level": 3,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Voo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "adivinhacao",
+    "name": "Adivinhação",
+    "level": 4,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Adivinhação. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "arca-secreta-de-leomund",
+    "name": "Arca Secreta de Leomund",
+    "level": 4,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Arca Secreta de Leomund. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "assassino-fantasmagorico",
+    "name": "Assassino Fantasmagórico",
+    "level": 4,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Assassino Fantasmagórico. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "aura-de-pureza",
+    "name": "Aura de Pureza",
+    "level": 4,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Aura de Pureza. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "aura-de-vida",
+    "name": "Aura de Vida",
+    "level": 4,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Aura de Vida. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "banimento",
     "name": "Banimento",
     "level": 4,
     "school": "Abjuração",
@@ -312,10 +3814,227 @@
     "ritual": false,
     "description": "Você tenta enviar uma criatura que você possa ver dentro do alcance para outro plano de existência. O alvo deve ser bem-sucedido em uma salvaguarda de Carisma ou será banido. Se o alvo for nativo do plano de existência em que você está, você bane o alvo para um semiplano inofensivo. Enquanto lá, o alvo fica incapacitado. O alvo permanece lá até a magia terminar.",
     "atHigherLevels": "Ao conjurar usando um slot de 5º nível ou superior, você pode visar uma criatura adicional para cada nível acima do 4º.",
-    "classes": ["Clérigo", "Paladino", "Mago", "Feiticeiro", "Bruxo"]
+    "classes": [
+      "Bruxo",
+      "Clérigo",
+      "Feiticeiro",
+      "Mago",
+      "Paladino"
+    ]
   },
   {
-    "id": "guardian-of-faith",
+    "id": "compulsao",
+    "name": "Compulsão",
+    "level": 4,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Compulsão. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo"
+    ]
+  },
+  {
+    "id": "confusao",
+    "name": "Confusão",
+    "level": 4,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Confusão. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "conjurar-elementais-menores",
+    "name": "Conjurar Elementais Menores",
+    "level": 4,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Conjurar Elementais Menores. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "conjurar-seres-da-floresta",
+    "name": "Conjurar Seres da Floresta",
+    "level": 4,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Conjurar Seres da Floresta. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "controlar-a-agua",
+    "name": "Controlar a Água",
+    "level": 4,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Controlar a Água. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "cao-fiel-de-mordenkainen",
+    "name": "Cão Fiel de Mordenkainen",
+    "level": 4,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Cão Fiel de Mordenkainen. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "destruicao-estonteante",
+    "name": "Destruição Estonteante",
+    "level": 4,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Destruição Estonteante. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "dominar-besta",
+    "name": "Dominar Besta",
+    "level": 4,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Dominar Besta. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro"
+    ]
+  },
+  {
+    "id": "escudo-de-fogo",
+    "name": "Escudo de Fogo",
+    "level": 4,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Escudo de Fogo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "esfera-resiliente-de-otiluke",
+    "name": "Esfera Resiliente de Otiluke",
+    "level": 4,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Esfera Resiliente de Otiluke. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "etereo",
+    "name": "Etéreo",
+    "level": 4,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Etéreo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "fabricar",
+    "name": "Fabricar",
+    "level": 4,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Fabricar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "guardiao-da-fe",
     "name": "Guardião da Fé",
     "level": 4,
     "school": "Conjuração",
@@ -327,10 +4046,243 @@
     "ritual": false,
     "description": "Um grande guardião espectral aparece e paira por um tempo determinado num espaço desocupado de sua escolha que você possa ver dentro do alcance. O guardião ocupa esse espaço e é indistinto, exceto por uma espada resplandecente e um escudo com o símbolo da sua divindade. Qualquer criatura hostil que se mova para um espaço a 3 metros do guardião pela primeira vez num turno deve ser bem-sucedida numa salvaguarda de Destreza. A criatura sofre 20 de dano radiante numa falha, ou metade desse dano num sucesso. O guardião desaparece quando tiver causado um total de 60 de dano.",
     "atHigherLevels": "",
-    "classes": ["Clérigo"]
+    "classes": [
+      "Clérigo",
+      "Paladino"
+    ]
   },
   {
-    "id": "death-ward",
+    "id": "inseto-gigante",
+    "name": "Inseto Gigante",
+    "level": 4,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Inseto Gigante. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "invisibilidade-maior",
+    "name": "Invisibilidade Maior",
+    "level": 4,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Invisibilidade Maior. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "localizar-criatura",
+    "name": "Localizar Criatura",
+    "level": 4,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Localizar Criatura. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Mago",
+      "Paladino",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "malogro",
+    "name": "Malogro",
+    "level": 4,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Malogro. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "metamorfose",
+    "name": "Metamorfose",
+    "level": 4,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Metamorfose. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "moldar-rochas",
+    "name": "Moldar Rochas",
+    "level": 4,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Moldar Rochas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "morte-pura",
+    "name": "Morte Pura",
+    "level": 4,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Morte Pura. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "movimentacao-livre",
+    "name": "Movimentação Livre",
+    "level": 4,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Movimentação Livre. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "muralha-de-fogo",
+    "name": "Muralha de Fogo",
+    "level": 4,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Muralha de Fogo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "olho-arcano",
+    "name": "Olho Arcano",
+    "level": 4,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Olho Arcano. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "pele-de-pedra",
+    "name": "Pele de Pedra",
+    "level": 4,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Pele de Pedra. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "porta-dimensional",
+    "name": "Porta Dimensional",
+    "level": 4,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Porta Dimensional. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "protecao-contra-a-morte",
     "name": "Proteção contra a Morte",
     "level": 4,
     "school": "Abjuração",
@@ -342,25 +4294,352 @@
     "ritual": false,
     "description": "Você toca uma criatura e a concede um fraco poder sobre a morte. Na primeira vez que o alvo cair a 0 pontos de vida como resultado de dano, ele cai a 1 ponto de vida em vez disso. Se a magia ainda estiver em vigor, mas o efeito não foi acionado, uma segunda instância de redução a 0 pontos de vida não é afetada. Além disso, se o alvo for sujeito a um efeito que o mataria instantaneamente sem reduzir os pontos de vida a 0, como o feitiço de matar, esse efeito é em vez disso anulado contra o alvo, e a magia termina.",
     "atHigherLevels": "",
-    "classes": ["Clérigo", "Paladino"]
+    "classes": [
+      "Clérigo",
+      "Paladino"
+    ]
   },
   {
-    "id": "flame-strike",
-    "name": "Golpe de Chama",
-    "level": 5,
+    "id": "santuario-particular-de-mordenkainen",
+    "name": "Santuário Particular de Mordenkainen",
+    "level": 4,
     "school": "Evocação",
     "castingTime": "1 ação",
-    "range": "18 metros",
-    "components": "V, S, M (pitada de enxofre)",
+    "range": "Variável",
+    "components": "V, S",
     "duration": "Instantânea",
     "concentration": false,
     "ritual": false,
-    "description": "Uma coluna vertical de fogo divino surge do céu num local que você especificar. Cada criatura numa área cilíndrica (3 metros de raio, 12 metros de altura) centrada num ponto dentro do alcance deve fazer uma salvaguarda de Constituição. Uma criatura sofre 4d6 de dano de fogo e 4d6 de dano radiante numa falha, ou metade de cada um desses danos num sucesso.",
-    "atHigherLevels": "Ao conjurar usando um slot de 6º nível ou superior, o dano de fogo ou o dano radiante (sua escolha) aumenta em 1d6 para cada nível acima do 5º.",
-    "classes": ["Clérigo"]
+    "description": "Santuário Particular de Mordenkainen. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
   },
   {
-    "id": "mass-cure-wounds",
+    "id": "tempestade-de-gelo",
+    "name": "Tempestade de Gelo",
+    "level": 4,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Tempestade de Gelo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "tentaculos-negros-de-evard",
+    "name": "Tentáculos Negros de Evard",
+    "level": 4,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Tentáculos Negros de Evard. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "terreno-alucinogeno",
+    "name": "Terreno Alucinógeno",
+    "level": 4,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Terreno Alucinógeno. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "vinha-esmagadora",
+    "name": "Vinha Esmagadora",
+    "level": 4,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Vinha Esmagadora. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "aljava-veloz",
+    "name": "Aljava Veloz",
+    "level": 5,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Aljava Veloz. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "animar-objetos",
+    "name": "Animar Objetos",
+    "level": 5,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Animar Objetos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "caminhar-em-arvores",
+    "name": "Caminhar em Árvores",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Caminhar em Árvores. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "coluna-de-chamas",
+    "name": "Coluna de Chamas",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Coluna de Chamas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "comunhao",
+    "name": "Comunhão",
+    "level": 5,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Comunhão. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "comunhao-com-a-natureza",
+    "name": "Comunhão com a Natureza",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Comunhão com a Natureza. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "cone-de-frio",
+    "name": "Cone de Frio",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Cone de Frio. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "conhecimento-lendario",
+    "name": "Conhecimento Lendário",
+    "level": 5,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Conhecimento Lendário. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "conjurar-elemental",
+    "name": "Conjurar Elemental",
+    "level": 5,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Conjurar Elemental. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "conjurar-saraivada",
+    "name": "Conjurar Saraivada",
+    "level": 5,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Conjurar Saraivada. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Patrulheiro"
+    ]
+  },
+  {
+    "id": "consagrar",
+    "name": "Consagrar",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Consagrar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "contato-extraplanar",
+    "name": "Contato Extraplanar",
+    "level": 5,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Contato Extraplanar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "criar-passagem",
+    "name": "Criar Passagem",
+    "level": 5,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Criar Passagem. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "criacao",
+    "name": "Criação",
+    "level": 5,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Criação. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "curar-ferimentos-em-massa",
     "name": "Curar Ferimentos em Massa",
     "level": 5,
     "school": "Evocação",
@@ -372,10 +4651,422 @@
     "ritual": false,
     "description": "Uma onda de energia curativa vasculha as criaturas de sua escolha que você possa ver dentro do alcance. Você restaura até 30 pontos de vida divididos igualmente entre até seis criaturas. Essa magia não tem efeito em mortos-vivos ou constructos.",
     "atHigherLevels": "Ao conjurar usando um slot de 6º nível ou superior, a cura aumenta em 5 para cada nível acima do 5º.",
-    "classes": ["Bardo", "Clérigo", "Druida"]
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida"
+    ]
   },
   {
-    "id": "raise-dead",
+    "id": "circulo-de-poder",
+    "name": "Círculo de Poder",
+    "level": 5,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Círculo de Poder. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "circulo-de-teletransporte",
+    "name": "Círculo de Teletransporte",
+    "level": 5,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Círculo de Teletransporte. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "cupula-antivida",
+    "name": "Cúpula Antivida",
+    "level": 5,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Cúpula Antivida. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "despertar",
+    "name": "Despertar",
+    "level": 5,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Despertar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "despistar",
+    "name": "Despistar",
+    "level": 5,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Despistar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "destruicao",
+    "name": "Destruição",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Destruição. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "destruicao-banidora",
+    "name": "Destruição Banidora",
+    "level": 5,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Destruição Banidora. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "dissipar-o-bem-e-mal",
+    "name": "Dissipar o Bem e Mal",
+    "level": 5,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Dissipar o Bem e Mal. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "dominar-pessoa",
+    "name": "Dominar Pessoa",
+    "level": 5,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Dominar Pessoa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "geas",
+    "name": "Geas",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Geas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "imobilizar-monstro",
+    "name": "Imobilizar Monstro",
+    "level": 5,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Imobilizar Monstro. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "ligacao-telepatica-de-rary",
+    "name": "Ligação Telepática de Rary",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Ligação Telepática de Rary. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "missao",
+    "name": "Missão",
+    "level": 5,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Missão. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Mago",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "modificar-memoria",
+    "name": "Modificar Memória",
+    "level": 5,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Modificar Memória. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo"
+    ]
+  },
+  {
+    "id": "muralha-de-energia",
+    "name": "Muralha de Energia",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Muralha de Energia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "muralha-de-pedra",
+    "name": "Muralha de Pedra",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Muralha de Pedra. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro"
+    ]
+  },
+  {
+    "id": "muro-de-forca",
+    "name": "Muro de Força",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Muro de Força. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "mao-de-bigby",
+    "name": "Mão de Bigby",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Mão de Bigby. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "nevoa-mortal",
+    "name": "Névoa Mortal",
+    "level": 5,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Névoa Mortal. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro"
+    ]
+  },
+  {
+    "id": "onda-destrutiva",
+    "name": "Onda Destrutiva",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Onda Destrutiva. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "praga",
+    "name": "Praga",
+    "level": 5,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Praga. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "praga-de-insetos",
+    "name": "Praga de Insetos",
+    "level": 5,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Praga de Insetos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Feiticeiro"
+    ]
+  },
+  {
+    "id": "reencarnacao",
+    "name": "Reencarnação",
+    "level": 5,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Reencarnação. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "ressuscitar",
     "name": "Ressuscitar",
     "level": 5,
     "school": "Necromancia",
@@ -387,6 +5078,1817 @@
     "ritual": false,
     "description": "Você devolve a vida a um morto para um humanoide morto que você toque, desde que tenha estado morto não mais do que 10 dias. Se a alma da criatura estiver livre e disposta, a criatura retorna à vida com 1 ponto de vida. Essa magia neutraliza quaisquer venenos e cura doenças não-mágicas que afetavam a criatura no momento da morte. Essa magia não remove, contudo, maldições mágicas; se a criatura estava amaldiçoada no momento da morte, ela continua amaldiçoada após ser ressuscitada.",
     "atHigherLevels": "",
-    "classes": ["Bardo", "Clérigo", "Paladino"]
+    "classes": [
+      "Paladino"
+    ]
+  },
+  {
+    "id": "restauracao-maior",
+    "name": "Restauração Maior",
+    "level": 5,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Restauração Maior. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "reviver-os-mortos",
+    "name": "Reviver os Mortos",
+    "level": 5,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Reviver os Mortos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "similaridade",
+    "name": "Similaridade",
+    "level": 5,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Similaridade. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro"
+    ]
+  },
+  {
+    "id": "sonho",
+    "name": "Sonho",
+    "level": 5,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Sonho. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo"
+    ]
+  },
+  {
+    "id": "telecinesia",
+    "name": "Telecinésia",
+    "level": 5,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Telecinésia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "teletransporte-por-espelho",
+    "name": "Teletransporte por Espelho",
+    "level": 5,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Teletransporte por Espelho. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "videncia",
+    "name": "Vidência",
+    "level": 5,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Vidência. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Clérigo",
+      "Druida",
+      "Mago",
+      "Paladino"
+    ]
+  },
+  {
+    "id": "ancora-planar",
+    "name": "Âncora Planar",
+    "level": 5,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Âncora Planar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "aliado-planar",
+    "name": "Aliado Planar",
+    "level": 6,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Aliado Planar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "ataque-visual",
+    "name": "Ataque Visual",
+    "level": 6,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Ataque Visual. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro"
+    ]
+  },
+  {
+    "id": "banquete-de-herois",
+    "name": "Banquete de Heróis",
+    "level": 6,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Banquete de Heróis. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "banquete-dos-herois",
+    "name": "Banquete dos Heróis",
+    "level": 6,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Banquete dos Heróis. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "barreira-de-laminas",
+    "name": "Barreira de Lâminas",
+    "level": 6,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Barreira de Lâminas. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "caminhar-no-vento",
+    "name": "Caminhar no Vento",
+    "level": 6,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Caminhar no Vento. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "carne-para-pedra",
+    "name": "Carne para Pedra",
+    "level": 6,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Carne para Pedra. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "conjurar-fada",
+    "name": "Conjurar Fada",
+    "level": 6,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Conjurar Fada. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "contingencia",
+    "name": "Contingência",
+    "level": 6,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Contingência. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "corrente-de-relampagos",
+    "name": "Corrente de Relâmpagos",
+    "level": 6,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Corrente de Relâmpagos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "criar-mortos-vivos",
+    "name": "Criar Mortos-Vivos",
+    "level": 6,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Criar Mortos-Vivos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Clérigo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "cura-completa",
+    "name": "Cura Completa",
+    "level": 6,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Cura Completa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "circulo-da-morte",
+    "name": "Círculo da Morte",
+    "level": 6,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Círculo da Morte. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "danca-irresistivel-de-otto",
+    "name": "Dança Irresistível de Otto",
+    "level": 6,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Dança Irresistível de Otto. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo"
+    ]
+  },
+  {
+    "id": "desintegrar",
+    "name": "Desintegrar",
+    "level": 6,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Desintegrar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "doenca-plena",
+    "name": "Doença Plena",
+    "level": 6,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Doença Plena. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "encontrar-o-caminho",
+    "name": "Encontrar o Caminho",
+    "level": 6,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Encontrar o Caminho. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "esfera-congelante-de-otiluke",
+    "name": "Esfera Congelante de Otiluke",
+    "level": 6,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Esfera Congelante de Otiluke. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "globo-de-invulnerabilidade",
+    "name": "Globo de Invulnerabilidade",
+    "level": 6,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Globo de Invulnerabilidade. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "ilusao-programada",
+    "name": "Ilusão Programada",
+    "level": 6,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Ilusão Programada. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "invocacao-instantanea-de-drawmij",
+    "name": "Invocação Instantânea de Drawmij",
+    "level": 6,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": true,
+    "description": "Invocação Instantânea de Drawmij. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "mover-terra",
+    "name": "Mover Terra",
+    "level": 6,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Mover Terra. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "muralha-de-espinhos",
+    "name": "Muralha de Espinhos",
+    "level": 6,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Muralha de Espinhos. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "muralha-de-gelo",
+    "name": "Muralha de Gelo",
+    "level": 6,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Muralha de Gelo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "palavra-de-recordacao",
+    "name": "Palavra de Recordação",
+    "level": 6,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Palavra de Recordação. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "portal-arcano",
+    "name": "Portal Arcano",
+    "level": 6,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Portal Arcano. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "proibicao",
+    "name": "Proibição",
+    "level": 6,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Proibição. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "proteger-fortaleza",
+    "name": "Proteger Fortaleza",
+    "level": 6,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Proteger Fortaleza. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo"
+    ]
+  },
+  {
+    "id": "raio-solar",
+    "name": "Raio Solar",
+    "level": 6,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Raio Solar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "recipiente-arcano",
+    "name": "Recipiente Arcano",
+    "level": 6,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Recipiente Arcano. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "simulacro",
+    "name": "Simulacro",
+    "level": 6,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Simulacro. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "sugestao-em-massa",
+    "name": "Sugestão em Massa",
+    "level": 6,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Sugestão em Massa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "teletransporte-por-arvores",
+    "name": "Teletransporte por Árvores",
+    "level": 6,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Teletransporte por Árvores. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "visao-da-verdade",
+    "name": "Visão da Verdade",
+    "level": 6,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Visão da Verdade. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Clérigo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "bola-de-fogo-controlavel",
+    "name": "Bola de Fogo Controlável",
+    "level": 7,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Bola de Fogo Controlável. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "conjurar-celestial",
+    "name": "Conjurar Celestial",
+    "level": 7,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Conjurar Celestial. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "dedo-da-morte",
+    "name": "Dedo da Morte",
+    "level": 7,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Dedo da Morte. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "espada-de-mordenkainen",
+    "name": "Espada de Mordenkainen",
+    "level": 7,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Espada de Mordenkainen. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "forma-eterea",
+    "name": "Forma Etérea",
+    "level": 7,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Forma Etérea. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Clérigo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "inverter-a-gravidade",
+    "name": "Inverter a Gravidade",
+    "level": 7,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Inverter a Gravidade. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "isolamento",
+    "name": "Isolamento",
+    "level": 7,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Isolamento. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "mansao-magnifica-de-mordenkainen",
+    "name": "Mansão Magnifica de Mordenkainen",
+    "level": 7,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Mansão Magnifica de Mordenkainen. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "miragem",
+    "name": "Miragem",
+    "level": 7,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Miragem. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "palavra-divina",
+    "name": "Palavra Divina",
+    "level": 7,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Palavra Divina. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "prisao-de-energia",
+    "name": "Prisão de Energia",
+    "level": 7,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Prisão de Energia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "projetar-imagem",
+    "name": "Projetar Imagem",
+    "level": 7,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Projetar Imagem. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "rajada-prismatica",
+    "name": "Rajada Prismática",
+    "level": 7,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Rajada Prismática. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "regeneracao",
+    "name": "Regeneração",
+    "level": 7,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Regeneração. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "ressurreicao",
+    "name": "Ressurreição",
+    "level": 7,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Ressurreição. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "simbolo",
+    "name": "Símbolo",
+    "level": 7,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Símbolo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Clérigo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "teletransporte",
+    "name": "Teletransporte",
+    "level": 7,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Teletransporte. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "tempestade-de-fogo",
+    "name": "Tempestade de Fogo",
+    "level": 7,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Tempestade de Fogo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Feiticeiro"
+    ]
+  },
+  {
+    "id": "viagem-planar",
+    "name": "Viagem Planar",
+    "level": 7,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Viagem Planar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Clérigo",
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "antipatia-simpatia",
+    "name": "Antipatia/Simpatia",
+    "level": 8,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Antipatia/Simpatia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "aura-sagrada",
+    "name": "Aura Sagrada",
+    "level": 8,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Aura Sagrada. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "campo-antimagia",
+    "name": "Campo Antimagia",
+    "level": 8,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Campo Antimagia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "clone",
+    "name": "Clone",
+    "level": 8,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Clone. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "controlar-o-clima",
+    "name": "Controlar o Clima",
+    "level": 8,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Controlar o Clima. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "dominar-monstro",
+    "name": "Dominar Monstro",
+    "level": 8,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Dominar Monstro. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "enfraquecer-intelecto",
+    "name": "Enfraquecer Intelecto",
+    "level": 8,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Enfraquecer Intelecto. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo"
+    ]
+  },
+  {
+    "id": "enfraquecer-o-intelecto",
+    "name": "Enfraquecer o Intelecto",
+    "level": 8,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Enfraquecer o Intelecto. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Druida",
+      "Mago"
+    ]
+  },
+  {
+    "id": "explosao-solar",
+    "name": "Explosão Solar",
+    "level": 8,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Explosão Solar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "formas-animais",
+    "name": "Formas Animais",
+    "level": 8,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Formas Animais. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "labirinto",
+    "name": "Labirinto",
+    "level": 8,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Labirinto. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "limpar-a-mente",
+    "name": "Limpar a Mente",
+    "level": 8,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Limpar a Mente. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo"
+    ]
+  },
+  {
+    "id": "loquacidade",
+    "name": "Loquacidade",
+    "level": 8,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Loquacidade. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo"
+    ]
+  },
+  {
+    "id": "mente-em-branco",
+    "name": "Mente em Branco",
+    "level": 8,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Mente em Branco. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "nuvem-incendiaria",
+    "name": "Nuvem Incendiária",
+    "level": 8,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Nuvem Incendiária. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro"
+    ]
+  },
+  {
+    "id": "palavra-de-poder-atordoar",
+    "name": "Palavra de Poder Atordoar",
+    "level": 8,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Palavra de Poder Atordoar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "semiplano",
+    "name": "Semiplano",
+    "level": 8,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Semiplano. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "telepatia",
+    "name": "Telepatia",
+    "level": 8,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Telepatia. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "terremoto",
+    "name": "Terremoto",
+    "level": 8,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Terremoto. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida",
+      "Feiticeiro"
+    ]
+  },
+  {
+    "id": "tsunami",
+    "name": "Tsunami",
+    "level": 8,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Tsunami. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "alterar-forma",
+    "name": "Alterar Forma",
+    "level": 9,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Alterar Forma. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
+  },
+  {
+    "id": "aprisionamento",
+    "name": "Aprisionamento",
+    "level": 9,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Aprisionamento. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "chuva-de-meteoros",
+    "name": "Chuva de Meteoros",
+    "level": 9,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Chuva de Meteoros. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "cura-completa-em-massa",
+    "name": "Cura Completa em Massa",
+    "level": 9,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Cura Completa em Massa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "curar-em-massa",
+    "name": "Curar em Massa",
+    "level": 9,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Curar em Massa. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo"
+    ]
+  },
+  {
+    "id": "desejo",
+    "name": "Desejo",
+    "level": 9,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Desejo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "encarnacao-fantasmagorica",
+    "name": "Encarnação Fantasmagórica",
+    "level": 9,
+    "school": "Ilusão",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Encarnação Fantasmagórica. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "feitico",
+    "name": "Feitiço",
+    "level": 9,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Feitiço. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "metamorfose-verdadeira",
+    "name": "Metamorfose Verdadeira",
+    "level": 9,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Metamorfose Verdadeira. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "muralha-prismatica",
+    "name": "Muralha Prismática",
+    "level": 9,
+    "school": "Abjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Muralha Prismática. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "palavra-de-poder-curar",
+    "name": "Palavra de Poder Curar",
+    "level": 9,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Palavra de Poder Curar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo"
+    ]
+  },
+  {
+    "id": "palavra-de-poder-matar",
+    "name": "Palavra de Poder Matar",
+    "level": 9,
+    "school": "Encantamento",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Palavra de Poder Matar. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "parar-o-tempo",
+    "name": "Parar o Tempo",
+    "level": 9,
+    "school": "Transmutação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Parar o Tempo. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "portal",
+    "name": "Portal",
+    "level": 9,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Portal. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Feiticeiro",
+      "Mago"
+    ]
+  },
+  {
+    "id": "prisao-de-forca",
+    "name": "Prisão de Força",
+    "level": 9,
+    "school": "Evocação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Prisão de Força. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Mago"
+    ]
+  },
+  {
+    "id": "projecao-astral",
+    "name": "Projeção Astral",
+    "level": 9,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Projeção Astral. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bruxo",
+      "Clérigo",
+      "Mago"
+    ]
+  },
+  {
+    "id": "ressurreicao-verdadeira",
+    "name": "Ressurreição Verdadeira",
+    "level": 9,
+    "school": "Necromancia",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Ressurreição Verdadeira. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Clérigo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "sexto-sentido",
+    "name": "Sexto Sentido",
+    "level": 9,
+    "school": "Adivinhação",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Sexto Sentido. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Bardo",
+      "Bruxo",
+      "Druida"
+    ]
+  },
+  {
+    "id": "tempestade-da-vinganca",
+    "name": "Tempestade da Vingança",
+    "level": 9,
+    "school": "Conjuração",
+    "castingTime": "1 ação",
+    "range": "Variável",
+    "components": "V, S",
+    "duration": "Instantânea",
+    "concentration": false,
+    "ritual": false,
+    "description": "Tempestade da Vingança. Consulte o Livro do Jogador para detalhes completos.",
+    "atHigherLevels": "",
+    "classes": [
+      "Druida"
+    ]
   }
 ]
