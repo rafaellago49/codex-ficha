@@ -360,7 +360,7 @@ export const InventoryModule = (() => {
   };
 
   // ── View ──────────────────────────────────────────────────────────────────
-  const _openViewModal = (item) => {
+  const _openViewModal = async (item) => {
     const modal = _panelEl.querySelector('#inv-view-modal');
     if (!modal) return;
     _panelEl.querySelector('#vm-name').textContent = item.name;
@@ -369,7 +369,16 @@ export const InventoryModule = (() => {
     _panelEl.querySelector('#vm-qty').textContent  = item.qty>1?`Quantidade: ${item.qty}`:'';
     _panelEl.querySelector('#vm-desc').textContent = item.desc||'';
     const imgEl = _panelEl.querySelector('#vm-img');
-    imgEl.innerHTML = item.img?`<img src="${item.img}" alt="${_esc(item.name)}">`:CAT_ICONS[_activeCat];
+    if (item.img) {
+      try {
+        const base64 = await window.ImageStorage.get(item.img);
+        imgEl.innerHTML = base64
+          ? `<img src="${base64}" alt="${_esc(item.name)}">`
+          : CAT_ICONS[_activeCat];
+      } catch { imgEl.innerHTML = CAT_ICONS[_activeCat]; }
+    } else {
+      imgEl.innerHTML = CAT_ICONS[_activeCat];
+    }
     const wBlock = _panelEl.querySelector('#vm-weapon');
     const wSep   = _panelEl.querySelector('#vm-sep');
     if (_activeCat==='Armas'&&item.wDice) {
@@ -545,7 +554,13 @@ export const InventoryModule = (() => {
     typeEl.value=item.type||'Outros';
     _panelEl.querySelector('#edit-status').value=item.status||'Normal';
     const pEl=_panelEl.querySelector('#edit-img-prev');
-    pEl.innerHTML=item.img?`<img src="${item.img}">`:CAT_ICONS[_activeCat];
+    if (item.img) {
+      window.ImageStorage.get(item.img).then(base64 => {
+        pEl.innerHTML = base64 ? `<img src="${base64}">` : CAT_ICONS[_activeCat];
+      }).catch(() => { pEl.innerHTML = CAT_ICONS[_activeCat]; });
+    } else {
+      pEl.innerHTML = CAT_ICONS[_activeCat];
+    }
     _panelEl.querySelector('#edit-img-fname').textContent=item.img?'Imagem atual':'Sem imagem';
     const wExtra=_panelEl.querySelector('#edit-weapon-extra');
     wExtra.classList.toggle('show',_activeCat==='Armas');

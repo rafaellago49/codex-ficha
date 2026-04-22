@@ -210,8 +210,23 @@ export const Sheet = (() => {
               Cada dado: 1d${sides} ${conTxt} PV
             </p>
             ${isWarlock ? `<p style="margin-bottom:1rem;color:var(--gold);font-size:0.85rem">✦ Warlock recupera todos os Spell Slots de Pacto.</p>` : ''}
-            <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1rem">
+            <div class="dice-hybrid-tabs" style="margin-bottom:0.75rem">
+              <button class="dice-tab-btn active" data-sr-mode="virtual">🎲 Virtual</button>
+              <button class="dice-tab-btn" data-sr-mode="manual">✍ Físico</button>
+            </div>
+            <div id="sr-virtual-panel" style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1rem">
               <button class="btn btn-secondary btn-sm" id="sr-use-dice">🎲 Usar 1 Dado de Vida (1d${sides})</button>
+            </div>
+            <div id="sr-manual-panel" style="display:none;margin-bottom:1rem">
+              <div style="display:flex;align-items:center;gap:0.5rem;justify-content:center;margin-bottom:0.4rem">
+                <input type="number" id="sr-manual-input" class="form-control"
+                  style="width:80px;text-align:center;font-size:1.2rem;font-family:var(--font-heading)"
+                  placeholder="—" min="1" max="${sides}">
+                <button class="btn btn-secondary btn-sm" id="sr-manual-confirm">✔ Confirmar</button>
+              </div>
+              <div style="font-size:0.72rem;color:var(--text-dim)">
+                Role seu d${sides} físico e insira o resultado (1–${sides})
+              </div>
             </div>
             <div id="sr-result" style="font-size:1.5rem;font-weight:700;color:var(--gold);min-height:2rem"></div>
             <div id="sr-rolls-log" style="font-size:0.78rem;color:var(--text-dim);margin-top:0.4rem"></div>
@@ -254,6 +269,44 @@ export const Sheet = (() => {
         availLocal--;
         rollsLog.push(`d${sides}=${roll}${conMod !== 0 ? (conMod > 0 ? `+${conMod}` : conMod) : ''}→${heal}`);
         _updateDisplay();
+      });
+
+      // Mode tabs
+      let srMode = 'virtual';
+      const _setSRMode = (mode) => {
+        srMode = mode;
+        overlay.querySelectorAll('[data-sr-mode]').forEach(b =>
+          b.classList.toggle('active', b.dataset.srMode === mode));
+        overlay.querySelector('#sr-virtual-panel').style.display = mode === 'virtual' ? 'flex' : 'none';
+        overlay.querySelector('#sr-manual-panel').style.display  = mode === 'manual'  ? 'block' : 'none';
+        if (mode === 'manual') {
+          const inp = overlay.querySelector('#sr-manual-input');
+          if (inp) { inp.value = ''; inp.focus(); }
+        }
+      };
+      overlay.querySelectorAll('[data-sr-mode]').forEach(btn => {
+        btn.addEventListener('click', () => _setSRMode(btn.dataset.srMode));
+      });
+
+      // Manual confirm
+      const _confirmManual = () => {
+        if (availLocal <= 0) { Toast.show('Sem dados de vida restantes.'); return; }
+        const inp = overlay.querySelector('#sr-manual-input');
+        const roll = parseInt(inp?.value);
+        if (!roll || roll < 1 || roll > sides) {
+          Toast.show(`⚠ Insira um valor válido (1–${sides})`); return;
+        }
+        const heal = Math.max(1, roll + conMod);
+        totalHeal += heal;
+        diceUsed++;
+        availLocal--;
+        rollsLog.push(`d${sides}=${roll}${conMod !== 0 ? (conMod > 0 ? `+${conMod}` : conMod) : ''}→${heal} (Físico)`);
+        if (inp) inp.value = '';
+        _updateDisplay();
+      };
+      overlay.querySelector('#sr-manual-confirm')?.addEventListener('click', _confirmManual);
+      overlay.querySelector('#sr-manual-input')?.addEventListener('keydown', e => {
+        if (e.key === 'Enter') _confirmManual();
       });
 
       overlay.querySelector('#sr-confirm')?.addEventListener('click', () => {
@@ -310,6 +363,7 @@ const _renderRegistro = () => {
           ${_htmlDeathSaves()}
           ${_htmlAttacksBlock()}
           ${_htmlSpellSlotsBlock()}
+          ${_htmlPreparedSpellsBlock()}
           ${_htmlResourcesBlock()}
           ${_htmlFeaturesBlock()}
         </div>
@@ -581,6 +635,71 @@ const _renderRegistro = () => {
           Recursos de Classe <button class="btn btn-ghost btn-sm" id="btn-add-resource">+ Recurso</button>
         </div>
         <div id="resources-list">${rows}</div>
+      </div>`;
+  };
+
+  // ── Magias Preparadas/Conhecidas (Registro) ───────────────────────────────
+  const _htmlPreparedSpellsBlock = () => {
+    const state   = CharacterState.get();
+    const classId = state.identity?.classId || '';
+    const subtype = CASTER_SUBTYPE[classId] || 'none';
+    if (subtype === 'none') return '';
+
+    const slots   = state.spells?.slots || {};
+    if (Object.keys(slots).length === 0) return '';
+
+    const known    = state.spells?.known    || [];
+    const prepared = state.spells?.prepared || [];
+
+    // Decide which list to show and its label
+    let spellIds = [];
+    let blockLabel = '';
+    if (subtype === 'known-fixed') {
+      spellIds   = known;
+      blockLabel = '📖 Magias Conhecidas';
+    } else {
+      // prepared-list, prepared-half, grimoire — show prepared
+      spellIds   = prepared;
+      blockLabel = '✦ Magias Preparadas';
+    }
+
+    if (spellIds.length === 0) return `
+      <div class="card mb-2">
+        <div class="card-title">${blockLabel}</div>
+        <p style="font-size:0.82rem;color:var(--text-dim);font-style:italic">
+          Nenhuma magia ${subtype === 'known-fixed' ? 'conhecida' : 'preparada'} ainda.
+          Acesse a aba Grimório para selecionar.
+        </p>
+      </div>`;
+
+    // Group by level — we need _spells but they're scoped to Sheet closure above
+    const grouped = {};
+    for (const id of spellIds) {
+      const sp = _spells.find(s => s.id === id);
+      if (!sp) continue;
+      const lvl = sp.level ?? 0;
+      if (!grouped[lvl]) grouped[lvl] = [];
+      grouped[lvl].push(sp);
+    }
+    const rows = Object.keys(grouped).sort((a,b)=>+a-+b).map(lvl => {
+      const label = SPELL_LVL_LABELS[+lvl] || `${lvl}º Círculo`;
+      const spells = grouped[lvl].map(sp => `
+        <div style="display:flex;align-items:baseline;gap:0.4rem;padding:0.15rem 0;border-bottom:1px solid var(--border-faint)">
+          <span style="font-size:0.82rem;color:var(--text-primary)">${sp.name}</span>
+          ${sp.school ? `<span style="font-size:0.68rem;color:var(--text-dim)">(${sp.school})</span>` : ''}
+          ${sp.ritual ? `<span style="font-size:0.65rem;color:var(--gold-dim)">ritual</span>` : ''}
+        </div>`).join('');
+      return `
+        <div style="margin-bottom:0.5rem">
+          <div style="font-size:0.68rem;font-family:var(--font-heading);text-transform:uppercase;letter-spacing:1.2px;color:var(--text-dim);margin-bottom:0.2rem">${label}</div>
+          ${spells}
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="card mb-2">
+        <div class="card-title">${blockLabel} <span style="font-size:0.75rem;color:var(--text-muted);font-family:inherit;font-weight:normal">(${spellIds.length})</span></div>
+        ${rows}
       </div>`;
   };
 
