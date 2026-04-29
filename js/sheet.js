@@ -15,6 +15,7 @@ import {
   HIT_DIE_BY_CLASS
 } from './app.js';
 import { InventoryModule } from './inventory.js';
+import { InventoryEnhancements } from './inventory-enhancements.js';
 
 const ATTR_LABELS = {
   str: { abbr: 'FOR', full: 'Força' },
@@ -84,6 +85,14 @@ export const Sheet = (() => {
     _viewEl.innerHTML = `
       <div class="sheet-topbar">
         <div class="topbar-left">
+          <div class="char-avatar-wrap" id="avatar-container" title="Ver / Alterar foto">
+            <div class="char-avatar" id="char-avatar-display">
+              ${id.avatarUrl
+                ? `<img src="${id.avatarUrl}" alt="Avatar de ${id.name||'Personagem'}">`
+                : `<span class="avatar-placeholder">⚜</span>`}
+            </div>
+          </div>
+          <input type="file" id="avatar-upload-input" accept="image/*" style="display:none">
           <div>
             <div class="topbar-char-name">${id.name || 'Personagem'}</div>
             <div class="topbar-char-sub">
@@ -146,6 +155,75 @@ export const Sheet = (() => {
   const _attachTopbar = () => {
     document.getElementById('btn-home-back')?.addEventListener('click', () => {
       window.dispatchEvent(new CustomEvent('navigate-home'));
+    });
+
+    // Lógica de visualização em tela cheia do avatar
+    const avatarContainer = document.getElementById('avatar-container');
+    avatarContainer?.addEventListener('click', () => {
+      const state = CharacterState.get();
+      if (state.identity.avatarUrl) {
+        let modal = document.getElementById('avatar-fullscreen-modal');
+        if (!modal) {
+          modal = document.createElement('div');
+          modal.id = 'avatar-fullscreen-modal';
+          modal.className = 'modal-overlay';
+          modal.innerHTML = `
+            <div style="position:relative; display:flex; flex-direction:column; align-items:center; gap:1rem;">
+              <button id="avatar-modal-close" style="position:absolute; top:-15px; right:-15px; background:var(--bg-card); border:1px solid var(--border-gold); color:var(--text-muted); border-radius:50%; width:32px; height:32px; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:var(--transition); z-index:10;">✕</button>
+              <img src="" id="avatar-fullscreen-img" style="max-width:90vw; max-height:80vh; border-radius:var(--radius-md); box-shadow:0 8px 32px rgba(0,0,0,0.8); object-fit:contain;">
+              <button class="btn btn-secondary btn-sm" id="avatar-modal-change">Alterar Foto</button>
+            </div>
+          `;
+          document.body.appendChild(modal);
+
+          modal.querySelector('#avatar-modal-close').addEventListener('click', () => modal.classList.remove('open'));
+          modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
+          modal.querySelector('#avatar-modal-change').addEventListener('click', () => {
+            modal.classList.remove('open');
+            document.getElementById('avatar-upload-input').click();
+          });
+        }
+        modal.querySelector('#avatar-fullscreen-img').src = state.identity.avatarUrl;
+        modal.classList.add('open');
+      } else {
+        document.getElementById('avatar-upload-input').click();
+      }
+    });
+
+    // ── Avatar upload ──────────────────────────────────────────────────────
+    const avatarInput = document.getElementById('avatar-upload-input');
+    avatarInput?.addEventListener('change', async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => {
+          // Redimensiona para no máximo 96x96px mantendo proporção
+          const MAX = 96;
+          const scale = Math.min(MAX / img.width, MAX / img.height, 1);
+          const w = Math.round(img.width  * scale);
+          const h = Math.round(img.height * scale);
+          const canvas = document.createElement('canvas');
+          canvas.width  = MAX;
+          canvas.height = MAX;
+          const ctx = canvas.getContext('2d');
+          // Fundo transparente e recorte centralizado
+          ctx.clearRect(0, 0, MAX, MAX);
+          const offsetX = Math.round((MAX - w) / 2);
+          const offsetY = Math.round((MAX - h) / 2);
+          ctx.drawImage(img, offsetX, offsetY, w, h);
+          const dataUrl = canvas.toDataURL('image/webp', 0.85);
+          CharacterState.patch({ identity: { ...CharacterState.get().identity, avatarUrl: dataUrl } });
+          const avatarEl = document.getElementById('char-avatar-display');
+          if (avatarEl) {
+            avatarEl.innerHTML = `<img src="${dataUrl}" alt="Avatar">`;
+          }
+          Toast.show('✦ Foto do personagem atualizada.');
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
     });
 
     document.getElementById('btn-export')?.addEventListener('click', () => {
@@ -1114,6 +1192,8 @@ el.querySelector('#btn-level-up')?.addEventListener('click', _openLevelUpModal);
     const el = document.getElementById('panel-inventario');
     if (!el) return;
     InventoryModule.init(el);
+    // MutationObserver autônomo — reaplica raridade+tooltips em re-renders
+    InventoryEnhancements.init(el);
   };
 
   // ══════════════════════════════════════════════════════════════════════════

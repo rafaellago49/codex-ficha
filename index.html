@@ -5,22 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Codex — Ficha de Personagem D&D 5e</title>
   <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/styles-update.css">
   <link rel="stylesheet" href="./css/styles-additions.css">
 </head>
 <body>
-
 <div id="app">
-
-  <!-- ════════════════════════════════════════════
-       VIEW: HOME
-       ════════════════════════════════════════════ -->
   <div class="view active" id="view-home">
     <div class="home-inner">
       <div class="home-rune">⚜</div>
       <h1>Codex</h1>
       <p class="home-subtitle">Ficha de Personagem — D&amp;D 5e</p>
       <hr class="divider divider-gold">
-
       <div class="home-actions">
         <div class="home-btn-card" id="btn-create">
           <span class="icon">✦</span>
@@ -29,7 +24,6 @@
             <div class="sub">Assistente passo a passo — raça, classe, atributos</div>
           </div>
         </div>
-
         <div class="home-btn-card" id="btn-load">
           <span class="icon">📂</span>
           <div>
@@ -37,7 +31,6 @@
             <div class="sub">Importar um arquivo <code>.json</code> salvo anteriormente</div>
           </div>
         </div>
-
         <div class="home-btn-card" id="btn-continue" style="display:none">
           <span class="icon">↩</span>
           <div>
@@ -46,49 +39,75 @@
           </div>
         </div>
       </div>
-
       <p style="margin-top:2rem;font-size:0.78rem;color:var(--text-dim)">
         Os dados são salvos automaticamente no seu navegador (localStorage).
       </p>
     </div>
     <input type="file" id="file-import" accept=".json" style="display:none">
   </div>
+  <div class="view" id="view-wizard"></div>
+  <div class="view" id="view-sheet"></div>
+</div>
 
-  <!-- ════════════════════════════════════════════
-       VIEW: WIZARD
-       ════════════════════════════════════════════ -->
-  <div class="view" id="view-wizard">
-    <!-- Wizard content injected by wizard.js -->
+<!-- Template: modal Descanso Curto -->
+<template id="tpl-short-rest-modal">
+  <div class="modal-overlay" id="short-rest-modal-overlay">
+    <div class="modal-box" style="max-width:360px" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div class="modal-title">⛺ Descanso Curto</div>
+        <button class="modal-close-btn" id="sr-modal-close" title="Cancelar">✕</button>
+      </div>
+      <div class="modal-body" style="text-align:center">
+        <p style="margin-bottom:0.75rem;color:var(--text-muted)">
+          Dados de Vida disponíveis: <strong id="sr-avail-display">—</strong> / <span id="sr-total-display">—</span>
+        </p>
+        <p style="margin-bottom:1rem;font-size:0.85rem;color:var(--text-dim)" id="sr-dice-label">Cada dado: — PV</p>
+        <p id="sr-warlock-notice" style="display:none;margin-bottom:1rem;color:var(--gold);font-size:0.85rem">
+          ✦ Warlock recupera todos os Spell Slots de Pacto.
+        </p>
+        <div class="dice-hybrid-tabs" style="margin-bottom:0.75rem">
+          <button class="dice-tab-btn active" data-sr-mode="virtual">🎲 Virtual</button>
+          <button class="dice-tab-btn"        data-sr-mode="manual">✍ Físico</button>
+        </div>
+        <div id="sr-virtual-panel" style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1rem">
+          <button class="btn btn-secondary btn-sm" id="sr-use-dice">🎲 Usar 1 Dado de Vida</button>
+        </div>
+        <div id="sr-manual-panel" style="display:none;margin-bottom:1rem">
+          <div style="display:flex;align-items:center;gap:0.5rem;justify-content:center;margin-bottom:0.4rem">
+            <input type="number" id="sr-manual-input" class="form-control"
+              style="width:80px;text-align:center;font-size:1.2rem;font-family:var(--font-heading)"
+              placeholder="—" min="1">
+            <button class="btn btn-secondary btn-sm" id="sr-manual-confirm">✔ Confirmar</button>
+          </div>
+          <div style="font-size:0.72rem;color:var(--text-dim)" id="sr-manual-hint">
+            Role seu dado físico e insira o resultado
+          </div>
+        </div>
+        <div id="sr-result"    style="font-size:1.5rem;font-weight:700;color:var(--gold);min-height:2rem"></div>
+        <div id="sr-rolls-log" style="font-size:0.78rem;color:var(--text-dim);margin-top:0.4rem"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" id="sr-cancel">Cancelar</button>
+        <button class="btn btn-primary btn-sm"   id="sr-confirm">Confirmar Descanso</button>
+      </div>
+    </div>
   </div>
-
-  <!-- ════════════════════════════════════════════
-       VIEW: SHEET
-       ════════════════════════════════════════════ -->
-  <div class="view" id="view-sheet">
-    <!-- Sheet content injected by sheet.js -->
-  </div>
-
-</div><!-- #app -->
-
-<!-- Toast container injected dynamically by app.js -->
+</template>
 
 <script type="module">
   import { CharacterState, Router, Toast, DataLoader, ThemeManager, DiceRoller } from './js/app.js';
   import { Wizard } from './js/wizard.js';
   import { Sheet }  from './js/sheet.js';
 
-  // ── Register views ──────────────────────────────────────────────────────
   Router.register('home',   document.getElementById('view-home'));
   Router.register('wizard', document.getElementById('view-wizard'));
   Router.register('sheet',  document.getElementById('view-sheet'));
 
-  // ── Home view logic ─────────────────────────────────────────────────────
   let _homeInitialized = false;
   const initHome = () => {
-    const hasData = CharacterState.load();
+    const hasData     = CharacterState.load();
     const btnContinue = document.getElementById('btn-continue');
     const btnName     = document.getElementById('btn-continue-name');
-
     if (hasData && CharacterState.get().identity?.name) {
       const name = CharacterState.get().identity.name;
       btnContinue.style.display = 'flex';
@@ -96,21 +115,16 @@
     } else {
       btnContinue.style.display = 'none';
     }
-
-    // Listeners são registrados apenas uma vez
     if (_homeInitialized) return;
     _homeInitialized = true;
-
     document.getElementById('btn-create').addEventListener('click', () => {
       CharacterState.reset();
       Router.navigate('wizard');
       Wizard.init(document.getElementById('view-wizard'));
     });
-
     document.getElementById('btn-load').addEventListener('click', () => {
       document.getElementById('file-import').click();
     });
-
     document.getElementById('file-import').addEventListener('change', async (e) => {
       const file = e.target.files?.[0];
       if (!file) return;
@@ -125,25 +139,21 @@
         Toast.show('❌ Arquivo JSON inválido.');
       }
     });
-
     document.getElementById('btn-continue')?.addEventListener('click', () => {
       Router.navigate('sheet');
       Sheet.init(document.getElementById('view-sheet'));
     });
   };
 
-  // ── Cross-view event bus ────────────────────────────────────────────────
   window.addEventListener('wizard-complete', () => {
     Router.navigate('sheet');
     Sheet.init(document.getElementById('view-sheet'));
   });
-
   window.addEventListener('navigate-home', () => {
     Router.navigate('home');
     initHome();
   });
 
-  // ── Theme Panel ──────────────────────────────────────────────────────────
   const _initThemePanel = () => {
     if (document.getElementById('settings-btn')) return;
     const swatchColors = { dark:'#d4af37', emerald:'#6dbf6d', frost:'#6ab4f0', infernal:'#e86520', parchment:'#1e3264' };
@@ -176,13 +186,11 @@
     });
   };
 
-  // ── Boot ────────────────────────────────────────────────────────────────
   ThemeManager.init();
   DiceRoller.init();
   Router.navigate('home');
   initHome();
   _initThemePanel();
 </script>
-
 </body>
 </html>

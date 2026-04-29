@@ -3,7 +3,7 @@
  * CRUD categorizado, upload Base64, bolsa de moedas, equipar item, limite de carga
  */
 
-import { CharacterState, Toast } from './app.js';
+import { CharacterState, Toast, ImageStorage } from './app.js';
 
 const CATS      = ['Equipamentos','Armas','Poções','Acessórios','Utilizáveis'];
 const CAT_ICONS = { 'Equipamentos':'🛡','Armas':'⚔','Poções':'⚗','Acessórios':'💍','Utilizáveis':'✨' };
@@ -124,6 +124,12 @@ export const InventoryModule = (() => {
         const eqMark = isEquipped ? `<span style="position:absolute;top:3px;right:3px;font-size:0.65rem;color:var(--gold)">⚙</span>` : '';
         slots += `
           <div class="slot filled ${isEquipped?'slot-equipped':''}" data-slot="${i}" data-cat="${_activeCat}"
+               data-item-name="${_esc(item.name)}"
+               data-item-type="${_esc(item.type||'')}"
+               data-item-rarity="${_esc((item.rarity||'').toLowerCase())}"
+               data-item-qty="${item.qty||1}"
+               data-cat-name="${_activeCat}"
+               data-item-id="${item.id}"
                title="${_esc(item.name)}${isEquipped?' [Equipado]':''}">
             ${img}${badge}${eqMark}
             <span class="snum">${i+1}</span>
@@ -371,7 +377,7 @@ export const InventoryModule = (() => {
     const imgEl = _panelEl.querySelector('#vm-img');
     if (item.img) {
       try {
-        const base64 = await window.ImageStorage.get(item.img);
+        const base64 = await ImageStorage.get(item.img);
         imgEl.innerHTML = base64
           ? `<img src="${base64}" alt="${_esc(item.name)}">`
           : CAT_ICONS[_activeCat];
@@ -555,7 +561,7 @@ export const InventoryModule = (() => {
     _panelEl.querySelector('#edit-status').value=item.status||'Normal';
     const pEl=_panelEl.querySelector('#edit-img-prev');
     if (item.img) {
-      window.ImageStorage.get(item.img).then(base64 => {
+      ImageStorage.get(item.img).then(base64 => {
         pEl.innerHTML = base64 ? `<img src="${base64}">` : CAT_ICONS[_activeCat];
       }).catch(() => { pEl.innerHTML = CAT_ICONS[_activeCat]; });
     } else {
@@ -731,7 +737,7 @@ export const InventoryModule = (() => {
       // Usa getAttribute para evitar o problema de img.src retornar a URL base da página
       if (img.getAttribute('src') || !imageId) continue;
       try {
-        const base64 = await window.ImageStorage.get(imageId);
+        const base64 = await ImageStorage.get(imageId);
         if (base64) img.src = base64;
       } catch (err) {
         console.error('Erro ao carregar imagem do IndexedDB:', err);

@@ -4,42 +4,53 @@
  * getMaxPrepared com tabelas PHB precisas, grimório do Mago em duas etapas.
  */
 
-const ImageStorage = {
+export const ImageStorage = {
+    _db: null,
     init() {
+        if (this._db) return Promise.resolve(this._db);
         return new Promise((resolve, reject) => {
             const request = indexedDB.open('DND_Vault', 1);
             request.onupgradeneeded = (event) => {
                 event.target.result.createObjectStore('item_images');
             };
-            request.onsuccess = () => resolve(request.result);
+            request.onsuccess = () => {
+                this._db = request.result;
+                resolve(this._db);
+            };
             request.onerror = (event) => reject(event.target.error);
         });
     },
-    
+
     async save(id, base64String) {
-        const db = await this.init();
+        const db   = await this.init();
+        const blob = await fetch(base64String).then(r => r.blob());
         return new Promise((resolve, reject) => {
-            const transaction = db.transaction('item_images', 'readwrite');
-            const store = transaction.objectStore('item_images');
-            const request = store.put(base64String, id);
+            const tx      = db.transaction('item_images', 'readwrite');
+            const request = tx.objectStore('item_images').put(blob, id);
             request.onsuccess = () => resolve(true);
-            request.onerror = () => reject(false);
+            request.onerror   = () => reject(new Error('ImageStorage.save falhou'));
         });
     },
-    
+
     async get(id) {
         const db = await this.init();
         return new Promise((resolve) => {
-            const transaction = db.transaction('item_images', 'readonly');
-            const store = transaction.objectStore('item_images');
-            const request = store.get(id);
-            request.onsuccess = () => resolve(request.result);
+            const tx      = db.transaction('item_images', 'readonly');
+            const request = tx.objectStore('item_images').get(id);
+            request.onsuccess = () => {
+                const result = request.result;
+                if (!result) { resolve(null); return; }
+                if (typeof result === 'string') { resolve(result); return; }
+                const reader = new FileReader();
+                reader.onload  = () => resolve(reader.result);
+                reader.onerror = () => resolve(null);
+                reader.readAsDataURL(result);
+            };
             request.onerror = () => resolve(null);
         });
     }
 };
 
-window.ImageStorage = ImageStorage;
 
 // ══════════════════════════════════════════════════════════════════════════════
 // TABELAS D&D 5e (PHB)
@@ -333,6 +344,26 @@ export function getMaxCantrips(classId, level) {
 // ══════════════════════════════════════════════════════════════════════════════
 export const CharacterState = (() => {
   const STORAGE_KEY = 'rpg_character_sheet_v1';
+  // ── Pub/Sub ────────────────────────────────────────────────────────────────
+  const _listeners = new Map();
+
+  const subscribe = (event, callback) => {
+    if (!_listeners.has(event)) _listeners.set(event, new Set());
+    _listeners.get(event).add(callback);
+    return () => _listeners.get(event)?.delete(callback);
+  };
+
+  const _emit = (event, payload) => {
+    _listeners.get(event)?.forEach(cb => {
+      try { cb(payload); } catch(e) { console.error('CharacterState event error:', e); }
+    });
+    if (event !== 'change') {
+      _listeners.get('change')?.forEach(cb => {
+        try { cb(_state); } catch(e) {}
+      });
+    }
+  };
+
 
   const _defaults = () => ({
     meta: { createdAt: new Date().toISOString(), version: 5 },
@@ -448,25 +479,25 @@ export const CharacterState = (() => {
     if (!_state.spells?.slots?.[k]) return false;
     const s = _state.spells.slots[k];
     if (s.used >= s.max) return false;
-    s.used++; save(); return true;
+    s.used++; save(); _emit('change:spells', _state.spells); return true;
   };
 
   const restoreSpellSlot = (level) => {
     const k = String(level);
     if (!_state.spells?.slots?.[k]) return;
     _state.spells.slots[k].used = Math.max(0, _state.spells.slots[k].used - 1);
-    save();
+    save(); _emit('change:spells', _state.spells);
   };
 
   const resetSpellSlots = () => {
     Object.values(_state.spells?.slots || {}).forEach(s => s.used = 0);
-    save();
+    save(); _emit('change:spells', _state.spells);
   };
 
   const resetPactSlots = () => {
     if (CASTER_TYPE[_state.identity?.classId] === 'pact') {
       Object.values(_state.spells?.slots || {}).forEach(s => s.used = 0);
-      save();
+      save(); _emit('change:spells', _state.spells);
     }
   };
 
@@ -482,14 +513,14 @@ export const CharacterState = (() => {
     _ensureSpells();
     if (!_state.spells.prepared.includes(spellId)) {
       _state.spells.prepared.push(spellId);
-      save();
+      save(); _emit('change:spells', _state.spells);
     }
   };
 
   const unprepareSpell = (spellId) => {
     _ensureSpells();
     _state.spells.prepared = _state.spells.prepared.filter(id => id !== spellId);
-    save();
+    save(); _emit('change:spells', _state.spells);
   };
 
   const isSpellPrepared = (spellId) => {
@@ -526,7 +557,7 @@ export const CharacterState = (() => {
     _ensureSpells();
     _state.spells.known    = _state.spells.known.filter(id => id !== spellId);
     _state.spells.prepared = _state.spells.prepared.filter(id => id !== spellId);
-    save();
+    save(); _emit('change:spells', _state.spells);
   };
 
   const isSpellKnown = (spellId) => {
@@ -609,6 +640,9 @@ export const CharacterState = (() => {
 
     initSpellSlots();
     save();
+    _emit('change:identity', _state.identity);
+    _emit('change:combat', _state.combat);
+    _emit('change:spells', _state.spells);
 
     return { newLevel, hpGain, newProf, featureText: newFeatureText, needsASI };
   };
@@ -639,7 +673,7 @@ export const CharacterState = (() => {
 
     ac += shieldBonus;
     _state.combat.ac = ac;
-    save(); return ac;
+    save(); _emit('change:combat', _state.combat); return ac;
   };
 
   // ── Equipped weapons → attacks ────────────────────────────────────────────
@@ -729,14 +763,31 @@ export const CharacterState = (() => {
   };
 
   const importJSON = (jsonString) => {
-    try { _state = deepMerge(_defaults(), JSON.parse(jsonString)); save(); return true; }
-    catch(e) { return false; }
+    try {
+      _state = deepMerge(_defaults(), JSON.parse(jsonString));
+      save();
+      _emit('change', _state);
+      return true;
+    } catch(e) { return false; }
   };
 
-  const reset  = () => { _state = _defaults(); save(); };
+  const reset  = () => {
+    _state = _defaults();
+    save();
+    _emit('change', _state);
+  };
   const get    = () => _state;
-  const set    = (path, value) => { setNestedValue(_state, path, value); save(); };
-  const patch  = (partialState) => { _state = deepMerge(_state, partialState); save(); };
+  const set    = (path, value) => {
+    setNestedValue(_state, path, value);
+    save();
+    const ns = path.split('.')[0];
+    _emit('change:' + ns, _state[ns]);
+  };
+  const patch  = (partialState) => {
+    _state = deepMerge(_state, partialState);
+    save();
+    Object.keys(partialState).forEach(ns => { _emit('change:' + ns, _state[ns]); });
+  };
 
   // ── Inventory CRUD ─────────────────────────────────────────────────────────
   const CATEGORIES = ['Equipamentos','Armas','Poções','Acessórios','Utilizáveis'];
@@ -767,7 +818,7 @@ export const CharacterState = (() => {
       aBaseAC: item.aBaseAC || null,
       aType: item.aType || null
     };
-    list.push(newItem); save(); return newItem;
+    list.push(newItem); save(); _emit('change:inventory', _state.inventory); return newItem;
   };
 
   const updateItem = (cat, id, updates, newCat) => {
@@ -782,7 +833,7 @@ export const CharacterState = (() => {
       list.splice(idx, 1);
       _state.inventory[newCat].push(merged);
     } else { list[idx] = merged; }
-    save(); return true;
+    save(); _emit('change:inventory', _state.inventory); return true;
   };
 
   const deleteItem = (cat, id) => {
@@ -790,7 +841,7 @@ export const CharacterState = (() => {
     const list = _state.inventory[cat];
     const idx  = list.findIndex(i => i.id === id);
     if (idx === -1) return false;
-    list.splice(idx, 1); save(); return true;
+    list.splice(idx, 1); save(); _emit('change:inventory', _state.inventory); return true;
   };
 
   const getTotalWeight = () => {
@@ -806,13 +857,13 @@ export const CharacterState = (() => {
   const updateCoins = (key, delta) => {
     if (!_state.coins) _state.coins = { pp:0,po:0,pe:0,pa:0,pc:0 };
     _state.coins[key] = Math.max(0, (_state.coins[key]||0) + delta);
-    save(); return _state.coins[key];
+    save(); _emit('change:coins', _state.coins); return _state.coins[key];
   };
 
   const setCoins = (key, value) => {
     if (!_state.coins) _state.coins = { pp:0,po:0,pe:0,pa:0,pc:0 };
     _state.coins[key] = Math.max(0, parseInt(value)||0);
-    save();
+    save(); _emit('change:coins', _state.coins);
   };
 
   const getTotalPO = () => {
@@ -822,6 +873,7 @@ export const CharacterState = (() => {
 
   return {
     get, set, patch, save, load, reset, exportJSON, importJSON,
+    subscribe,
     getTotalAttr, getModifier, getProficiencyBonus,
     getSkillMod, getSaveMod, getPassivePerception, getCarryLimit,
     addItem, updateItem, deleteItem, getTotalWeight,

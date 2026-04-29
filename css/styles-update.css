@@ -1,0 +1,781 @@
+/* ================================================================
+   CODEX — Upgrade Estético v2
+   Arquivo: styles-update.css
+   Descrição: Glassmorphism, hierarquia tipográfica, textura
+              Parchment, raridades, avatar, hover tooltip inventário
+   ================================================================ */
+
+/* ══════════════════════════════════════════════════════════════
+   1. EFEITO ARCANO — Glassmorphism nos cards e topbar
+   ══════════════════════════════════════════════════════════════ */
+
+/* Cards com vidro arcano */
+.card {
+  background: rgba(var(--bg-card-rgb, 28, 25, 40), 0.72);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  border: 1px solid var(--border-faint);
+  box-shadow:
+    var(--shadow-card),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow:
+    var(--shadow-card),
+    0 0 20px var(--accent-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Topbar com glassmorphism */
+.sheet-topbar {
+  background: rgba(var(--bg-surface-rgb, 19, 17, 26), 0.82);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid var(--border-gold);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* Abas com micro-glass */
+.sheet-tabs {
+  background: rgba(var(--bg-surface-rgb, 19, 17, 26), 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Modal backdrop melhorado */
+.modal-box {
+  background: rgba(var(--bg-card-rgb, 28, 25, 40), 0.92);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  box-shadow:
+    var(--shadow-card),
+    0 0 40px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Home cards com glassmorphism */
+.home-btn-card {
+  background: rgba(var(--bg-card-rgb, 28, 25, 40), 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.home-btn-card:hover {
+  background: rgba(var(--bg-card-rgb, 28, 25, 40), 0.85);
+  box-shadow:
+    var(--shadow-gold),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Theme panel com glass */
+.theme-panel {
+  background: rgba(var(--bg-card-rgb, 28, 25, 40), 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Dice result box */
+.dice-result-box {
+  background: rgba(var(--bg-card-rgb, 28, 25, 40), 0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* ── Tokens RGB para glassmorphism por tema ────────────────── */
+[data-theme="dark"],
+:root:not([data-theme]) {
+  --bg-card-rgb: 28, 25, 40;
+  --bg-surface-rgb: 19, 17, 26;
+}
+[data-theme="emerald"] {
+  --bg-card-rgb: 21, 32, 22;
+  --bg-surface-rgb: 14, 24, 16;
+}
+[data-theme="frost"] {
+  --bg-card-rgb: 20, 30, 46;
+  --bg-surface-rgb: 13, 21, 32;
+}
+[data-theme="infernal"] {
+  --bg-card-rgb: 34, 18, 0;
+  --bg-surface-rgb: 24, 10, 0;
+}
+[data-theme="parchment"] {
+  --bg-card-rgb: 250, 244, 228;
+  --bg-surface-rgb: 232, 221, 196;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   2. HIERARQUIA TIPOGRÁFICA
+   ══════════════════════════════════════════════════════════════ */
+
+/* Valores numéricos de atributos — peso forte */
+.attr-display-box .attr-score,
+.attr-display-box .attr-score-input,
+.attr-total,
+.combat-stat-box .val,
+.combat-stat-box input.val,
+.coin-val,
+.resource-val,
+.hp-input,
+.dice-result-num {
+  font-weight: 700;
+}
+
+/* Labels auxiliares — leve com espaçamento */
+.attr-display-box .attr-abbr,
+.combat-stat-box .lbl-sm,
+.coin-name,
+.coin-label,
+.card-title,
+.wizard-step-title,
+.cat-label,
+.ws-label,
+.weapon-block-title,
+.filter-label,
+.coins-title,
+.slots-count,
+.form-group label,
+h4 {
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+/* Modificadores de atributo com peso médio */
+.attr-display-box .attr-modifier,
+.attr-mod,
+.attr-race-bonus,
+.skill-mod {
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+/* Nomes de itens e magias — peso semibold */
+.spell-name,
+.active-spell-name,
+.resource-name,
+.atk-name-disp {
+  font-weight: 600;
+}
+
+/* Topbar refinado */
+.topbar-char-name {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.topbar-char-sub {
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  font-size: 0.78rem;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   3. TEMA PARCHMENT — Textura de papel antigo
+   ══════════════════════════════════════════════════════════════ */
+
+[data-theme="parchment"] body {
+  background-color: var(--bg-void);
+  background-image:
+    /* Ruído de papel */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='overlay' result='blend'/%3E%3CfeComposite in='blend' in2='SourceGraphic' operator='in'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"),
+    /* Manchas de envelhecimento */
+    radial-gradient(ellipse 70% 50% at 15% 20%, rgba(139, 90, 43, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 85% 75%, rgba(101, 67, 33, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(210, 180, 140, 0.03) 0%, transparent 70%),
+    /* Gradiente base de pergaminho */
+    linear-gradient(
+      160deg,
+      #ede0c4 0%,
+      #f0e8d4 25%,
+      #e8ddc4 50%,
+      #ede5cb 75%,
+      #e5d9b6 100%
+    );
+  filter: sepia(0.2);
+}
+
+[data-theme="parchment"] .sheet-topbar,
+[data-theme="parchment"] .sheet-tabs {
+  background: rgba(232, 221, 196, 0.88);
+  backdrop-filter: blur(10px);
+  border-color: rgba(30, 50, 100, 0.2);
+  filter: sepia(0.1);
+}
+
+[data-theme="parchment"] .card {
+  background: rgba(250, 244, 228, 0.78);
+  filter: sepia(0.08);
+  border-color: rgba(30, 50, 100, 0.18);
+}
+
+[data-theme="parchment"] .modal-box {
+  background: rgba(250, 244, 228, 0.96);
+  filter: sepia(0.1);
+}
+
+[data-theme="parchment"] .form-control,
+[data-theme="parchment"] .diary-textarea,
+[data-theme="parchment"] .bg-input,
+[data-theme="parchment"] .attr-base-input,
+[data-theme="parchment"] .hp-input,
+[data-theme="parchment"] .coin-input {
+  background: rgba(240, 232, 212, 0.65);
+  border-color: rgba(30, 50, 100, 0.25);
+}
+
+/* Evitar branco puro no Parchment */
+[data-theme="parchment"] * {
+  --bg-input: rgba(240, 232, 212, 0.7);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   4. INTERATIVIDADE — Botões primários com brilho
+   ══════════════════════════════════════════════════════════════ */
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.12);
+  transform: skewX(-20deg);
+  transition: left 0.4s ease;
+  pointer-events: none;
+}
+
+.btn-primary:hover {
+  box-shadow:
+    0 0 20px var(--accent-glow),
+    0 0 40px rgba(var(--bg-card-rgb, 28, 25, 40), 0.2),
+    var(--shadow-glow);
+  letter-spacing: 1.8px;
+  transform: translateY(-2px);
+}
+
+.btn-primary:hover::before {
+  left: 120%;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* Botão submit do inventário */
+.btn-submit-inv {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit-inv:hover {
+  box-shadow: 0 0 18px var(--accent-glow);
+  letter-spacing: 1.5px;
+}
+
+/* Home cards — brilho no hover */
+.home-btn-card:hover {
+  box-shadow:
+    var(--shadow-gold),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Botão FAB de dados */
+.dice-fab:hover {
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.5),
+    0 0 30px var(--accent-glow);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   5. AVATAR DO PERSONAGEM — Container no topbar
+   ══════════════════════════════════════════════════════════════ */
+
+.char-avatar-wrap {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* Forma hexagonal via clip-path */
+.char-avatar {
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--border-gold);
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-input);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  box-shadow:
+    0 0 0 1px var(--border-faint),
+    0 2px 8px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.char-avatar:hover {
+  border-color: var(--gold);
+  box-shadow:
+    0 0 0 1px var(--gold),
+    0 0 12px var(--accent-glow),
+    0 2px 8px rgba(0, 0, 0, 0.4);
+  transform: scale(1.08);
+}
+
+.char-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 50%;
+  display: block;
+  /* Garante que imagens maiores sejam recortadas e centralizadas no círculo */
+  min-width: 100%;
+  min-height: 100%;
+  max-width: none;
+  flex-shrink: 0;
+}
+
+.char-avatar .avatar-placeholder {
+  font-size: 1.5rem;
+  opacity: 0.5;
+  user-select: none;
+  line-height: 1;
+}
+
+/* Anel de status animado */
+.char-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  opacity: 0;
+  transition: opacity 0.3s;
+  animation: avatar-pulse 3s ease-in-out infinite;
+}
+
+.char-avatar:hover::after {
+  opacity: 0.6;
+}
+
+@keyframes avatar-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50%       { transform: scale(1.06); opacity: 0.7; }
+}
+
+/* Tooltip de upload ao passar o mouse */
+.char-avatar-wrap::before {
+  content: 'Ver / Alterar';
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+
+.char-avatar-wrap:hover::before {
+  opacity: 1;
+}
+
+/* Input de upload escondido */
+.avatar-upload-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   6. TOOLTIP DE INVENTÁRIO — Hover label nos slots
+   ══════════════════════════════════════════════════════════════ */
+
+/* Tooltip flutuante (gerado via JS) */
+.inv-slot-tooltip {
+  position: fixed;
+  z-index: 9000;
+  pointer-events: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px 6px;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.5),
+    0 0 12px var(--accent-glow);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  max-width: 180px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.inv-slot-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.inv-slot-tooltip .tt-name {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.inv-slot-tooltip .tt-type {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.inv-slot-tooltip .tt-qty {
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  color: var(--gold-dim);
+}
+
+/* Barra de status na base do grid (alternativa ao tooltip) */
+.inv-status-bar {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-top: 1px solid var(--border-faint);
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+}
+
+.inv-status-bar .isb-name {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.inv-status-bar .isb-sep {
+  color: var(--border-gold);
+}
+
+.inv-status-bar .isb-cat {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   7. RARIDADE DE ITENS — Classes para slots do inventário
+   ══════════════════════════════════════════════════════════════ */
+
+/* Tokens de raridade */
+:root {
+  --rarity-comum:     rgba(180, 180, 180, 0.55);
+  --rarity-incomum:   rgba(30, 200, 90, 0.65);
+  --rarity-raro:      rgba(50, 120, 230, 0.70);
+  --rarity-epico:     rgba(160, 60, 220, 0.72);
+  --rarity-lendario:  rgba(255, 160, 30, 0.80);
+  --rarity-artefato:  rgba(255, 80, 80, 0.78);
+
+  --rarity-comum-glow:    rgba(180, 180, 180, 0.2);
+  --rarity-incomum-glow:  rgba(30, 200, 90, 0.25);
+  --rarity-raro-glow:     rgba(50, 120, 230, 0.28);
+  --rarity-epico-glow:    rgba(160, 60, 220, 0.28);
+  --rarity-lendario-glow: rgba(255, 160, 30, 0.32);
+  --rarity-artefato-glow: rgba(255, 80, 80, 0.30);
+}
+
+/* Slot base com raridade — sobrescreve a borda inferior */
+.slot.rarity-comum::after {
+  background: var(--rarity-comum) !important;
+  box-shadow: none;
+}
+.slot.rarity-incomum::after {
+  background: var(--rarity-incomum) !important;
+  height: 3px !important;
+}
+.slot.rarity-raro::after {
+  background: var(--rarity-raro) !important;
+  height: 3px !important;
+}
+.slot.rarity-epico::after {
+  background: var(--rarity-epico) !important;
+  height: 3px !important;
+}
+.slot.rarity-lendario::after {
+  background: linear-gradient(90deg, #ff8c00, var(--rarity-lendario), #ff8c00) !important;
+  height: 3px !important;
+  animation: legendary-shimmer 2.5s linear infinite;
+}
+.slot.rarity-artefato::after {
+  background: linear-gradient(90deg, #ff0040, var(--rarity-artefato), #ff0040) !important;
+  height: 3px !important;
+  animation: legendary-shimmer 1.8s linear infinite;
+}
+
+@keyframes legendary-shimmer {
+  0%   { background-position: -100px 0; }
+  100% { background-position: 100px 0; }
+}
+
+/* Brilho interno nos slots com raridade */
+.slot.rarity-incomum.filled {
+  box-shadow: inset 0 0 12px rgba(30, 200, 90, 0.12);
+}
+.slot.rarity-incomum.filled:hover {
+  box-shadow: inset 0 0 16px rgba(30, 200, 90, 0.2), 0 0 12px var(--rarity-incomum-glow);
+  border-color: rgb(30, 200, 90);
+}
+
+.slot.rarity-raro.filled {
+  box-shadow: inset 0 0 12px rgba(50, 120, 230, 0.14);
+}
+.slot.rarity-raro.filled:hover {
+  box-shadow: inset 0 0 16px rgba(50, 120, 230, 0.22), 0 0 14px var(--rarity-raro-glow);
+  border-color: rgb(80, 140, 240);
+}
+
+.slot.rarity-epico.filled {
+  box-shadow: inset 0 0 14px rgba(160, 60, 220, 0.16);
+  border-color: rgba(160, 60, 220, 0.45);
+}
+.slot.rarity-epico.filled:hover {
+  box-shadow: inset 0 0 18px rgba(160, 60, 220, 0.26), 0 0 16px var(--rarity-epico-glow);
+  border-color: rgb(180, 80, 240);
+}
+
+.slot.rarity-lendario.filled {
+  box-shadow: inset 0 0 16px rgba(255, 160, 30, 0.16);
+  border-color: rgba(255, 160, 30, 0.5);
+}
+.slot.rarity-lendario.filled:hover {
+  box-shadow: inset 0 0 22px rgba(255, 160, 30, 0.28), 0 0 18px var(--rarity-lendario-glow);
+  border-color: rgb(255, 175, 50);
+}
+
+.slot.rarity-artefato.filled {
+  box-shadow: inset 0 0 18px rgba(255, 80, 80, 0.18);
+  border-color: rgba(255, 80, 80, 0.5);
+  animation: artefato-pulse 2s ease-in-out infinite;
+}
+
+@keyframes artefato-pulse {
+  0%, 100% { box-shadow: inset 0 0 14px rgba(255, 80, 80, 0.15); }
+  50%       { box-shadow: inset 0 0 22px rgba(255, 80, 80, 0.28), 0 0 14px var(--rarity-artefato-glow); }
+}
+
+/* Badge de raridade no slot */
+.slot .rarity-badge {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.slot.rarity-comum    .rarity-badge { background: #b0b0b0; }
+.slot.rarity-incomum  .rarity-badge { background: #1ec85a; }
+.slot.rarity-raro     .rarity-badge { background: #3278e6; }
+.slot.rarity-epico    .rarity-badge { background: #a03cdc; }
+.slot.rarity-lendario .rarity-badge { background: #ffa01e; }
+.slot.rarity-artefato .rarity-badge { background: #ff5050; }
+
+/* Tooltip de raridade no modal de visualização */
+.rarity-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.rarity-tag.rarity-comum    { background: rgba(180,180,180,0.12); color: #c0c0c0; border: 1px solid rgba(180,180,180,0.3); }
+.rarity-tag.rarity-incomum  { background: rgba(30,200,90,0.1);  color: #1ec85a; border: 1px solid rgba(30,200,90,0.35); }
+.rarity-tag.rarity-raro     { background: rgba(50,120,230,0.1); color: #5090f0; border: 1px solid rgba(50,120,230,0.35); }
+.rarity-tag.rarity-epico    { background: rgba(160,60,220,0.1); color: #b850f0; border: 1px solid rgba(160,60,220,0.35); }
+.rarity-tag.rarity-lendario { background: rgba(255,160,30,0.1); color: #ffaa20; border: 1px solid rgba(255,160,30,0.4); }
+.rarity-tag.rarity-artefato { background: rgba(255,80,80,0.1);  color: #ff6060; border: 1px solid rgba(255,80,80,0.4); }
+
+
+/* ══════════════════════════════════════════════════════════════
+   8. REFINAMENTOS GERAIS
+   ══════════════════════════════════════════════════════════════ */
+
+/* Atributos com entrada editável — destaque sutil */
+.attr-display-box {
+  position: relative;
+  transition: var(--transition);
+}
+
+.attr-display-box:hover {
+  border-color: var(--border-gold);
+  box-shadow: inset 0 0 8px rgba(var(--bg-card-rgb, 28, 25, 40), 0.3), 0 0 8px var(--accent-glow);
+}
+
+/* Combate stat boxes */
+.combat-stat-box {
+  transition: var(--transition);
+}
+
+.combat-stat-box:hover {
+  border-color: var(--border-gold);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* Barra de HP com gradiente mais vibrante */
+.hp-bar-fill {
+  background: linear-gradient(
+    90deg,
+    var(--hp-bar-from),
+    var(--hp-bar-to)
+  );
+  box-shadow: 0 0 8px rgba(var(--hp-bar-from, 255, 77, 77), 0.35);
+}
+
+/* Scroll suave nos painéis */
+.sheet-body {
+  scroll-behavior: smooth;
+}
+
+/* Tabs com underline animado */
+.sheet-tab {
+  position: relative;
+  overflow: hidden;
+}
+
+.sheet-tab::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  height: 2px;
+  background: var(--gold);
+  transition: left 0.25s ease, right 0.25s ease;
+}
+
+.sheet-tab:hover::before {
+  left: 20%;
+  right: 20%;
+}
+
+.sheet-tab.active::before {
+  left: 0;
+  right: 0;
+}
+
+/* Race e Class cards com shimmer no selected */
+.race-card.selected,
+.class-card.selected {
+  box-shadow:
+    0 0 0 1px var(--gold),
+    0 0 16px var(--accent-glow),
+    inset 0 0 12px rgba(212, 175, 55, 0.06);
+}
+
+/* Spell entries refinadas */
+.spell-entry {
+  transition: var(--transition);
+}
+
+.spell-entry:hover {
+  box-shadow: inset 0 0 0 1px var(--border-gold), 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.spell-entry.prepared {
+  box-shadow: inset 0 0 16px rgba(212, 175, 55, 0.05), 0 0 8px var(--accent-glow);
+}
+
+/* Wizard step bar dots com gradiente */
+.step-dot.done {
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* Toast refinado com glass */
+.toast {
+  background: rgba(var(--bg-card-rgb, 28, 25, 40), 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-left: 3px solid var(--gold);
+}
+
+/* ── Micro-animação de entrada nos cards ── */
+.attr-display-box,
+.combat-stat-box,
+.skill-row-item,
+.spell-entry {
+  animation: entry-fade 0.3s ease both;
+}
+
+@keyframes entry-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   9. RESPONSIVIDADE
+   ══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .char-avatar-wrap::before {
+    display: none;
+  }
+
+  .inv-slot-tooltip {
+    display: none; /* Em mobile, usa a barra de status */
+  }
+}
